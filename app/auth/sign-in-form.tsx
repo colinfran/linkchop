@@ -1,0 +1,178 @@
+'use client'
+/* eslint-disable tailwindcss/no-custom-classname */
+/* eslint-disable max-len */
+/* eslint-disable no-useless-escape */
+import React, { useState } from "react"
+// import { useNavigate } from "react-router-dom"
+import { z } from "zod"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+// import { useAuth } from "../Contexts/AuthContext"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import PasswordEye from "./password-eye"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+import { Icons } from "@/assets/icons"
+import { signIn, useSession } from 'next-auth/react';
+
+
+const userLoginFormSchema = z.object({
+  email: z
+    .string()
+    .min(1, { message: "This is not a valid email." })
+    .email("This is not a valid email."),
+  password: z.string().min(1).max(32),
+})
+
+type UserLoginFormValues = z.infer<typeof userLoginFormSchema>
+
+// type SignInFormProps = {
+//   onSignIn: () => Promise<void>
+// }
+
+const SignInForm: React.FC = () => {
+  // const navigate = useNavigate()
+  // const { login, isAuthenticated } = useAuth()
+
+  const [showPassword, setShowPassword] = useState(false)
+
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<undefined | string>()
+
+  const formSignIn = useForm<UserLoginFormValues>({
+    resolver: zodResolver(userLoginFormSchema),
+    mode: "onChange",
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
+
+  const form = formSignIn
+  const { watch, handleSubmit, formState } = form
+
+  const formData = watch()
+
+  const onSignIn = () => {
+    const runSignIn =  async() => {
+      setLoading(true)
+      await signIn('credentials', {
+        redirectTo: '/protected',
+        email: formData.email,
+        password: formData.password,
+      });
+      setLoading(false)
+    }
+    runSignIn()
+  }
+
+  return (
+    <Card className="">
+      <CardHeader>
+        <CardTitle>Sign in</CardTitle>
+        <CardDescription>Enter your email and password to access your account</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div>
+          <div>
+            <Form {...form}>
+              <form className="space-y-8" onSubmit={handleSubmit(onSignIn as any)}>
+                <div>
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Email</FormLabel>
+                          <FormControl>
+                            <Input placeholder="hello@test.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div>
+                    <div className="relative flex w-full space-x-2">
+                      <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                          <FormItem className={"w-full"}>
+                            <FormLabel>Password</FormLabel>
+                            <FormControl>
+                              <Input
+                                placeholder="abc123"
+                                {...field}
+                                type={showPassword ? "text" : "password"}
+                              />
+                            </FormControl>
+                            <Button
+                              className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                              size="icon"
+                              type="button"
+                              onClick={() => setShowPassword(!showPassword)}
+                            >
+                              <PasswordEye showPassword={showPassword} />
+                            </Button>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                    </div>
+                  </div>
+                  <div className="mt-8">
+                    <Button
+                      className="w-full"
+                      disabled={
+                        loading ||
+                        Object.entries(formState.errors).length !== 0 ||
+                        formData.password === "" ||
+                        formData.password === ""
+                      }
+                      type="submit"
+                    >
+                      {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Sign In"}
+                    </Button>
+                  </div>
+                </div>
+              </form>
+            </Form>
+          </div>
+          <div>
+            <div className={`mt-2.5 ${error ? "visible" : "invisible"}`}>
+              <p className="text-sm font-medium text-destructive">{error}</p>
+            </div>
+          </div>
+          <div className="mb-4">
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <span className="w-full border-t" />
+              </div>
+              <div className="relative mt-5 flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or login with</span>
+              </div>
+            </div>
+            <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
+              <Icons.google className="mr-2 size-4" /> Google
+            </Button>
+            <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
+              <Icons.apple className="mr-2 size-4" /> Apple
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
+
+export default SignInForm
