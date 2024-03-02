@@ -12,14 +12,18 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useSession, signIn, signOut } from "next-auth/react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 // import { Link, useLocation, useNavigate } from "react-router-dom"
 // import { useAuth } from "@/Contexts/AuthContext"
 
 const UserNavigation: React.FC = () => {
   const { data } = useSession()
+  const router = useRouter()
+
   const logoutUser = async (): Promise<void> => {
     await signOut()
+    router.push("/")
   }
 
   return (

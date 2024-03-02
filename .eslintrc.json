@@ -32,7 +32,7 @@
   "plugins": ["react", "@typescript-eslint", "react-hooks", "tailwindcss"],
   "rules": {
 		"prettier/prettier": ["error", {"endOfLine": "auto"}],
-		
+		"jsx-a11y/role-supports-aria-props":[0],
     "quotes": ["error", "double"],
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": ["error"],

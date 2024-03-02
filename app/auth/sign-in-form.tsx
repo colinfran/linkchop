@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { signIn, useSession } from "next-auth/react"
-import PasswordEye from "../../components/password-eye"
+import PasswordEye from "@/components/password-eye"
 
 const userLoginFormSchema = z.object({
   email: z
@@ -63,7 +63,7 @@ const SignInForm: React.FC = () => {
   const onSignIn = () => {
     const runSignIn = async () => {
       setLoading(true)
-      console.log('here')
+      console.log("here")
       await signIn("credentials", {
         redirectTo: "/home",
         email: formData.email,

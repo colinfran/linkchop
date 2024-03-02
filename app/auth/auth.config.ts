@@ -1,5 +1,14 @@
 import { NextAuthConfig } from "next-auth"
 
+const privateRoutes = [
+  "/home",
+  "/settings",
+  "/settings/profile",
+  "/settings/account",
+  "/settings/display",
+  "/settings/notifications",
+]
+
 export const authConfig = {
   pages: {
     signIn: "/auth",
@@ -11,15 +20,16 @@ export const authConfig = {
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user
-      const isOnDashboard = nextUrl.pathname.startsWith("/home")
-
-      if (isOnDashboard) {
-        if (isLoggedIn) return true
-        return false // Redirect unauthenticated users to login page
-      } else if (isLoggedIn && nextUrl.pathname === "/") {
-       return Response.redirect(new URL("/home", nextUrl))
+      // prevent user from going to root route or auth route if logged in
+      if (isLoggedIn && (nextUrl.pathname === "/" || nextUrl.pathname === "/auth")) {
+        return Response.redirect(new URL("/home", nextUrl))
       }
-
+      // allow user to go to all other routes if logged in
+      if (isLoggedIn) return true
+      // if user is not logged in, do not allow them access to private routes
+      if (!isLoggedIn && privateRoutes.includes(nextUrl.pathname)) {
+        return Response.redirect(new URL("/auth", nextUrl))
+      }
       return true
     },
   },

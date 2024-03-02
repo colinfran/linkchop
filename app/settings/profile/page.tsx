@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import React from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -88,7 +88,7 @@ const SettingsProfile: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">Profile</h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           This is how others will see you on the site.
         </p>
       </div>

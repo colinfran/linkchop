@@ -5,4 +5,14 @@ dist-ssr
 *.local
 .eslintcache
 /src/frontend/components/ui
-app/layout.tsx
+.eslintignore
+.eslintrc.json
+.prettierignore
+components.json
+middleware.ts
+tsconfig.json
+tailwind.config.js
+postcss.config.js
+package.json
+package-lock.json
+next-env.d.ts

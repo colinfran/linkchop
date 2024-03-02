@@ -42,7 +42,6 @@ const SettingsDisplay: React.FC = () => {
   const { setTheme, theme } = useTheme()
   const [mounted, setMounted] = useState(false)
 
-
   const form = useForm<DisplayFormValues>({
     resolver: zodResolver(displayFormSchema),
     defaultValues,
@@ -71,7 +70,7 @@ const SettingsDisplay: React.FC = () => {
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-medium">Display</h3>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           Turn items on or off to control what&apos;s displayed in the app.
         </p>
       </div>
