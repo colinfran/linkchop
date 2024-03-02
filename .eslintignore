@@ -5,3 +5,4 @@ dist-ssr
 *.local
 .eslintcache
 /src/frontend/components/ui
+app/layout.tsx

@@ -152,7 +152,7 @@ const HomePage: React.FC = () => {
                       Simple Pricing
                     </h2>
                     <p className="mx-auto max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                      Choose the plan that's right for you. All plans come with unlimited links and
+                      Choose the plan that&apos;s right for you. All plans come with unlimited links and
                       clicks.
                     </p>
                   </div>

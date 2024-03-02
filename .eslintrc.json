@@ -4,12 +4,14 @@
       "version": "detect"
     },
     "import/resolver": {
-
       "alias": {
         "map": [
-          ["@", "./"]
+          ["@/components", "./components"],
+          ["@/app", "./app"],
+          ["@/assets", "./assets"],
+          ["@/lib", "./lib"]
         ],
-        "extensions": [".ts", ".tsx", ".json"]
+        "extensions": [".ts", ".tsx", ".json", "css"]
       },
       "typescript": {
         "alwaysTryTypes": true

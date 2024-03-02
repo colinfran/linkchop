@@ -1,4 +1,4 @@
-'use client'
+"use client"
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
@@ -11,7 +11,6 @@ import { useForm } from "react-hook-form"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import PasswordEye from "./password-eye"
 import {
   Form,
   FormControl,
@@ -21,8 +20,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
-import { signIn, useSession } from 'next-auth/react';
-
+import { signIn, useSession } from "next-auth/react"
+import PasswordEye from "../../components/password-eye"
 
 const userLoginFormSchema = z.object({
   email: z
@@ -62,13 +61,14 @@ const SignInForm: React.FC = () => {
   const formData = watch()
 
   const onSignIn = () => {
-    const runSignIn =  async() => {
+    const runSignIn = async () => {
       setLoading(true)
-      await signIn('credentials', {
-        redirectTo: '/protected',
+      console.log('here')
+      await signIn("credentials", {
+        redirectTo: "/home",
         email: formData.email,
         password: formData.password,
-      });
+      })
       setLoading(false)
     }
     runSignIn()

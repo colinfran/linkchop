@@ -8,12 +8,11 @@ import Link from "next/link"
 import { useSession, signIn, signOut } from "next-auth/react"
 import { usePathname } from "next/navigation"
 import Image from "next/image"
+import UserNavigation from "./user-navigation"
 
 const TopNavigation: React.FC = () => {
-  const { data: isAuthenticated } = useSession()
-  const pathname = usePathname()
   return (
-    <div className="h-full">
+    <div className="">
       <nav className="dark:border-gray-60 fixed start-0 top-0 z-20 w-full border-b border-gray-200">
         <div className={"top-0 size-full"}>
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
@@ -30,52 +29,44 @@ const TopNavigation: React.FC = () => {
             <>
               <div className="flex">
                 <div className="flex hidden content-center justify-center md:block	">
-                  {pathname === "/" && (
-                    <>
-                      <a href="#features">
-                        <Button variant="link">Features</Button>
-                      </a>
-                      <a href="#prices">
-                        <Button variant="link">Prices</Button>
-                      </a>
-                      <a href="#contact">
-                        <Button variant="link">Contact</Button>
-                      </a>
-                    </>
-                  )}
-                  {!isAuthenticated && (
-                    <Link href="/auth">
-                      <Button variant="default">Sign Up / Sign In</Button>
-                    </Link>
-                  )}
+                  <>
+                    <a href="/#features">
+                      <Button variant="link">Features</Button>
+                    </a>
+                    <a href="/#prices">
+                      <Button variant="link">Prices</Button>
+                    </a>
+                    <a href="/#contact">
+                      <Button variant="link">Contact</Button>
+                    </a>
+                  </>
+
+                  <Link href="/auth">
+                    <Button variant="default">Sign Up / Sign In</Button>
+                  </Link>
                 </div>
               </div>
-              {isAuthenticated && <div className="flex justify-center">{/* <UserNav /> */}</div>}
             </>
           </div>
         </div>
       </nav>
       <div className="block flex content-center justify-center pb-[8px] pt-[72px] pt-[80px] md:hidden	">
-        {pathname === "/" && (
-          <>
-            <a href="#features">
-              <Button variant="link">Features</Button>
-            </a>
-            <a href="#prices">
-              <Button variant="link">Prices</Button>
-            </a>
-            <a href="#contact">
-              <Button variant="link">Contact</Button>
-            </a>
-          </>
-        )}
-        {!isAuthenticated && pathname === "/" && (
-          <Link href="/auth">
-            <Button variant="default">Sign Up / Sign In</Button>
-          </Link>
-        )}
+        <>
+          <a href="#features">
+            <Button variant="link">Features</Button>
+          </a>
+          <a href="#prices">
+            <Button variant="link">Prices</Button>
+          </a>
+          <a href="#contact">
+            <Button variant="link">Contact</Button>
+          </a>
+        </>
+        <Link href="/auth">
+          <Button variant="default">Sign Up / Sign In</Button>
+        </Link>
       </div>
-      {pathname === "/" && <Separator />}
+      <Separator />
     </div>
   )
 }

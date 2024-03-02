@@ -1,4 +1,4 @@
-'use client'
+"use client"
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
@@ -22,9 +22,7 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { createUser, getUser } from "app/db"
-import { useRouter } from 'next/navigation';
-
-
+import { useRouter } from "next/navigation"
 
 const userSignUpFormSchema = z.object({
   name: z
@@ -52,7 +50,7 @@ type UserSignUpFormValues = z.infer<typeof userSignUpFormSchema>
 // }
 
 const SignUpForm: React.FC = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const [passwordScore, setPasswordScore] = useState(0)
 
@@ -74,37 +72,37 @@ const SignUpForm: React.FC = () => {
   const formData = watch()
 
   const register = async () => {
-    setLoading(true);
+    setLoading(true)
 
     console.log(formData)
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
+      const response = await fetch("/api/auth/register", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           name: formData.name,
           email: formData.email,
           password: formData.password,
         }),
-      });
+      })
 
       if (response.ok) {
-        // Redirect to protected page or display success message
-        router.push('/protected');
+        // Redirect to home page or display success message
+        router.push("/home")
       } else {
         // Handle registration error
-        const errorData = await response.json();
-        console.error('Registration failed:', errorData.error);
+        const errorData = await response.json()
+        console.error("Registration failed:", errorData.error)
         setError(errorData.error)
       }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <Card className="">
