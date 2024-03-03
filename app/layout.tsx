@@ -2,7 +2,6 @@ import React from "react"
 import "../assets/css/globals.css"
 import { GeistSans } from "geist/font/sans"
 import { SessionProvider } from "next-auth/react"
-import { Session } from "next-auth"
 import { ThemeProvider } from "@/components/theme-provider"
 import Footer from "@/components/footer"
 
@@ -35,12 +34,13 @@ export const metadata = {
   // metadataBase: new URL("https://nextjs-postgres-auth.vercel.app"),
 }
 
-interface Props {
-  session: Session | null
-  children: React.ReactNode
-}
+// type Props = {
+//   session: Session | null
+//   children: React.ReactNode
+// }
 
-const RootLayout: React.FC<Props> = ({ children, session }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const RootLayout: React.FC<any> = ({ children, session }) => {
   return (
     <html lang="en">
       <body className={GeistSans.variable}>

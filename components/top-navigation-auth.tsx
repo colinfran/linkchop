@@ -30,7 +30,7 @@ const TopNavigationAuth: React.FC = () => {
             </>
           </div>
         </div>
-      <Separator />
+        <Separator />
       </nav>
     </div>
   )
