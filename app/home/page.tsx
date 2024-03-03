@@ -2,7 +2,7 @@ import React from "react"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import { auth } from "@/app/auth/auth"
 
-const HomeAuthenticatedPage = async () => {
+const HomeAuthenticatedPage: React.FC = async () => {
   const session = await auth()
 
   return (

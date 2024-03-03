@@ -1,4 +1,3 @@
-import TopNavigation from "@/components/top-navigation"
 import React from "react"
 
 const SettingsPage: React.FC = () => {

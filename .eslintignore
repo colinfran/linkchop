@@ -4,7 +4,7 @@ dist
 dist-ssr
 *.local
 .eslintcache
-/src/frontend/components/ui
+/components/ui
 .eslintignore
 .eslintrc.json
 .prettierignore

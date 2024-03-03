@@ -1,3 +1,4 @@
+import React from "react"
 import "../assets/css/globals.css"
 import { GeistSans } from "geist/font/sans"
 import { SessionProvider } from "next-auth/react"

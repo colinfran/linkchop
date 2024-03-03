@@ -3,11 +3,9 @@
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
 import React, { useState } from "react"
-// import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-// import { useAuth } from "../Contexts/AuthContext"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -20,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
-import { signIn, useSession } from "next-auth/react"
+import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
 
 const userLoginFormSchema = z.object({
@@ -33,14 +31,7 @@ const userLoginFormSchema = z.object({
 
 type UserLoginFormValues = z.infer<typeof userLoginFormSchema>
 
-// type SignInFormProps = {
-//   onSignIn: () => Promise<void>
-// }
-
 const SignInForm: React.FC = () => {
-  // const navigate = useNavigate()
-  // const { login, isAuthenticated } = useAuth()
-
   const [showPassword, setShowPassword] = useState(false)
 
   const [loading, setLoading] = useState(false)
@@ -60,15 +51,19 @@ const SignInForm: React.FC = () => {
 
   const formData = watch()
 
-  const onSignIn = () => {
-    const runSignIn = async () => {
+  const onSignIn = (): void => {
+    const runSignIn = async (): Promise<void> => {
       setLoading(true)
       console.log("here")
-      await signIn("credentials", {
-        redirectTo: "/home",
-        email: formData.email,
-        password: formData.password,
-      })
+      try {
+        await signIn("credentials", {
+          redirectTo: "/home",
+          email: formData.email,
+          password: formData.password,
+        })
+      } catch (err) {
+        setError(err as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+      }
       setLoading(false)
     }
     runSignIn()
@@ -84,7 +79,7 @@ const SignInForm: React.FC = () => {
         <div>
           <div>
             <Form {...form}>
-              <form className="space-y-8" onSubmit={handleSubmit(onSignIn as any)}>
+              <form className="space-y-8" onSubmit={handleSubmit(onSignIn)}>
                 <div>
                   <div>
                     <FormField

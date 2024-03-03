@@ -1,8 +1,9 @@
+import React from "react"
 import Link from "next/link"
 
-const Footer = () => {
+const Footer: React.FC = () => {
   return (
-    <footer className="shrink-0 border-t border-gray-200 bg-gray-200 dark:border-gray-800 dark:bg-gray-600">
+    <footer className="absolute w-full bottom-0 shrink-0 border-t border-gray-200 bg-gray-200 dark:border-gray-800 dark:bg-gray-600">
       <div className="container flex flex-row justify-between gap-2 p-4 md:gap-4 md:px-6 lg:gap-6">
         <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-300">
           <span>© 2023 LinkChop. All rights reserved.</span>

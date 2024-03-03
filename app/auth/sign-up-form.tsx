@@ -3,12 +3,10 @@
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
 import React, { useState } from "react"
-// import { useNavigate } from "react-router-dom"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import PasswordStrengthBar from "react-password-strength-bar"
-// import { useAuth } from "../Contexts/AuthContext"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -21,7 +19,6 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
-import { createUser, getUser } from "app/db"
 import { useRouter } from "next/navigation"
 
 const userSignUpFormSchema = z.object({
@@ -71,7 +68,7 @@ const SignUpForm: React.FC = () => {
   const { handleSubmit, watch } = form
   const formData = watch()
 
-  const register = async () => {
+  const register = async (): Promise<void> => {
     setLoading(true)
 
     console.log(formData)
@@ -97,8 +94,8 @@ const SignUpForm: React.FC = () => {
         console.error("Registration failed:", errorData.error)
         setError(errorData.error)
       }
-    } catch (error) {
-      console.error("Registration error:", error)
+    } catch (err) {
+      console.error("Registration error:", err)
     } finally {
       setLoading(false)
     }
@@ -116,7 +113,7 @@ const SignUpForm: React.FC = () => {
         <div>
           <div>
             <Form {...form}>
-              <form className="space-y-8" onSubmit={handleSubmit(register as any)}>
+              <form className="space-y-8" onSubmit={handleSubmit(register)}>
                 <div>
                   <div>
                     <FormField

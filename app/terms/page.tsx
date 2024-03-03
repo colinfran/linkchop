@@ -3,7 +3,6 @@ import React from "react"
 import TopNavigation from "@/components/top-navigation"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import { useSession } from "next-auth/react"
-import Link from "next/link"
 
 const TermsOfService: React.FC = () => {
   const { data } = useSession()
@@ -21,34 +20,38 @@ const TermsOfService: React.FC = () => {
                   </h1>
                   <p className="pt-10">Last updated: January 1, 2023</p>
                 </div>
-                <div className="pt-10">                  
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">Introduction</h3>
+                <div className="pt-10">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
+                    Introduction
+                  </h3>
                   <p>
-                    Welcome to LinkChop! These terms and conditions outline the rules and regulations
-                    for the use of LinkChop's Website, located at linkchop.com.
+                    Welcome to LinkChop! These terms and conditions outline the rules and
+                    regulations for the use of LinkChop&apos;s Website, located at linkchop.com.
                   </p>
                   <p>
-                    By accessing this website we assume you accept these terms and conditions. Do not
-                    continue to use LinkChop if you do not agree to take all of the terms and
+                    By accessing this website we assume you accept these terms and conditions. Do
+                    not continue to use LinkChop if you do not agree to take all of the terms and
                     conditions stated on this page.
                   </p>
                   <p>
-                    The following terminology applies to these Terms and Conditions, Privacy Statement
-                    and Disclaimer Notice and all Agreements: "Client", "You" and "Your" refers to
-                    you, the person log on this website and compliant to the Company’s terms and
-                    conditions. "The Company", "Ourselves", "We", "Our" and "Us", refers to our
-                    Company. "Party", "Parties", or "Us", refers to both the Client and ourselves. All
-                    terms refer to the offer, acceptance and consideration of payment necessary to
-                    undertake the process of our assistance to the Client in the most appropriate
-                    manner for the express purpose of meeting the Client’s needs in respect of
-                    provision of the Company’s stated services, in accordance with and subject to,
-                    prevailing law of Netherlands. Any use of the above terminology or other words in
-                    the singular, plural, capitalization and/or he/she or they, are taken as
+                    The following terminology applies to these Terms and Conditions, Privacy
+                    Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;,
+                    &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this
+                    website and compliant to the Company&apos;s terms and conditions. &quot;The
+                    Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and
+                    &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;,
+                    or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to
+                    the offer, acceptance and consideration of payment necessary to undertake the
+                    process of our assistance to the Client in the most appropriate manner for the
+                    express purpose of meeting the Client&apos;s needs in respect of provision of
+                    the Company&apos;s stated services, in accordance with and subject to,
+                    prevailing law of Netherlands. Any use of the above terminology or other words
+                    in the singular, plural, capitalization and/or he/she or they, are taken as
                     interchangeable and therefore as referring to same.
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
                     User Responsibilities
                   </h3>
                   <p>
@@ -58,16 +61,17 @@ const TermsOfService: React.FC = () => {
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
                     Service Availability
                   </h3>
                   <p>
-                    LinkChop makes every effort to ensure that the service is available at all times.
-                    However, we do not guarantee that the service will be uninterrupted or error-free.
+                    LinkChop makes every effort to ensure that the service is available at all
+                    times. However, we do not guarantee that the service will be uninterrupted or
+                    error-free.
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
                     Intellectual Property
                   </h3>
                   <p>
@@ -76,7 +80,7 @@ const TermsOfService: React.FC = () => {
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
                     Payment and Subscription
                   </h3>
                   <p>
@@ -86,14 +90,18 @@ const TermsOfService: React.FC = () => {
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">Termination</h3>
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
+                    Termination
+                  </h3>
                   <p>
                     LinkChop reserves the right to terminate the account of any user who violates
                     these terms and conditions.
                   </p>
                 </div>
                 <div className="pt-10">
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight pb-4">Disclaimer</h3>
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
+                    Disclaimer
+                  </h3>
                   <p>
                     In no event shall LinkChop, nor any of its officers, directors and employees, be
                     held liable for anything arising out of or in any way connected with your use of

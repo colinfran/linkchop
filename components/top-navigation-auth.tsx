@@ -5,11 +5,12 @@ import logo from "../assets/media/logo.webp"
 import Link from "next/link"
 import Image from "next/image"
 import UserNavigation from "./user-navigation"
+import { Separator } from "@/components/ui/separator"
 
 const TopNavigationAuth: React.FC = () => {
   return (
-    <div className="">
-      <nav className="dark:border-gray-60 fixed start-0 top-0 z-20 w-full border-b border-gray-200">
+    <div className="flex size-full">
+      <nav className="fixed start-0 top-0 z-20 w-full">
         <div className={"top-0 size-full"}>
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
             <Link className="flex items-center space-x-3 rtl:space-x-reverse" href="/home">
@@ -29,6 +30,7 @@ const TopNavigationAuth: React.FC = () => {
             </>
           </div>
         </div>
+      <Separator />
       </nav>
     </div>
   )

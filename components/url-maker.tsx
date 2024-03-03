@@ -15,7 +15,7 @@ const urlFormSchema = z.object({
 
 type urlFormValues = z.infer<typeof urlFormSchema>
 
-const UrlMaker = () => {
+const UrlMaker: React.FC = () => {
   const [shortUrl, setShortUrl] = useState("")
 
   const form = useForm<urlFormValues>({
@@ -28,16 +28,16 @@ const UrlMaker = () => {
 
   const { watch, handleSubmit } = form
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const generateUrl = (e: any): void => {
     e.preventDefault()
-    //  if ()
-    // geerate new url
+    // generate new url
     const formData = watch()
     setShortUrl(formData.url)
   }
 
   return (
-    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
+    <section className="size-full py-12 md:py-24 lg:py-32 xl:py-48">
       <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
         <div className="space-y-2">
           <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">

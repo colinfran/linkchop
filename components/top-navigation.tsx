@@ -1,19 +1,15 @@
 "use client"
-import React, { useState, ReactElement } from "react"
-import { Separator } from "./ui/separator"
-// import UserNav from "./user-nav"
-import { Button } from "./ui/button"
-import logo from "../assets/media/logo.webp"
+import React from "react"
+import { Separator } from "@/components/ui/separator"
+import { Button } from "@/components/ui/button"
+import logo from "@/assets/media/logo.webp"
 import Link from "next/link"
-import { useSession, signIn, signOut } from "next-auth/react"
-import { usePathname } from "next/navigation"
 import Image from "next/image"
-import UserNavigation from "./user-navigation"
 
 const TopNavigation: React.FC = () => {
   return (
-    <div className="">
-      <nav className="dark:border-gray-60 fixed start-0 top-0 z-20 w-full border-b border-gray-200">
+    <div className="flex size-full">
+      <nav className="fixed start-0 top-0 z-20 w-full">
         <div className={"top-0 size-full"}>
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
             <Link className="flex items-center space-x-3 rtl:space-x-reverse" href="/">
@@ -28,7 +24,7 @@ const TopNavigation: React.FC = () => {
             </Link>
             <>
               <div className="flex">
-                <div className="flex hidden content-center justify-center md:block	">
+                <div className="hidden content-center justify-center md:block	">
                   <>
                     <a href="/#features">
                       <Button variant="link">Features</Button>
@@ -50,7 +46,7 @@ const TopNavigation: React.FC = () => {
           </div>
         </div>
       </nav>
-      <div className="block flex content-center justify-center pb-[8px] pt-[72px] pt-[80px] md:hidden	">
+      <div className="flex content-center justify-center pb-[8px] pt-[72px] md:hidden	">
         <>
           <a href="#features">
             <Button variant="link">Features</Button>

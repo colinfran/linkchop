@@ -1,11 +1,12 @@
 "use client"
+import React from "react"
 import TopNavigation from "@/components/top-navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import SignInForm from "./sign-in-form"
 import SignUpForm from "./sign-up-form"
 
-export default function Auth() {
+const Auth: React.FC = () => {
   return (
     <>
       <TopNavigation />
@@ -30,3 +31,5 @@ export default function Auth() {
     </>
   )
 }
+
+export default Auth

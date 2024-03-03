@@ -4,6 +4,10 @@
       "version": "detect"
     },
     "import/resolver": {
+      "node": {
+        "extensions": [".ts", ".tsx", ".d.ts"],
+        "moduleDirectory": [".", "node_modules"]
+      },
       "alias": {
         "map": [
           ["@/components", "./components"],
