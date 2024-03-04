@@ -10,7 +10,7 @@ const Auth: React.FC = () => {
   return (
     <>
       <TopNavigation />
-      <div className="size-full pt-[6rem]">
+      <div className="size-full h-[100vh] pt-[6rem]">
         <div className="flex flex-col items-center justify-center bg-background xl:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
           <div className="mb-20 flex h-full justify-center xl:mb-0 xl:w-2/5">
             <Tabs className="w-full max-w-2xl xl:mt-16" defaultValue="signin">

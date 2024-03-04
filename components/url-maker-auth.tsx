@@ -10,6 +10,8 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import { useSession } from "next-auth/react"
+import { UrlsProps } from "@/app/home/page"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {
@@ -23,7 +25,14 @@ const sleep = (ms: number): Promise<void> => {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-const UrlMaker: React.FC = () => {
+type UrlMakeAuthProp = {
+  setUrls: (url: UrlsProps[]) => void
+  urls: UrlsProps[]
+}
+
+const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthProp) => {
+  const { data } = useSession()
+
   const [shortUrl, setShortUrl] = useState(null)
   const [loading, setLoading] = useState(false)
   const [showingCopiedText, setShowingCopiedText] = useState(false)
@@ -41,6 +50,7 @@ const UrlMaker: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const generateUrl = (e: any): void => {
     const createUrl = async (): Promise<void> => {
+      console.log(data?.user.data)
       setLoading(true)
       const formData = watch()
       try {
@@ -49,7 +59,7 @@ const UrlMaker: React.FC = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ originalUrl: formData.url }),
+          body: JSON.stringify({ originalUrl: formData.url, userId: data?.user.data.id }),
         })
         if (!response.ok) {
           const errorData = await response.json()
@@ -57,6 +67,18 @@ const UrlMaker: React.FC = () => {
         }
         const { urlId } = await response.json()
         setShortUrl(urlId)
+        console.log(urls)
+        const arr = [
+          {
+            id: urlId,
+            original_url: formData.url,
+            user_id: data?.user.data.id,
+            created_at: new Date(),
+          },
+          ...urls,
+        ]
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setUrls(arr as any)
       } catch (error) {
         console.log(error)
       }
@@ -73,17 +95,8 @@ const UrlMaker: React.FC = () => {
   }
 
   return (
-    <section className="size-full py-12 md:py-24 lg:py-32 xl:py-48">
+    <section className="size-full py-12 md:pt-24 lg:pt-32 xl:pt-48">
       <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
-        <div className="space-y-2">
-          <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            LinkChop. The URL shortener for everyone.
-          </h1>
-          <p className="mx-auto max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-            Shorten, share, and track your links with ease. Perfect for social media, email
-            campaigns, and more.
-          </p>
-        </div>
         <div className="mx-auto space-y-2 sm:w-[375px] md:w-[600px]">
           <Form {...form}>
             <form className="space-y-8" onSubmit={handleSubmit(generateUrl)}>
@@ -149,4 +162,4 @@ const UrlMaker: React.FC = () => {
   )
 }
 
-export default UrlMaker
+export default UrlMakeAuth

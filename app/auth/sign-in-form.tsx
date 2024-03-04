@@ -54,7 +54,6 @@ const SignInForm: React.FC = () => {
   const onSignIn = (): void => {
     const runSignIn = async (): Promise<void> => {
       setLoading(true)
-      console.log("here")
       try {
         await signIn("credentials", {
           redirectTo: "/home",

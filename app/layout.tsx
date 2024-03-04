@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from "@/components/theme-provider"
 import Footer from "@/components/footer"
+import { Session } from "next-auth/types"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -26,21 +27,15 @@ export const metadata = {
       },
     ],
   },
-  // twitter: {
-  //   card: "summary_large_image",
-  //   title,
-  //   description,
-  // },
-  // metadataBase: new URL("https://nextjs-postgres-auth.vercel.app"),
 }
 
-// type Props = {
-//   session: Session | null
-//   children: React.ReactNode
-// }
+type Props = {
+  session: Session | null
+  children?: React.ReactNode
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const RootLayout: React.FC<any> = ({ children, session }) => {
+const RootLayout: React.FC<any> = ({ children, session }: Props) => {
   return (
     <html lang="en">
       <body className={GeistSans.variable}>
@@ -50,7 +45,11 @@ const RootLayout: React.FC<any> = ({ children, session }) => {
           disableTransitionOnChange
           enableSystem
         >
-          <SessionProvider session={session}>{children}</SessionProvider>
+          <SessionProvider session={session}>
+            {/* <UserProvider session={session}> */}
+            {children}
+            {/* </UserProvider> */}
+          </SessionProvider>
         </ThemeProvider>
         <Footer />
       </body>

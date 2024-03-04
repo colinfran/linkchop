@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { createUser, getUser } from "app/db"
 import { signIn } from "@/app/auth/auth"
 
-export async function POST(request: Request): Promise<any> {
+export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
   const { email, name, password } = res
   try {

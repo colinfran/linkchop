@@ -14,7 +14,9 @@ export const {
   ...authConfig,
   providers: [
     Credentials({
-      async authorize({ email, password }: any) {
+      // @ts-expect-error type error bug see here https://github.com/nextauthjs/next-auth/issues/2701
+      async authorize(credentials: Credentials): Promise<any> {
+        const { email, password } = credentials
         const user = await getUser(email)
         if (user.length === 0) return null
         const passwordsMatch = await compare(password, user[0].password!)
@@ -22,4 +24,25 @@ export const {
       },
     }),
   ],
+  callbacks: {
+    session: ({ session, token }) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      session.user = { ...session.user, ...token }
+      return session
+    },
+    jwt: ({ token, user }) => {
+      let newVal = token
+      if (user) {
+        newVal = {
+          data: user,
+          exp: token.exp,
+          iat: token.iat,
+          jti: token.jti,
+          sub: token.sub,
+        }
+      }
+      return newVal
+    },
+  },
 })
