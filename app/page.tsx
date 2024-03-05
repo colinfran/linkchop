@@ -197,7 +197,7 @@ const HomePage: React.FC = () => {
                           Includes all features
                         </p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Advancned Analytics &amp; Tracking
+                          Advanced Analytics &amp; Tracking
                         </p>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
                           Custom Short Links
