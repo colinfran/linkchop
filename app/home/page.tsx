@@ -7,6 +7,7 @@ import UrlMakerAuth from "@/components/url-maker-auth"
 import { useSession } from "next-auth/react"
 import { Input } from "@/components/ui/input"
 import { XCircle } from "lucide-react"
+import Footer from "@/components/footer"
 
 export type UrlsProps = {
   id: string
@@ -145,6 +146,7 @@ const HomeAuthenticatedPage: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

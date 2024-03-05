@@ -4,6 +4,7 @@ import TopNavigation from "@/components/top-navigation"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import { useSession } from "next-auth/react"
 import Link from "next/link"
+import Footer from "@/components/footer"
 
 const PrivacyPolicy: React.FC = () => {
   const { data } = useSession()
@@ -120,6 +121,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

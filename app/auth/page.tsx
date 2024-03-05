@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import SignInForm from "./sign-in-form"
 import SignUpForm from "./sign-up-form"
+import Footer from "@/components/footer"
 
 const Auth: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ const Auth: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

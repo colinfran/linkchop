@@ -48,13 +48,13 @@ const TopNavigation: React.FC = () => {
       </nav>
       <div className="flex content-center justify-center pb-[8px] pt-[72px] md:hidden	">
         <>
-          <a href="#features">
+          <a href="/#features">
             <Button variant="link">Features</Button>
           </a>
-          <a href="#prices">
+          <a href="/#prices">
             <Button variant="link">Prices</Button>
           </a>
-          <a href="#contact">
+          <a href="/#contact">
             <Button variant="link">Contact</Button>
           </a>
         </>

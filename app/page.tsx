@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import UrlMaker from "@/components/url-maker"
 import TopNavigation from "@/components/top-navigation"
+import Footer from "@/components/footer"
 
 const HomePage: React.FC = () => {
   return (
@@ -283,6 +284,7 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   )
 }

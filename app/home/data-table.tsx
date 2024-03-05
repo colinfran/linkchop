@@ -63,8 +63,8 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <div className="">
-      <div className="rounded-md border">
-        <Table>
+      <div className="rounded-md border min-h-[818.5px]">
+        <Table className="">
           <TableHeader>
             <TableRow>
               <TableHead>Original URL</TableHead>
@@ -75,10 +75,10 @@ export const DataTable: React.FC<DataTableProps> = ({
           </TableHeader>
           <TableBody className="text-black dark:text-white">
             {loading ? (
-              <TableRow className="h-[300px]">
+              <TableRow className="h-[700px]">
                 <TableCell className="h-24" colSpan={4}>
                   <div className="flex items-center justify-center">
-                    <Icons.spinner className="size-3 animate-spin" />
+                    <Icons.spinner className="size-16 animate-spin" />
                   </div>
                 </TableCell>
               </TableRow>
@@ -86,7 +86,7 @@ export const DataTable: React.FC<DataTableProps> = ({
               <>
                 {data.length ? (
                   data.slice(startIndex - 1, endIndex).map((url) => (
-                    <TableRow key={url.id}>
+                    <TableRow key={url.id} className="h-[80px]">
                       <TableCell className="h-24">
                         <div className="flex">{url.original_url}</div>
                       </TableCell>
