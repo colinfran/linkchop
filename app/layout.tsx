@@ -46,11 +46,7 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
           disableTransitionOnChange
           enableSystem
         >
-          <SessionProvider session={session}>
-            {/* <UserProvider session={session}> */}
-            {children}
-            {/* </UserProvider> */}
-          </SessionProvider>
+          <SessionProvider session={session}>{children}</SessionProvider>
         </ThemeProvider>
         <Analytics />
       </body>
