@@ -10,21 +10,23 @@ const Auth: React.FC = () => {
   return (
     <>
       <TopNavigation />
-      <div className="size-full h-[100vh] pt-[6rem]">
-        <div className="flex flex-col items-center justify-center bg-background xl:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
-          <div className="mb-20 flex h-full justify-center xl:mb-0 xl:w-2/5">
-            <Tabs className="w-full max-w-2xl xl:mt-16" defaultValue="signin">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
-              </TabsList>
-              <TabsContent value="signin">
-                <SignInForm />
-              </TabsContent>
-              <TabsContent value="signup">
-                <SignUpForm />
-              </TabsContent>
-            </Tabs>
+      <div className="size-full space-y-6 py-6 xl:space-y-16 h-[calc(100vh-4rem)] md:h-auto">
+        <div className="container space-y-2 p-12">
+          <div className="flex flex-col items-center justify-center bg-background xl:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
+            <div className="mb-20 flex h-full justify-center xl:mb-0 xl:w-2/5">
+              <Tabs className="w-full max-w-2xl xl:mt-16" defaultValue="signin">
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="signin">Sign In</TabsTrigger>
+                  <TabsTrigger value="signup">Sign Up</TabsTrigger>
+                </TabsList>
+                <TabsContent value="signin">
+                  <SignInForm />
+                </TabsContent>
+                <TabsContent value="signup">
+                  <SignUpForm />
+                </TabsContent>
+              </Tabs>
+            </div>
           </div>
         </div>
       </div>
