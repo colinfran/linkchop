@@ -39,7 +39,6 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
           <AlertDialogCancel onClick={() => setIsOpen(!isOpen)}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={async () => {
-              console.log(id)
               await deleteUrl(id)
               setIsOpen(!isOpen)
               setSelectedItemId("")

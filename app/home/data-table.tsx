@@ -115,7 +115,6 @@ export const DataTable: React.FC<DataTableProps> = ({
                                 onClick={() => {
                                   setSelectedItemId(url.id)
                                   setEditedUrlString(url.original_url)
-                                  console.log(url.original_url)
                                   setIsEditOpen(!isEditOpen)
                                 }}
                               >

@@ -51,7 +51,6 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const generateUrl = (e: any): void => {
     const createUrl = async (): Promise<void> => {
-      console.log(data?.user.data)
       setLoading(true)
       try {
         const response = await fetch("/api/urls/create", {
@@ -67,7 +66,6 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
         }
         const { urlId } = await response.json()
         setShortUrl(urlId)
-        console.log(urls)
         const arr = [
           {
             id: urlId,
@@ -80,7 +78,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setUrls(arr as any)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
       setLoading(false)
     }
@@ -93,7 +91,6 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
     await sleep(1000)
     setShowingCopiedText(false)
   }
-  console.log(formState.errors.url?.message)
   return (
     <section className="size-full py-12 pt-24 md:flex md:justify-center md:pt-32">
       <div className="w-full md:max-w-[600px]">

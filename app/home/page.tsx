@@ -25,12 +25,10 @@ const HomeAuthenticatedPage: React.FC = () => {
   const { data, status } = useSession()
 
   useEffect(() => {
-    console.log(status)
     if (status === "authenticated") {
       const getUrls = async (): Promise<void> => {
         try {
           setLoading(true)
-          console.log(data)
           const response = await fetch("/api/urls/get", {
             method: "POST",
             headers: {
@@ -43,7 +41,6 @@ const HomeAuthenticatedPage: React.FC = () => {
             throw new Error(errorData.error)
           }
           const urlsArr = await response.json()
-          console.log(urlsArr)
           const val = urlsArr.sort(
             (a: UrlsProps, b: UrlsProps) =>
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,7 +49,7 @@ const HomeAuthenticatedPage: React.FC = () => {
           setUrls(val)
           setFilteredUrls(val)
         } catch (error) {
-          console.log(error)
+          console.error(error)
         }
         setLoading(false)
       }
@@ -67,7 +64,6 @@ const HomeAuthenticatedPage: React.FC = () => {
 
   const deleteUrl = async (id: string): Promise<void> => {
     try {
-      console.log(data)
       const response = await fetch("/api/urls/delete", {
         method: "POST",
         headers: {
@@ -81,13 +77,11 @@ const HomeAuthenticatedPage: React.FC = () => {
       }
       const { success } = await response.json()
       if (success) {
-        console.log("successful")
         const filteredData = urls.filter((item) => item.id !== id)
-        console.log(filteredData)
         setUrls(filteredData)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
   }
 

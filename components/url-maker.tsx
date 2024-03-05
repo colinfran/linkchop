@@ -58,7 +58,7 @@ const UrlMaker: React.FC = () => {
         const { urlId } = await response.json()
         setShortUrl(urlId)
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
       setLoading(false)
     }

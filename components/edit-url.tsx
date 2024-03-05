@@ -65,12 +65,11 @@ const EditUrl: React.FC<EditUrlProps> = ({
         const newData = urls.map((obj: any) =>
           obj.id === id ? Object.assign({}, obj, { ...obj, original_url: updatedUrl }) : obj,
         )
-        console.log(newData)
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         setUrls(newData as any)
       }
     } catch (error) {
-      console.log(error)
+      console.error(error)
     }
     setIsOpen(false)
   }

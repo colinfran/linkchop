@@ -68,8 +68,6 @@ const SignUpForm: React.FC = () => {
 
   const register = async (): Promise<void> => {
     setLoading(true)
-
-    console.log(formData)
     try {
       const response = await fetch("/api/auth/register", {
         method: "POST",

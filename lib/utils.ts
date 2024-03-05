@@ -11,7 +11,7 @@ export const isValidUrl = (str: string): boolean => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars, unused-imports/no-unused-vars
     givenURL = new URL(str)
   } catch (error) {
-    console.log("error is", error)
+    console.error(error)
     return false
   }
   return true
