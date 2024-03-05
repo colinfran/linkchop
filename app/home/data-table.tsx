@@ -167,7 +167,7 @@ export const DataTable: React.FC<DataTableProps> = ({
               {data.length ? (
                 data.slice(startIndex - 1, endIndex).map((url, index) => (
                   <>
-                    <div className="hover:bg-mute flex  size-full flex-row justify-between p-8 text-black dark:text-white">
+                    <div className="flex  size-full flex-row justify-between p-8 text-black dark:text-white">
                       <div>
                         <div>{url.original_url}</div>
                         <div>{`https://linkchop.com/${url.id}`}</div>
