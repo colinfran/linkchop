@@ -71,6 +71,7 @@
     "eslint-plugin-readable-tailwind": "^1.0.0",
     "eslint-plugin-tailwindcss": "^3.14.3",
     "eslint-plugin-unused-imports": "^3.1.0",
+    "husky": "^9.0.11",
     "postcss": "^8.4.32",
     "prettier": "^3.2.5",
     "prettier-plugin-tailwindcss": "^0.5.11",
