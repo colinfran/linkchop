@@ -11,14 +11,27 @@ import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
-
-import { LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
+import { useTheme } from "next-themes"
+import {
+  Home,
+  LineChart,
+  LogOut,
+  Moon,
+  Settings,
+  Sun,
+  SunMoon,
+  Unlock,
+  XOctagon,
+} from "lucide-react"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [userData, setUserData] = useState<any>(null)
   const { data } = useSession()
   const router = useRouter()
+
+  const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setUserData(data?.user?.data)
@@ -51,10 +64,17 @@ const UserNavigation: React.FC = () => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
+          <Link href="/home">
+            <DropdownMenuItem className="cursor-pointer">
+              <Home className="mr-2 size-4" />
+              Home
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem className="cursor-pointer" disabled={!userData?.is_premium_user}>
             <LineChart className="mr-2 size-4" />
             <span className="w-full">Analytics</span>
           </DropdownMenuItem>
+          <DropdownMenuSeparator />
           {userData?.is_premium_user ? (
             <DropdownMenuItem className="cursor-pointer">
               <XOctagon className="mr-2 size-4" />
@@ -66,12 +86,35 @@ const UserNavigation: React.FC = () => {
               <span className="w-full">Unlock Premium</span>
             </DropdownMenuItem>
           )}
+          <DropdownMenuSeparator />
+          <div>
+            <div className="flex flex-row">
+              <div className="flex flex-col justify-center px-1">
+                {theme === "system" && <SunMoon className="h-4" />}
+                {theme === "dark" && <Moon className="h-4" />}
+                {theme === "light" && <Sun className="h-4" />}
+              </div>
+              <Select value={theme} onValueChange={(value) => setTheme(value)}>
+                <SelectTrigger className="h-8 w-[100px] py-0">
+                  <div className="flex flex-row">
+                    <SelectValue />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="light">Light</SelectItem>
+                  <SelectItem value="dark">Dark</SelectItem>
+                  <SelectItem value="system">System</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
           <Link href="/settings/profile">
             <DropdownMenuItem className="cursor-pointer">
               <Settings className="mr-2 size-4" />
               Settings
             </DropdownMenuItem>
           </Link>
+          <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onClick={logoutUser}>
             <LogOut className="mr-2 size-4" />
             Log out
