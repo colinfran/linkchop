@@ -208,7 +208,7 @@ const HomePage: React.FC = () => {
               </div>
             </section>
             <Separator />
-            <section className="size-full py-12 md:py-24 lg:py-32 pb-32 lg:pb-40" id="contact">
+            <section className="size-full py-12 pb-32 md:py-24 lg:py-32 lg:pb-40" id="contact">
               <div className="container flex flex-col gap-4 px-4 text-center md:flex-row md:items-center md:justify-center md:gap-6 lg:gap-10 xl:gap-12">
                 <div className="space-y-3 md:text-left">
                   <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
