@@ -3,7 +3,7 @@ import Link from "next/link"
 
 const Footer: React.FC = () => {
   return (
-    <footer className="absolute bottom-0 w-full shrink-0 border-t border-gray-200 bg-gray-200 dark:border-gray-800 dark:bg-gray-600">
+    <footer className="bottom-0 mt-40 w-full shrink-0 border-t border-gray-200 bg-gray-200 dark:border-gray-800 dark:bg-gray-600">
       <div className="container flex flex-row justify-between gap-2 p-4 md:gap-4 md:px-6 lg:gap-6">
         <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-300">
           <span>© 2023 LinkChop. All rights reserved.</span>
