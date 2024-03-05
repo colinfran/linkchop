@@ -74,8 +74,8 @@ export const DataTable: React.FC<DataTableProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody className="text-black dark:text-white">
-            {loading ? (
-              <TableRow className="h-[700px]">
+            {true ? (
+              <TableRow className="h-[400px] md:h-[700px]">
                 <TableCell className="h-24" colSpan={4}>
                   <div className="flex items-center justify-center">
                     <Icons.spinner className="size-16 animate-spin" />
@@ -149,7 +149,7 @@ export const DataTable: React.FC<DataTableProps> = ({
       >
         {!loading && (
           <div className="flex-1 text-sm text-muted-foreground">
-            {`Showing ${startIndex} to ${endIndex} of ${data.length} entries`}
+            {data.length && `Showing ${startIndex} to ${endIndex} of ${data.length} entries`}
           </div>
         )}
         <div className={"space-x-2"}>
