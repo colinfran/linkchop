@@ -63,7 +63,7 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <div className="">
-      <div className="rounded-md border min-h-[818.5px]">
+      <div className="min-h-[818.5px] rounded-md border">
         <Table className="">
           <TableHeader>
             <TableRow>
@@ -86,7 +86,7 @@ export const DataTable: React.FC<DataTableProps> = ({
               <>
                 {data.length ? (
                   data.slice(startIndex - 1, endIndex).map((url) => (
-                    <TableRow key={url.id} className="h-[80px]">
+                    <TableRow className="h-[80px]" key={url.id}>
                       <TableCell className="h-24">
                         <div className="flex">{url.original_url}</div>
                       </TableCell>
