@@ -25,6 +25,7 @@ const HomeAuthenticatedPage: React.FC = () => {
   const { data, status } = useSession()
 
   useEffect(() => {
+    console.log(status)
     if (status === "authenticated") {
       const getUrls = async (): Promise<void> => {
         try {

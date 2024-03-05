@@ -1,5 +1,5 @@
+// import { signIn } from "@/app/auth/auth"
 import { createUser, getUser } from "app/db"
-import { signIn } from "@/app/auth/auth"
 
 export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
@@ -17,15 +17,14 @@ export async function POST(request: Request): Promise<Response> {
     await createUser(email, password, name)
 
     // Sign in the user
-    await signIn("credentials", {
-      email,
-      password,
+    // await signIn("credentials", {
+      // email,
+      // password,
       // Specify the redirect URL after sign-in
-      redirect: false, // Don't redirect automatically
-      callbackUrl: "/home", // Redirect to '/home' after sign-in
-    })
+      // redirectTo: "/home", // Redirect to '/home' after sign-in
+    // })
 
-    return Response.json({ message: "User registered and signed in successfully" })
+    return Response.json({ success: true, message: "User registered successfully" })
   } catch (error) {
     console.error("Registration error:", error)
     return Response.json({ error: "Registration failed" })

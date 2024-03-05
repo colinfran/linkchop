@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { useRouter } from "next/navigation"
+import { signIn } from "next-auth/react"
+
 
 const userSignUpFormSchema = z.object({
   name: z
@@ -85,9 +87,15 @@ const SignUpForm: React.FC = () => {
         }),
       })
 
-      if (response.ok) {
+      const data = await response.json()
+      if (response.ok && data.success) {
         // Redirect to home page or display success message
-        router.push("/home")
+        // router.push("/home")
+        await signIn("credentials", {
+          // redirectTo: "/home",
+          email: formData.email,
+          password: formData.password,
+        })
       } else {
         // Handle registration error
         const errorData = await response.json()
