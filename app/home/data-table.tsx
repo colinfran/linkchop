@@ -74,7 +74,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody className="text-black dark:text-white">
-            {true ? (
+            {loading ? (
               <TableRow className="h-[400px] md:h-[700px]">
                 <TableCell className="h-24" colSpan={4}>
                   <div className="flex items-center justify-center">
