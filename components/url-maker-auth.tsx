@@ -96,8 +96,8 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
 
   return (
     <section className="size-full py-12 md:pt-48">
-      <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
-        <div className="mx-auto space-y-2 sm:w-[375px] md:w-[600px]">
+      <div className="flex flex-col w-full items-center justify-center text-center">
+        <div className="mx-auto space-y-2 w-full">
           <Form {...form}>
             <form className="space-y-8" onSubmit={handleSubmit(generateUrl)}>
               <div>
@@ -136,7 +136,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
         <div className="mt-10 flex justify-center pb-4">
           <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
             <div
-              className={`flex min-h-[42.46px] w-[350px] justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
+              className={`flex min-h-[42.46px] w-full justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
               onClick={showText}
             >
               {loading ? (

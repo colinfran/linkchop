@@ -22,6 +22,7 @@ import DeleteAlert from "@/components/delete-alert"
 import { Icons } from "@/assets/icons"
 import EditUrl from "@/components/edit-url"
 import { UrlsProps } from "./page"
+import { Separator } from "@radix-ui/react-separator"
 
 type DataTableProps = {
   data: UrlsProps[]
@@ -63,7 +64,9 @@ export const DataTable: React.FC<DataTableProps> = ({
 
   return (
     <div className="">
-      <div className="min-h-[818.5px] rounded-md border">
+      <div
+        className={`min-h-[400px] rounded-md border md:min-h-[815px] ${urls.length !== 0 ? "h-[815px]" : "h-[400px]"}`}
+      >
         <Table className="">
           <TableHeader>
             <TableRow>
@@ -75,17 +78,20 @@ export const DataTable: React.FC<DataTableProps> = ({
           </TableHeader>
           <TableBody className="text-black dark:text-white">
             {loading ? (
-              <TableRow className="h-[400px] md:h-[700px]">
-                <TableCell className="h-24" colSpan={4}>
-                  <div className="flex items-center justify-center">
-                    <Icons.spinner className="size-16 animate-spin" />
-                  </div>
-                </TableCell>
-              </TableRow>
+              <>
+                <TableRow className="h-[400px] md:h-[700px]">
+                  <TableCell className="h-24" colSpan={4}>
+                    <div className="flex items-center justify-center">
+                      <Icons.spinner className="size-16 animate-spin" />
+                    </div>
+                  </TableCell>
+                </TableRow>
+              </>
             ) : (
               <>
                 {data.length ? (
                   data.slice(startIndex - 1, endIndex).map((url) => (
+                    <>
                     <TableRow className="h-[80px]" key={url.id}>
                       <TableCell className="h-24">
                         <div className="flex">{url.original_url}</div>
@@ -131,14 +137,18 @@ export const DataTable: React.FC<DataTableProps> = ({
                         </>
                       </TableCell>
                     </TableRow>
+                    </>
                   ))
                 ) : (
-                  <TableRow>
-                    <TableCell className="h-24" colSpan={4}>
-                      <div className="flex items-center justify-center">No results.</div>
-                    </TableCell>
-                  </TableRow>
+                  <>
+                    <TableRow>
+                      <TableCell className="h-24" colSpan={4}>
+                        <div className="flex items-center justify-center">No results.</div>
+                      </TableCell>
+                    </TableRow>
+                  </>
                 )}
+                {endIndex - 7 !== startIndex && <Separator />}
               </>
             )}
           </TableBody>
@@ -149,7 +159,9 @@ export const DataTable: React.FC<DataTableProps> = ({
       >
         {!loading && (
           <div className="flex-1 text-sm text-muted-foreground">
-            {data.length && `Showing ${startIndex} to ${endIndex} of ${data.length} entries`}
+            {data.length !== 0
+              ? `Showing ${startIndex} to ${endIndex} of ${data.length} entries`
+              : ""}
           </div>
         )}
         <div className={"space-x-2"}>
