@@ -13,9 +13,9 @@ const Auth: React.FC = () => {
       <TopNavigation />
       <div className="size-full h-[calc(100vh-4rem)] space-y-6 py-6 md:h-auto xl:space-y-16">
         <div className="container space-y-2 p-12">
-          <div className="flex flex-col items-center justify-center bg-background xl:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
+          <div className="flex flex-col items-center justify-center bg-background md:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
             <div className="mb-20 flex h-full justify-center xl:mb-0 xl:w-2/5">
-              <Tabs className="w-full max-w-2xl xl:mt-16" defaultValue="signin">
+              <Tabs className="w-full max-w-2xl md:mt-16" defaultValue="signin">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="signin">Sign In</TabsTrigger>
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
