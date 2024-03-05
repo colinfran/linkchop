@@ -21,7 +21,7 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
   return (
     <nav
       className={cn(
-        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 overflow-x-auto justify-center",
+        "flex space-x-2 lg:flex-col lg:space-x-0 lg:space-y-1 overflow-x-auto md:justify-center",
         className,
       )}
       {...props}
