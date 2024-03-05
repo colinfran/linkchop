@@ -95,7 +95,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
   }
 
   return (
-    <section className="size-full py-12 pt-48">
+    <section className="size-full py-12 md:pt-48">
       <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
         <div className="mx-auto space-y-2 sm:w-[375px] md:w-[600px]">
           <Form {...form}>
