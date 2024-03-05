@@ -35,7 +35,7 @@ const SettingsLayout: React.FC<Props> = ({ children }: Props) => {
       <TopNavigationAuth />
       <div className="w-full space-y-6 py-6 xl:space-y-16">
         <div className="container space-y-2 p-12 md:p-32">
-          <div className="size-full space-y-6 p-10 md:p-0 md:block">
+          <div className="size-full space-y-6 p-10 md:block md:p-0">
             <div className="space-y-0.5">
               <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
               <p className="text-muted-foreground">

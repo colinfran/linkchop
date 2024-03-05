@@ -137,7 +137,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
           <div className="mt-10 flex justify-center pb-4">
             <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
               <div
-                className={`flex min-h-[42.46px] w-full md:w-1/2 justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
+                className={`flex min-h-[42.46px] w-full justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 md:w-1/2 ${showingCopiedText ? "!border-blue-500" : ""}`}
                 onClick={showText}
               >
                 {loading ? (
