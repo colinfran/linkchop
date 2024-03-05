@@ -9,21 +9,9 @@ export async function POST(request: Request): Promise<Response> {
     const userExists = await getUser(email)
     if (userExists.length > 0) {
       return Response.json({ error: "User already exists" })
-      // return Response.json({ error: 'User already exists' })
-      // return res.status(400).json({ error: 'User already exists' });
     }
-
     // Create new user
     await createUser(email, password, name)
-
-    // Sign in the user
-    // await signIn("credentials", {
-      // email,
-      // password,
-      // Specify the redirect URL after sign-in
-      // redirectTo: "/home", // Redirect to '/home' after sign-in
-    // })
-
     return Response.json({ success: true, message: "User registered successfully" })
   } catch (error) {
     console.error("Registration error:", error)

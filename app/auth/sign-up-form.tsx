@@ -19,9 +19,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
-import { useRouter } from "next/navigation"
 import { signIn } from "next-auth/react"
-
 
 const userSignUpFormSchema = z.object({
   name: z
@@ -49,8 +47,6 @@ type UserSignUpFormValues = z.infer<typeof userSignUpFormSchema>
 // }
 
 const SignUpForm: React.FC = () => {
-  const router = useRouter()
-
   const [passwordScore, setPasswordScore] = useState(0)
 
   const [loading, setLoading] = useState(false)
