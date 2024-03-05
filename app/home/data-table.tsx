@@ -153,7 +153,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             )}
           </TableBody>
         </Table>
-        <div className="overflow-y-auto">
+        <div className="block md:hidden">
           {loading ? (
             <div className="h-[450px]">
               <div className="flex h-full items-center justify-center">
