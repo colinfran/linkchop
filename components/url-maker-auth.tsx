@@ -95,68 +95,72 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
   }
 
   return (
-    <section className="size-full py-12 md:pt-48">
-      <div className="flex flex-col w-full items-center justify-center text-center">
-        <div className="mx-auto space-y-2 w-full">
-          <Form {...form}>
-            <form className="space-y-8" onSubmit={handleSubmit(generateUrl)}>
-              <div>
+    <section className="size-full py-12 pt-24 md:flex md:justify-center md:pt-32">
+      <div className="w-full md:max-w-[600px]">
+        <div className="flex w-full flex-col items-center justify-center text-center">
+          <div className="mx-auto w-full space-y-2">
+            <Form {...form}>
+              <form className="space-y-8" onSubmit={handleSubmit(generateUrl)}>
                 <div>
-                  <FormField
-                    control={form.control}
-                    name="url"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="flex">
-                            <Input
-                              placeholder="https://google.com/test/asdf/wer/asdf/asdf"
-                              type="text"
-                              {...field}
-                            />
-                            <Button className="ml-5" type="submit" onClick={generateUrl}>
-                              Create
-                            </Button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="url"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex">
+                              <Input
+                                placeholder="https://google.com/test/asdf/wer/asdf/asdf"
+                                type="text"
+                                {...field}
+                              />
+                              <Button className="ml-5" type="submit" onClick={generateUrl}>
+                                Create
+                              </Button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
+              </form>
+            </Form>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Sign up to keep track of your generated URLs.
+            </p>
+          </div>
+        </div>
+        <div className="relative">
+          <div className="mt-10 flex justify-center pb-4">
+            <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
+              <div
+                className={`flex min-h-[42.46px] w-full md:w-1/2 justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
+                onClick={showText}
+              >
+                {loading ? (
+                  <div className="flex w-full items-center justify-center	">
+                    <Icons.spinner className="size-3 animate-spin" />
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      className={shortUrl ? "" : "invisible"}
+                    >{`https://linkchop.com/${shortUrl}`}</div>
+                    <div className={!shortUrl ? "invisible block" : "hidden"}>|</div>
+                  </>
+                )}
               </div>
-            </form>
-          </Form>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Sign up to keep track of your generated URLs.
-          </p>
+            </CopyToClipboard>
+          </div>
+          {showingCopiedText && (
+            <p className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
+              Copied
+            </p>
+          )}
         </div>
-      </div>
-      <div className="relative">
-        <div className="mt-10 flex justify-center pb-4">
-          <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
-            <div
-              className={`flex min-h-[42.46px] w-full justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
-              onClick={showText}
-            >
-              {loading ? (
-                <div className="flex w-full items-center justify-center	">
-                  <Icons.spinner className="size-3 animate-spin" />
-                </div>
-              ) : (
-                <>
-                  <div
-                    className={shortUrl ? "" : "invisible"}
-                  >{`https://linkchop.com/${shortUrl}`}</div>
-                  <div className={!shortUrl ? "invisible block" : "hidden"}>|</div>
-                </>
-              )}
-            </div>
-          </CopyToClipboard>
-        </div>
-        {showingCopiedText && (
-          <p className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">Copied</p>
-        )}
       </div>
     </section>
   )

@@ -114,8 +114,8 @@ const HomeAuthenticatedPage: React.FC = () => {
     <>
       <TopNavigationAuth />
       <div className="size-full space-y-6 py-6 xl:space-y-16">
-        <div className="container space-y-2 p-12">
-          <div className="md:w-4/5 md:flex md:m-auto">
+        <div className="container space-y-2 p-8 md:p-12">
+          <div className="md:m-auto md:flex md:w-4/5">
             <UrlMakerAuth setUrls={setUrls} urls={urls} />
           </div>
           <div className="flex flex-col items-center justify-center space-y-5 text-white">
