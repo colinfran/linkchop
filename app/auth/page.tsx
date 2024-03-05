@@ -11,7 +11,7 @@ const Auth: React.FC = () => {
   return (
     <>
       <TopNavigation />
-      <div className="size-full h-[calc(100vh-4rem)] space-y-6 py-6 md:h-auto xl:space-y-16">
+      <div className="size-full md:h-[calc(100vh-4rem)] space-y-6 py-6 md:h-auto xl:space-y-16">
         <div className="container space-y-2 p-12">
           <div className="flex flex-col items-center justify-center bg-background md:h-[calc(100vh-4rem)] xl:flex-row xl:justify-center">
             <div className="mb-20 flex h-full justify-center xl:mb-0 xl:w-2/5">
