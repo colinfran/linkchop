@@ -8,7 +8,7 @@ import Image from "next/image"
 
 const TopNavigation: React.FC = () => {
   return (
-    <div className="flex size-full">
+    <div className="flex size-full flex-col">
       <nav className="fixed start-0 top-0 z-20 w-full">
         <div className={"top-0 size-full"}>
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">

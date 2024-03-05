@@ -117,7 +117,7 @@ const HomeAuthenticatedPage: React.FC = () => {
             <UrlMakerAuth setUrls={setUrls} urls={urls} />
           </div>
           <div className="flex flex-col items-center justify-center space-y-5 text-white">
-            <div className="w-4/5">
+            <div className="w-full md:w-4/5">
               <div className="mb-5 w-full md:w-1/2">
                 <div className="relative text-black dark:text-white">
                   <Input
