@@ -23,6 +23,7 @@ import { Icons } from "@/assets/icons"
 import EditUrl from "@/components/edit-url"
 import { UrlsProps } from "./page"
 import { Separator } from "@radix-ui/react-separator"
+import { useIsMobile } from "@/lib/utils"
 
 type DataTableProps = {
   data: UrlsProps[]
@@ -45,8 +46,10 @@ export const DataTable: React.FC<DataTableProps> = ({
   const [selectedItemId, setSelectedItemId] = useState<string>("")
   const [editedUrlString, setEditedUrlString] = useState<string>("")
 
+  const isMobile = useIsMobile()
+
   const [currentPage, setCurrentPage] = useState(1)
-  const itemsPerPage = 8
+  const itemsPerPage = isMobile ? 4 : 8
 
   // Calculate the start and end indices of the current page
   const startIndex = (currentPage - 1) * itemsPerPage + 1
@@ -65,9 +68,9 @@ export const DataTable: React.FC<DataTableProps> = ({
   return (
     <div className="">
       <div
-        className={`min-h-[400px] rounded-md border md:min-h-[815px] ${urls.length !== 0 ? "h-[815px]" : "h-[400px]"}`}
+        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "h-[815px]" : "h-[550px]"}`}
       >
-        <Table className="">
+        <Table className="hidden md:table">
           <TableHeader>
             <TableRow>
               <TableHead>Original URL</TableHead>
@@ -150,6 +153,67 @@ export const DataTable: React.FC<DataTableProps> = ({
             )}
           </TableBody>
         </Table>
+        <div className="overflow-y-auto">
+          {loading ? (
+            <div className="h-[450px]">
+              <div className="flex h-full items-center justify-center">
+                <div className="flex">
+                  <Icons.spinner className="size-16 animate-spin text-black dark:text-white" />
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              {data.length ? (
+                data.slice(startIndex - 1, endIndex).map((url, index) => (
+                  <>
+                    <div className="flex flex-row  justify-between size-full p-8 text-black dark:text-white hover:bg-mute">
+                      <div>
+                        <div>{url.original_url}</div>
+                        <div>{`https://linkchop.com/${url.id}`}</div>
+                        <div>{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
+                      </div>
+                      <div className="flex flex-col justify-center">
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button className="size-8 p-0" variant="ghost">
+                              <span className="sr-only">Open menu</span>
+                              <MoreHorizontal className="size-4" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedItemId(url.id)
+                                setEditedUrlString(url.original_url)
+                                setIsEditOpen(!isEditOpen)
+                              }}
+                            >
+                              <Pencil className="mr-2 size-4" />
+                              Edit
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              onClick={() => {
+                                setSelectedItemId(url.id)
+                                setIsDeleteOpen(!isDeleteOpen)
+                              }}
+                            >
+                              <Trash2 className="mr-2 size-4" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </div>
+                    </div>
+                    {index + 1 !== itemsPerPage && <Separator className="border" />}
+                  </>
+                ))
+              ) : (
+                <div>No Results</div>
+              )}
+            </>
+          )}
+        </div>
       </div>
       <div
         className={`flex items-center justify-end space-x-2 py-4 text-black dark:text-white ${data.length === urls.length ? "visible" : "invisible"}`}
