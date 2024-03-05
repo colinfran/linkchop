@@ -45,14 +45,14 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
     },
   })
 
-  const { watch, handleSubmit } = form
+  const { watch, handleSubmit, formState } = form
+  const formData = watch()
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const generateUrl = (e: any): void => {
     const createUrl = async (): Promise<void> => {
       console.log(data?.user.data)
       setLoading(true)
-      const formData = watch()
       try {
         const response = await fetch("/api/urls/create", {
           method: "POST",
@@ -93,7 +93,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
     await sleep(1000)
     setShowingCopiedText(false)
   }
-
+  console.log(formState.errors.url?.message)
   return (
     <section className="size-full py-12 pt-24 md:flex md:justify-center md:pt-32">
       <div className="w-full md:max-w-[600px]">
@@ -115,7 +115,15 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
                                 type="text"
                                 {...field}
                               />
-                              <Button className="ml-5" type="submit" onClick={generateUrl}>
+                              <Button
+                                className="ml-5"
+                                disabled={
+                                  formData.url === "" ||
+                                  formState.errors.url?.message === "Invalid url"
+                                }
+                                type="submit"
+                                onClick={generateUrl}
+                              >
                                 Create
                               </Button>
                             </div>

@@ -91,53 +91,51 @@ export const DataTable: React.FC<DataTableProps> = ({
               <>
                 {data.length ? (
                   data.slice(startIndex - 1, endIndex).map((url) => (
-                    <>
-                      <TableRow className="h-[80px]" key={url.id}>
-                        <TableCell className="h-24">
-                          <div className="flex">{url.original_url}</div>
-                        </TableCell>
-                        <TableCell className="h-24">
-                          <div className="flex">{`https://linkchop.com/${url.id}`}</div>
-                        </TableCell>
-                        <TableCell className="h-24">
-                          <div className="flex">{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
-                        </TableCell>
-                        <TableCell className="h-24">
-                          <>
-                            <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                <Button className="size-8 p-0" variant="ghost">
-                                  <span className="sr-only">Open menu</span>
-                                  <MoreHorizontal className="size-4" />
-                                </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                <DropdownMenuItem
-                                  onClick={() => {
-                                    setSelectedItemId(url.id)
-                                    setEditedUrlString(url.original_url)
-                                    console.log(url.original_url)
-                                    setIsEditOpen(!isEditOpen)
-                                  }}
-                                >
-                                  <Pencil className="mr-2 size-4" />
-                                  Edit
-                                </DropdownMenuItem>
-                                <DropdownMenuItem
-                                  onClick={() => {
-                                    setSelectedItemId(url.id)
-                                    setIsDeleteOpen(!isDeleteOpen)
-                                  }}
-                                >
-                                  <Trash2 className="mr-2 size-4" />
-                                  Delete
-                                </DropdownMenuItem>
-                              </DropdownMenuContent>
-                            </DropdownMenu>
-                          </>
-                        </TableCell>
-                      </TableRow>
-                    </>
+                    <TableRow className="h-[80px]" key={url.id}>
+                      <TableCell className="h-24">
+                        <div className="flex">{url.original_url}</div>
+                      </TableCell>
+                      <TableCell className="h-24">
+                        <div className="flex">{`https://linkchop.com/${url.id}`}</div>
+                      </TableCell>
+                      <TableCell className="h-24">
+                        <div className="flex">{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
+                      </TableCell>
+                      <TableCell className="h-24">
+                        <>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button className="size-8 p-0" variant="ghost">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="size-4" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setSelectedItemId(url.id)
+                                  setEditedUrlString(url.original_url)
+                                  console.log(url.original_url)
+                                  setIsEditOpen(!isEditOpen)
+                                }}
+                              >
+                                <Pencil className="mr-2 size-4" />
+                                Edit
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => {
+                                  setSelectedItemId(url.id)
+                                  setIsDeleteOpen(!isDeleteOpen)
+                                }}
+                              >
+                                <Trash2 className="mr-2 size-4" />
+                                Delete
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </>
+                      </TableCell>
+                    </TableRow>
                   ))
                 ) : (
                   <>
