@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Session } from "next-auth/types"
+import { Analytics } from "@vercel/analytics/react"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -51,6 +52,7 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
             {/* </UserProvider> */}
           </SessionProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   )
