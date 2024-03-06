@@ -49,7 +49,7 @@ export const errorMessages: any = {
   Callback: "Try signing with a different account.",
   OAuthAccountNotLinked:
     "To confirm your identity, sign in with the same account you used originally.",
-  EmailSignin: "Check your email address.",
-  CredentialsSignin: "Sign in failed. Check the details you provided are correct.",
+  EmailSignin: "Invalid email address and/or password.",
+  CredentialsSignin: "Invalid email address and/or password.",
   default: "Unable to sign in.",
 }

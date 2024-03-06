@@ -21,7 +21,7 @@ import {
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
-import { useIsMobile } from "@/lib/utils"
+import { errorMessages, useIsMobile } from "@/lib/utils"
 import { useSearchParams } from "next/navigation"
 
 const userLoginFormSchema = z.object({
@@ -54,34 +54,23 @@ const SignInForm: React.FC = () => {
   const { watch, handleSubmit, formState } = form
 
   const formData = watch()
-  // const searchParams = useSearchParams()
-  // if (typeof document !== "undefined") {
-  //   // code that relies on the document object
-  //   const params = new URLSearchParams(document.location.search)
-  //   console.log(params.getAll("error"))
-  //   err = params.getAll("error")[0]
-  // }
+
   const hasError = params.get("error")
-  const [error, setError] = useState(hasError ? hasError : "")
+  const [error, setError] = useState(hasError ? errorMessages[hasError] : "")
 
   const onSignIn = (): void => {
     const runSignIn = async (): Promise<void> => {
       try {
         setLoading(true)
-        const res = await signIn("credentials", {
+        await signIn("credentials", {
           redirectTo: "/home",
-          // redirect: false,
           email: formData.email,
           password: formData.password,
         })
-        console.log(res)
-        if (!res?.error) {
-          // redirect("/home")
-        }
       } catch (e) {
         console.log(e)
         console.log("Invalid credentials.")
-        setError("Invalid credentials.")
+        setError("An error Occured while trying to sign in.")
       }
       setLoading(false)
     }
