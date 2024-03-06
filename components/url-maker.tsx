@@ -99,9 +99,9 @@ const UrlMaker: React.FC = () => {
                         <FormControl>
                           <div className="flex">
                             <Input
+                              className={isMobile ? "text-base" : ""}
                               placeholder="https://google.com/test/asdf/wer/asdf/asdf"
                               type="text"
-                              className={isMobile ? "text-base" : ""}
                               {...field}
                             />
                             <Button className="ml-5" type="submit" onClick={generateUrl}>
