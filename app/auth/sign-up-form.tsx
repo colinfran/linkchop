@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
+import { useIsMobile } from "@/lib/utils"
 
 const userSignUpFormSchema = z.object({
   name: z
@@ -48,6 +49,7 @@ type UserSignUpFormValues = z.infer<typeof userSignUpFormSchema>
 
 const SignUpForm: React.FC = () => {
   const [passwordScore, setPasswordScore] = useState(0)
+  const isMobile = useIsMobile()
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("|")
@@ -125,7 +127,11 @@ const SignUpForm: React.FC = () => {
                         <FormItem>
                           <FormLabel>Name</FormLabel>
                           <FormControl>
-                            <Input placeholder="Billy Bob" {...field} />
+                            <Input
+                              placeholder="Billy Bob"
+                              {...field}
+                              className={isMobile ? "text-base" : ""}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -140,7 +146,11 @@ const SignUpForm: React.FC = () => {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="hello@test.com" {...field} />
+                            <Input
+                              placeholder="hello@test.com"
+                              {...field}
+                              className={isMobile ? "text-base" : ""}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -156,7 +166,12 @@ const SignUpForm: React.FC = () => {
                           <FormItem className={"w-full"}>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                              <Input placeholder="abc123" {...field} type="password" />
+                              <Input
+                                placeholder="abc123"
+                                {...field}
+                                className={isMobile ? "text-base" : ""}
+                                type="password"
+                              />
                             </FormControl>
                             <FormMessage />
                           </FormItem>

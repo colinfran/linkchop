@@ -38,7 +38,6 @@ type Props = {
 const RootLayout: React.FC<any> = ({ children, session }: Props) => {
   return (
     <html lang="en">
-      <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport" />
       <body className={`${GeistSans.variable}`}>
         <ThemeProvider
           attribute="class"

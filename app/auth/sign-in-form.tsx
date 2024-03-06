@@ -20,6 +20,7 @@ import {
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
+import { useIsMobile } from "@/lib/utils"
 
 const userLoginFormSchema = z.object({
   email: z
@@ -33,6 +34,7 @@ type UserLoginFormValues = z.infer<typeof userLoginFormSchema>
 
 const SignInForm: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const isMobile = useIsMobile()
 
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<undefined | string>()
@@ -88,7 +90,11 @@ const SignInForm: React.FC = () => {
                         <FormItem>
                           <FormLabel>Email</FormLabel>
                           <FormControl>
-                            <Input placeholder="hello@test.com" {...field} />
+                            <Input
+                              placeholder="hello@test.com"
+                              {...field}
+                              className={isMobile ? "text-base" : ""}
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -107,6 +113,7 @@ const SignInForm: React.FC = () => {
                               <Input
                                 placeholder="abc123"
                                 {...field}
+                                className={isMobile ? "text-base" : ""}
                                 type={showPassword ? "text" : "password"}
                               />
                             </FormControl>
