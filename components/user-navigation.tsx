@@ -11,27 +11,25 @@ import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useTheme } from "next-themes"
 import { Home, LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
+import { UserData } from "@/types/user"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [userData, setUserData] = useState<any>(null)
+  const [userData, setUserData] = useState<UserData | null>(null)
   const { data } = useSession()
   const router = useRouter()
 
-  const { theme, setTheme } = useTheme()
-
   useEffect(() => {
-    setUserData(data?.user?.data)
+    console.log(data)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    setUserData(data?.user?.data as any)
   }, [data])
 
   const logoutUser = async (): Promise<void> => {
     await signOut()
     router.push("/")
   }
-
-  // const { name, email, is_premium_user} = userData
 
   return (
     <div className="mr-3 w-auto md:mr-0 md:w-[150px]">
@@ -76,27 +74,6 @@ const UserNavigation: React.FC = () => {
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
-          {/* <div>
-            <div className="flex flex-row">
-              <div className="flex flex-col justify-center px-1">
-                {theme === "system" && <SunMoon className="h-4" />}
-                {theme === "dark" && <Moon className="h-4" />}
-                {theme === "light" && <Sun className="h-4" />}
-              </div>
-              <Select value={theme} onValueChange={(value) => setTheme(value)}>
-                <SelectTrigger className="h-8 w-[100px] py-0">
-                  <div className="flex flex-row">
-                    <SelectValue />
-                  </div>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="light">Light</SelectItem>
-                  <SelectItem value="dark">Dark</SelectItem>
-                  <SelectItem value="system">System</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div> */}
           <Link href="/settings/profile">
             <DropdownMenuItem className="cursor-pointer" disabled>
               <Settings className="mr-2 size-4" />

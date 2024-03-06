@@ -166,7 +166,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             <>
               {data.length ? (
                 data.slice(startIndex - 1, endIndex).map((url, index) => (
-                  <>
+                  <div className="flex flex-col" key={url.id}>
                     <div className="flex  size-full flex-row justify-between p-8 text-black dark:text-white">
                       <div>
                         <div>{url.original_url}</div>
@@ -206,7 +206,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                       </div>
                     </div>
                     {index + 1 !== itemsPerPage && <Separator className="border" />}
-                  </>
+                  </div>
                 ))
               ) : (
                 <div>No Results</div>
