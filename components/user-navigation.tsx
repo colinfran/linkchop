@@ -12,18 +12,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useTheme } from "next-themes"
-import {
-  Home,
-  LineChart,
-  LogOut,
-  Moon,
-  Settings,
-  Sun,
-  SunMoon,
-  Unlock,
-  XOctagon,
-} from "lucide-react"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
+import { Home, LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -87,7 +76,7 @@ const UserNavigation: React.FC = () => {
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
-          <div>
+          {/* <div>
             <div className="flex flex-row">
               <div className="flex flex-col justify-center px-1">
                 {theme === "system" && <SunMoon className="h-4" />}
@@ -107,9 +96,9 @@ const UserNavigation: React.FC = () => {
                 </SelectContent>
               </Select>
             </div>
-          </div>
+          </div> */}
           <Link href="/settings/profile">
-            <DropdownMenuItem className="cursor-pointer">
+            <DropdownMenuItem className="cursor-pointer" disabled>
               <Settings className="mr-2 size-4" />
               Settings
             </DropdownMenuItem>
