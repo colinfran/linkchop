@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server"
 
-export async function GET(request: Request): Promise<NextResponse> {
+export async function GET(): Promise<NextResponse> {
   try {
     return NextResponse.json({ error: false, success: true })
   } catch (err) {

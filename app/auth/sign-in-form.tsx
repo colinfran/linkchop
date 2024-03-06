@@ -3,7 +3,7 @@
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable max-len */
 /* eslint-disable no-useless-escape */
-import React, { useState } from "react"
+import React, { useState, Suspense } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -21,7 +21,7 @@ import {
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
-import { useIsMobile, errorMessages } from "@/lib/utils"
+import { useIsMobile } from "@/lib/utils"
 import { useSearchParams } from "next/navigation"
 
 const userLoginFormSchema = z.object({
@@ -39,7 +39,8 @@ const SignInForm: React.FC = () => {
   const isMobile = useIsMobile()
 
   const [loading, setLoading] = useState(false)
-
+  const params = useSearchParams()
+  // console.log("status", params.get("error"))
   const formSignIn = useForm<UserLoginFormValues>({
     resolver: zodResolver(userLoginFormSchema),
     mode: "onChange",
@@ -53,23 +54,34 @@ const SignInForm: React.FC = () => {
   const { watch, handleSubmit, formState } = form
 
   const formData = watch()
-  const searchParams = useSearchParams()
-  console.log(searchParams.getAll("error"))
-  const err = searchParams.getAll("error")
-  // const { error: signInError } = useSearchParams()
-  const [error, setError] = useState(err[0])
+  // const searchParams = useSearchParams()
+  // if (typeof document !== "undefined") {
+  //   // code that relies on the document object
+  //   const params = new URLSearchParams(document.location.search)
+  //   console.log(params.getAll("error"))
+  //   err = params.getAll("error")[0]
+  // }
+  const hasError = params.get("error")
+  const [error, setError] = useState(hasError ? hasError : "")
 
   const onSignIn = (): void => {
     const runSignIn = async (): Promise<void> => {
-      setLoading(true)
-      const signInResult = await signIn("credentials", {
-        redirectTo: "/home",
-        // redirect: false,
-        email: formData.email,
-        password: formData.password,
-      })
-      if (signInResult?.error) {
-        setError(errorMessages[signInResult.error] as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+      try {
+        setLoading(true)
+        const res = await signIn("credentials", {
+          redirectTo: "/home",
+          // redirect: false,
+          email: formData.email,
+          password: formData.password,
+        })
+        console.log(res)
+        if (!res?.error) {
+          // redirect("/home")
+        }
+      } catch (e) {
+        console.log(e)
+        console.log("Invalid credentials.")
+        setError("Invalid credentials.")
       }
       setLoading(false)
     }
@@ -77,110 +89,116 @@ const SignInForm: React.FC = () => {
   }
 
   return (
-    <Card className="">
-      <CardHeader>
-        <CardTitle>Sign in</CardTitle>
-        <CardDescription>Enter your email and password to access your account</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div>
+    <Suspense>
+      <Card className="">
+        <CardHeader>
+          <CardTitle>Sign in</CardTitle>
+          <CardDescription>Enter your email and password to access your account</CardDescription>
+        </CardHeader>
+        <CardContent>
           <div>
-            <Form {...form}>
-              <form className="space-y-8" onSubmit={handleSubmit(onSignIn)}>
-                <div>
+            <div>
+              <Form {...form}>
+                <form className="space-y-8" onSubmit={handleSubmit(onSignIn)}>
                   <div>
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Email</FormLabel>
-                          <FormControl>
-                            <Input
-                              placeholder="hello@test.com"
-                              {...field}
-                              className={isMobile ? "text-base" : ""}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  <div>
-                    <div className="relative flex w-full space-x-2">
+                    <div>
                       <FormField
                         control={form.control}
-                        name="password"
+                        name="email"
                         render={({ field }) => (
-                          <FormItem className={"w-full"}>
-                            <FormLabel>Password</FormLabel>
+                          <FormItem>
+                            <FormLabel>Email</FormLabel>
                             <FormControl>
                               <Input
-                                placeholder="abc123"
+                                placeholder="hello@test.com"
                                 {...field}
                                 className={isMobile ? "text-base" : ""}
-                                type={showPassword ? "text" : "password"}
                               />
                             </FormControl>
-                            <Button
-                              className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
-                              size="icon"
-                              type="button"
-                              onClick={() => setShowPassword(!showPassword)}
-                            >
-                              <PasswordEye showPassword={showPassword} />
-                            </Button>
                             <FormMessage />
                           </FormItem>
                         )}
                       />
                     </div>
+                    <div>
+                      <div className="relative flex w-full space-x-2">
+                        <FormField
+                          control={form.control}
+                          name="password"
+                          render={({ field }) => (
+                            <FormItem className={"w-full"}>
+                              <FormLabel>Password</FormLabel>
+                              <FormControl>
+                                <Input
+                                  placeholder="abc123"
+                                  {...field}
+                                  className={isMobile ? "text-base" : ""}
+                                  type={showPassword ? "text" : "password"}
+                                />
+                              </FormControl>
+                              <Button
+                                className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                                size="icon"
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                              >
+                                <PasswordEye showPassword={showPassword} />
+                              </Button>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </div>
+                    <div className="mt-8">
+                      <Button
+                        className="w-full"
+                        disabled={
+                          loading ||
+                          Object.entries(formState.errors).length !== 0 ||
+                          formData.password === "" ||
+                          formData.password === ""
+                        }
+                        type="submit"
+                      >
+                        {loading ? (
+                          <Icons.spinner className="mr-2 size-4 animate-spin" />
+                        ) : (
+                          "Sign In"
+                        )}
+                      </Button>
+                    </div>
                   </div>
-                  <div className="mt-8">
-                    <Button
-                      className="w-full"
-                      disabled={
-                        loading ||
-                        Object.entries(formState.errors).length !== 0 ||
-                        formData.password === "" ||
-                        formData.password === ""
-                      }
-                      type="submit"
-                    >
-                      {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Sign In"}
-                    </Button>
-                  </div>
+                </form>
+              </Form>
+            </div>
+            <div>
+              <div className={`mt-2.5 ${error ? "visible" : "invisible"}`}>
+                <p className="text-sm font-medium text-destructive">
+                  {error && <span>{error}</span>}
+                </p>
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <span className="w-full border-t" />
                 </div>
-              </form>
-            </Form>
-          </div>
-          <div>
-            <div className={`mt-2.5 ${error ? "visible" : "invisible"}`}>
-              <p className="text-sm font-medium text-destructive">
-                {error && (errorMessages[error] ?? errorMessages.default)}
-              </p>
+                <div className="relative mt-5 flex justify-center text-xs uppercase">
+                  <span className="bg-background px-2 text-muted-foreground">Or login with</span>
+                </div>
+              </div>
+              <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
+                <Icons.google className="mr-2 size-4" /> Google
+              </Button>
+              <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
+                <Icons.apple className="mr-2 size-4" /> Apple
+              </Button>
             </div>
           </div>
-          <div className="mb-4">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t" />
-              </div>
-              <div className="relative mt-5 flex justify-center text-xs uppercase">
-                <span className="bg-background px-2 text-muted-foreground">Or login with</span>
-              </div>
-            </div>
-            <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
-              <Icons.google className="mr-2 size-4" /> Google
-            </Button>
-            <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
-              <Icons.apple className="mr-2 size-4" /> Apple
-            </Button>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Suspense>
   )
 }
 

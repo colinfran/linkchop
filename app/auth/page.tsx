@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { Suspense } from "react"
 import TopNavigation from "@/components/top-navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
@@ -21,7 +21,9 @@ const Auth: React.FC = () => {
                   <TabsTrigger value="signup">Sign Up</TabsTrigger>
                 </TabsList>
                 <TabsContent value="signin">
-                  <SignInForm />
+                  <Suspense>
+                    <SignInForm />
+                  </Suspense>
                 </TabsContent>
                 <TabsContent value="signup">
                   <SignUpForm />

@@ -18,17 +18,13 @@ export const {
       async authorize(credentials: Credentials): Promise<any> {
         const { email, password } = credentials
         const user = await getUser(email)
-        if (user.length === 0) return null
+        if (user.length === 0) return new Error("test")
         const passwordsMatch = await compare(password, user[0].password!)
         if (passwordsMatch) return user[0] as any
       },
     }),
   ],
   callbacks: {
-    redirect: ({ url, baseUrl }) => {
-      if (url.startsWith("/")) return `${baseUrl}${url}`
-      return baseUrl
-    },
     session: ({ session, token }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
