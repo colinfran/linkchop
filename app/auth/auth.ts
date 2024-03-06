@@ -25,6 +25,10 @@ export const {
     }),
   ],
   callbacks: {
+    redirect: ({ url, baseUrl }) => {
+      if (url.startsWith("/")) return `${baseUrl}${url}`
+      return baseUrl
+    },
     session: ({ session, token }) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

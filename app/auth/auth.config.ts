@@ -12,6 +12,7 @@ const privateRoutes = [
 export const authConfig = {
   pages: {
     signIn: "/auth",
+    error: "/auth",
   },
   providers: [
     // added later in auth.ts since it requires bcrypt which is only compatible with Node.js

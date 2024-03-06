@@ -38,7 +38,8 @@ const clicks = pgTable("clicks", {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getUser = async (email: string): Promise<any[]> => {
-  return await db.select().from(users).where(eq(users.email, email))
+  const cleanedEmail = email.toLowerCase()
+  return await db.select().from(users).where(eq(users.email, cleanedEmail))
 }
 
 export const createUser = async (
@@ -48,7 +49,8 @@ export const createUser = async (
 ): Promise<UsersQueryType[]> => {
   const salt = genSaltSync(10)
   const hash = hashSync(password, salt)
-  return await db.insert(users).values({ email, name, password: hash })
+  const cleanedEmail = email.toLowerCase()
+  return await db.insert(users).values({ email: cleanedEmail, name, password: hash })
 }
 
 type CreateUrlsQueryType = { id: string; original_url: string; user_id: string }

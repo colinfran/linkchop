@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 /* eslint-disable tailwindcss/no-custom-classname */
 /* eslint-disable max-len */
@@ -20,7 +21,8 @@ import {
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile, errorMessages } from "@/lib/utils"
+import { useSearchParams } from "next/navigation"
 
 const userLoginFormSchema = z.object({
   email: z
@@ -37,7 +39,6 @@ const SignInForm: React.FC = () => {
   const isMobile = useIsMobile()
 
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<undefined | string>()
 
   const formSignIn = useForm<UserLoginFormValues>({
     resolver: zodResolver(userLoginFormSchema),
@@ -52,18 +53,23 @@ const SignInForm: React.FC = () => {
   const { watch, handleSubmit, formState } = form
 
   const formData = watch()
+  const searchParams = useSearchParams()
+  console.log(searchParams.getAll("error"))
+  const err = searchParams.getAll("error")
+  // const { error: signInError } = useSearchParams()
+  const [error, setError] = useState(err[0])
 
   const onSignIn = (): void => {
     const runSignIn = async (): Promise<void> => {
       setLoading(true)
-      try {
-        await signIn("credentials", {
-          redirectTo: "/home",
-          email: formData.email,
-          password: formData.password,
-        })
-      } catch (err) {
-        setError(err as any) // eslint-disable-line @typescript-eslint/no-explicit-any
+      const signInResult = await signIn("credentials", {
+        redirectTo: "/home",
+        // redirect: false,
+        email: formData.email,
+        password: formData.password,
+      })
+      if (signInResult?.error) {
+        setError(errorMessages[signInResult.error] as any) // eslint-disable-line @typescript-eslint/no-explicit-any
       }
       setLoading(false)
     }
@@ -151,7 +157,9 @@ const SignInForm: React.FC = () => {
           </div>
           <div>
             <div className={`mt-2.5 ${error ? "visible" : "invisible"}`}>
-              <p className="text-sm font-medium text-destructive">{error}</p>
+              <p className="text-sm font-medium text-destructive">
+                {error && (errorMessages[error] ?? errorMessages.default)}
+              </p>
             </div>
           </div>
           <div className="mb-4">
