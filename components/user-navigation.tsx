@@ -76,12 +76,12 @@ const UserNavigation: React.FC = () => {
             </DropdownMenuItem>
           )}
           <DropdownMenuSeparator />
-          <Link href="/settings/profile">
-            <DropdownMenuItem className="cursor-pointer" disabled>
-              <Settings className="mr-2 size-4" />
-              Settings
-            </DropdownMenuItem>
-          </Link>
+          {/* <Link href="/settings/profile"> */}
+          <DropdownMenuItem className="cursor-pointer" disabled>
+            <Settings className="mr-2 size-4" />
+            Settings
+          </DropdownMenuItem>
+          {/* </Link> */}
           <DropdownMenuSeparator />
           <DropdownMenuItem className="cursor-pointer" onClick={logoutUser}>
             <LogOut className="mr-2 size-4" />
