@@ -119,8 +119,9 @@ const UrlMaker: React.FC = () => {
           </p>
         </div>
       </div>
-      <div className="relative">
-        <div className="mt-10 flex justify-center pb-4">
+      <div className={`relative ${shortUrl ? "visible" : "invisible"}`}>
+        <div className="mt-10 flex flex-col items-center justify-center pb-4">
+          <p className="text-xs text-gray-500 dark:text-gray-400">Click the link below to copy</p>
           <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
             <div
               className={`flex min-h-[42.46px] w-[350px] justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 ${showingCopiedText ? "!border-blue-500" : ""}`}
@@ -132,10 +133,7 @@ const UrlMaker: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  <div
-                    className={shortUrl ? "" : "invisible"}
-                  >{`https://linkchop.com/${shortUrl}`}</div>
-                  <div className={!shortUrl ? "invisible block" : "hidden"}>|</div>
+                  <div>{`https://linkchop.com/${shortUrl}`}</div>
                 </>
               )}
             </div>

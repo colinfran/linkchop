@@ -135,7 +135,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
             </Form>
           </div>
         </div>
-        <div className="relative">
+        <div className={`relative ${shortUrl ? "visible" : "invisible"}`}>
           <div className="mt-10 flex flex-col items-center justify-center pb-4">
             <p className="text-xs text-gray-500 dark:text-gray-400">Click the link below to copy</p>
             <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
