@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
+import { useIsMobile } from "@/lib/utils"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {
@@ -27,6 +28,7 @@ const UrlMaker: React.FC = () => {
   const [shortUrl, setShortUrl] = useState(null)
   const [loading, setLoading] = useState(false)
   const [showingCopiedText, setShowingCopiedText] = useState(false)
+  const isMobile = useIsMobile()
 
   const form = useForm<urlFormValues>({
     resolver: zodResolver(urlFormSchema),
@@ -99,6 +101,7 @@ const UrlMaker: React.FC = () => {
                             <Input
                               placeholder="https://google.com/test/asdf/wer/asdf/asdf"
                               type="text"
+                              className={isMobile ? "text-base" : ""}
                               {...field}
                             />
                             <Button className="ml-5" type="submit" onClick={generateUrl}>
