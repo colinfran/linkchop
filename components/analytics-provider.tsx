@@ -20,7 +20,7 @@ export const VercelAnalytics: React.FC = () => {
   return (
     <Analytics
       beforeSend={(event) => {
-        if (!validAppRoutes.includes(event.url)) {
+        if (!validAppRoutes.includes(new URL(event.url).pathname)) {
           return null
         }
         return event

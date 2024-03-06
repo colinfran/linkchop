@@ -18,8 +18,9 @@ export const authConfig = {
     // while this file is also used in non-Node.js environments
   ],
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
+    authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user
+      const { nextUrl } = request
       // prevent user from going to root route or auth route if logged in
       if (isLoggedIn && (nextUrl.pathname === "/" || nextUrl.pathname === "/auth")) {
         return Response.redirect(new URL("/home", nextUrl))

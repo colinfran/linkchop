@@ -133,13 +133,11 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
                 </div>
               </form>
             </Form>
-            <p className="text-xs text-gray-500 dark:text-gray-400">
-              Sign up to keep track of your generated URLs.
-            </p>
           </div>
         </div>
         <div className="relative">
-          <div className="mt-10 flex justify-center pb-4">
+          <div className="mt-10 flex flex-col items-center justify-center pb-4">
+            <p className="text-xs text-gray-500 dark:text-gray-400">Click the link below to copy</p>
             <CopyToClipboard text={`https://linkchop.com/${shortUrl}`}>
               <div
                 className={`flex min-h-[42.46px] w-full justify-center rounded-md border border-gray-200 p-5 px-4 py-2 transition duration-300 md:w-1/2 ${showingCopiedText ? "!border-blue-500" : ""}`}

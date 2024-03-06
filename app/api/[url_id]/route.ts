@@ -8,18 +8,18 @@ export async function GET(request: Request): Promise<Response> {
     const id = requestUrl.pathname.slice(1)
     // check if url id is valid
     const data = await getUrl(id)
-    const { original_url, user_id } = data[0]
-    if (data) {
+    if (data[0]) {
+      const { original_url, user_id } = data[0]
       console.log(user_id)
       if (user_id !== null && user_id !== "") {
         await addClick(id)
       }
       return NextResponse.redirect(original_url)
     } else {
-      throw Error("URL does not exist in DB")
+      return NextResponse.redirect(new URL("/404", request.url))
     }
   } catch (err) {
-    console.error(err)
+    console.log(err)
     return NextResponse.redirect(new URL("/404", request.url))
   }
 }
