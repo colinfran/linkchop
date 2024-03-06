@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Home, LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
 import { UserData } from "@/types/user"
+import { Badge } from "./ui/badge"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -60,6 +61,7 @@ const UserNavigation: React.FC = () => {
           <DropdownMenuItem className="cursor-pointer" disabled={!userData?.is_premium_user}>
             <LineChart className="mr-2 size-4" />
             <span className="w-full">Analytics</span>
+            <Badge>Premium</Badge>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           {userData?.is_premium_user ? (
