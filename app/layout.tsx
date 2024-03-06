@@ -34,6 +34,20 @@ type Props = {
   children?: React.ReactNode
 }
 
+const validAppRoutes = [
+  "/",
+  "/home",
+  "/auth",
+  "/settings",
+  "/settings/profile",
+  "/settings/display",
+  "/settings/notifications",
+  "/settings/account",
+  "/privacy",
+  "/terms",
+  "/404",
+]
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const RootLayout: React.FC<any> = ({ children, session }: Props) => {
   return (
@@ -48,7 +62,14 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
         >
           <SessionProvider session={session}>{children}</SessionProvider>
         </ThemeProvider>
-        <Analytics />
+        <Analytics
+          beforeSend={(event) => {
+            if (!validAppRoutes.includes(event.url)) {
+              return null
+            }
+            return event
+          }}
+        />
       </body>
     </html>
   )
