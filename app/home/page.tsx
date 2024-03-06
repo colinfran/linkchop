@@ -124,7 +124,7 @@ const HomeAuthenticatedPage: React.FC = () => {
                     onChange={handleSearchInputChange}
                   />
                   <button
-                    className="absolute right-0 top-0 mr-2 size-4 h-full text-black dark:text-white"
+                    className="absolute right-0 top-0 mr-2 size-4 h-full text-black active:text-neutral-500 dark:text-white dark:active:text-neutral-800"
                     onClick={clearSearch}
                   >
                     <XCircle className="mr-2 size-4" />
