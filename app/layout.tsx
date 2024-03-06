@@ -4,7 +4,7 @@ import { GeistSans } from "geist/font/sans"
 import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Session } from "next-auth/types"
-import { Analytics } from "@vercel/analytics/react"
+import { VercelAnalytics } from "@/components/analytics-provider"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -34,20 +34,6 @@ type Props = {
   children?: React.ReactNode
 }
 
-const validAppRoutes = [
-  "/",
-  "/home",
-  "/auth",
-  "/settings",
-  "/settings/profile",
-  "/settings/display",
-  "/settings/notifications",
-  "/settings/account",
-  "/privacy",
-  "/terms",
-  "/404",
-]
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const RootLayout: React.FC<any> = ({ children, session }: Props) => {
   return (
@@ -62,14 +48,7 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
         >
           <SessionProvider session={session}>{children}</SessionProvider>
         </ThemeProvider>
-        <Analytics
-          beforeSend={(event) => {
-            if (!validAppRoutes.includes(event.url)) {
-              return null
-            }
-            return event
-          }}
-        />
+        <VercelAnalytics />
       </body>
     </html>
   )
