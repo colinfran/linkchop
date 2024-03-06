@@ -13,6 +13,7 @@ export type UrlsProps = {
   id: string
   original_url: string
   created_at: string
+  click_count?: number
 }
 
 const HomeAuthenticatedPage: React.FC = () => {

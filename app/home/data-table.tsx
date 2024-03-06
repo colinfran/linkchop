@@ -75,21 +75,20 @@ export const DataTable: React.FC<DataTableProps> = ({
             <TableRow>
               <TableHead>Original URL</TableHead>
               <TableHead>Chopped URL</TableHead>
+              <TableHead>Clicks</TableHead>
               <TableHead>Created</TableHead>
               <TableHead></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody className="text-black dark:text-white">
             {loading ? (
-              <>
-                <TableRow className="h-[400px] md:h-[700px]">
-                  <TableCell className="h-24" colSpan={4}>
-                    <div className="flex items-center justify-center">
-                      <Icons.spinner className="size-16 animate-spin" />
-                    </div>
-                  </TableCell>
-                </TableRow>
-              </>
+              <TableRow className="h-[400px] md:h-[700px]">
+                <TableCell className="h-24" colSpan={4}>
+                  <div className="flex items-center justify-center">
+                    <Icons.spinner className="size-16 animate-spin" />
+                  </div>
+                </TableCell>
+              </TableRow>
             ) : (
               <>
                 {data.length ? (
@@ -100,6 +99,9 @@ export const DataTable: React.FC<DataTableProps> = ({
                       </TableCell>
                       <TableCell className="h-24">
                         <div className="flex">{`https://linkchop.com/${url.id}`}</div>
+                      </TableCell>
+                      <TableCell className="h-24">
+                        <div className="flex">{url.click_count}</div>
                       </TableCell>
                       <TableCell className="h-24">
                         <div className="flex">{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
@@ -140,15 +142,13 @@ export const DataTable: React.FC<DataTableProps> = ({
                     </TableRow>
                   ))
                 ) : (
-                  <>
-                    <TableRow>
-                      <TableCell className="h-24" colSpan={4}>
-                        <div className="flex items-center justify-center">No results.</div>
-                      </TableCell>
-                    </TableRow>
-                  </>
+                  <TableRow>
+                    <TableCell className="h-24" colSpan={4}>
+                      <div className="flex items-center justify-center">No results.</div>
+                    </TableCell>
+                  </TableRow>
                 )}
-                {endIndex - 7 !== startIndex && <Separator />}
+                {/* {endIndex - 7 !== startIndex && <Separator />} */}
               </>
             )}
           </TableBody>

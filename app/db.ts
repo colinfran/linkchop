@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/postgres-js"
 import { pgTable, varchar, boolean, timestamp } from "drizzle-orm/pg-core"
-import { eq } from "drizzle-orm"
+import { count, eq } from "drizzle-orm"
 import postgres from "postgres"
 import { genSaltSync, hashSync } from "bcrypt-ts"
 import ShortUniqueId from "short-unique-id"
@@ -28,6 +28,12 @@ const urls = pgTable("urls", {
   original_url: varchar("original_url"),
   user_id: varchar("user_id") || "",
   created_at: timestamp("created_at"),
+})
+
+const clicks = pgTable("clicks", {
+  id: varchar("id"),
+  url_id: varchar("url_id") || "",
+  timestamp: timestamp("timestamp"),
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +76,19 @@ export const createUrl = async (
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getUrls = async (userId: string): Promise<any[]> => {
-  return await db.select().from(urls).where(eq(urls.user_id, userId))
+  // return await db.select().from(urls).where(eq(urls.user_id, userId))
+  return await db
+    .select({
+      id: urls.id,
+      original_url: urls.original_url,
+      created_at: urls.created_at,
+      user_id: urls.user_id,
+      click_count: count(clicks.id),
+    })
+    .from(urls)
+    .leftJoin(clicks, eq(urls.id, clicks.url_id))
+    .where(eq(urls.user_id, userId))
+    .groupBy(urls.id, urls.original_url)
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -81,4 +99,14 @@ export const deleteUrl = async (id: string): Promise<any[]> => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const editUrl = async (id: string, newUrl: string): Promise<any[]> => {
   return await db.update(urls).set({ original_url: newUrl }).where(eq(urls.id, id))
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getUrl = async (id: string): Promise<any[]> => {
+  return await db.select().from(urls).where(eq(urls.id, id))
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const addClick = async (id: string): Promise<any[]> => {
+  return await db.insert(clicks).values({ url_id: id })
 }
