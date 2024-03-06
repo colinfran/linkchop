@@ -68,7 +68,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   return (
     <div className="">
       <div
-        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "h-[815px]" : "min-h-[550px]"}`}
+        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "h-[815px]" : "min-h-[580px]"}`}
       >
         <Table className="hidden md:table">
           <TableHeader>
@@ -167,11 +167,12 @@ export const DataTable: React.FC<DataTableProps> = ({
               {data.length ? (
                 data.slice(startIndex - 1, endIndex).map((url, index) => (
                   <div className="flex flex-col" key={url.id}>
-                    <div className="flex  size-full flex-row justify-between p-8 text-black dark:text-white">
+                    <div className="flex  size-full flex-row justify-between p-6 text-black dark:text-white">
                       <div>
                         <div>{url.original_url}</div>
                         <div>{`https://linkchop.com/${url.id}`}</div>
-                        <div>{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
+                        <div>{`Created: ${format(new Date(url.created_at), "Pp")}`}</div>
+                        <div>{`Clicks: ${url.click_count}`}</div>
                       </div>
                       <div className="flex flex-col justify-center">
                         <DropdownMenu>

@@ -41,6 +41,11 @@ const TopNavigation: React.FC = () => {
                     <Button variant="default">Sign Up / Sign In</Button>
                   </Link>
                 </div>
+                <div className="block md:hidden">
+                  <Link href="/auth">
+                    <Button variant="default">Sign Up / Sign In</Button>
+                  </Link>
+                </div>
               </div>
             </>
           </div>
@@ -58,9 +63,9 @@ const TopNavigation: React.FC = () => {
             <Button variant="link">Contact</Button>
           </a>
         </>
-        <Link href="/auth">
+        {/* <Link href="/auth">
           <Button variant="default">Sign Up / Sign In</Button>
-        </Link>
+        </Link> */}
       </div>
       <Separator />
     </div>
