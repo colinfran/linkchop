@@ -1,13 +1,25 @@
 # LinkChop
 
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/12bwc.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/12bze.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-
-[![Better Stack Badge](https://uptime.betterstack.com/status-badges/v2/monitor/12c0v.svg)](https://uptime.betterstack.com/?utm_source=status_badge)
-
-
 LinkChop is a versatile URL shortener application designed to simplify the process of sharing long URLs by generating concise and memorable shortened links. With both limited and premium features, LinkChop caters to a wide range of users, offering an intuitive interface and robust functionality.
+
+## Product Status:
+<table>
+  <thead>
+    <tr>
+      <th>LinkChop Website</th>
+      <th>LinkChop API</th>
+      <th>LinkChop Database</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><img src="https://uptime.betterstack.com/status-badges/v2/monitor/12bwc.svg" alt="LinkChop Website Status"></td>
+      <td><img src="https://uptime.betterstack.com/status-badges/v2/monitor/12bze.svg" alt="LinkChop API Status"></td>
+      <td><img src="https://uptime.betterstack.com/status-badges/v2/monitor/12c0v.svg" alt="LinkChop Database Status"></td>
+    </tr>
+  </tbody>
+</table>
+
 
 ## Technologies Used
 
