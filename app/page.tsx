@@ -220,8 +220,8 @@ const HomePage: React.FC = () => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 md:flex-row md:gap-4 lg:gap-2">
-                  <a href="mailto:test@test.com">
-                    <Button>
+                  <a href="mailto:support@linkchop.com">
+                  <Button className="w-full md:w-auto">
                       <svg
                         className="size-4"
                         fill="none"
@@ -241,7 +241,7 @@ const HomePage: React.FC = () => {
                     </Button>
                   </a>
                   <a href="https://twitter.com/colinfran">
-                    <Button>
+                    <Button className="w-full md:w-auto">
                       <svg
                         className="size-4"
                         fill="none"
@@ -260,7 +260,7 @@ const HomePage: React.FC = () => {
                     </Button>
                   </a>
                   <a href="https://github.com/colinfran">
-                    <Button>
+                  <Button className="w-full md:w-auto">
                       <svg
                         className="size-4"
                         fill="none"
