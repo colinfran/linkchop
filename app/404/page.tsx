@@ -6,12 +6,19 @@ import TopNavigationAuth from "@/components/top-navigation-auth"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
+import { Skeleton } from "@/components/ui/skeleton"
 
 const Page404: React.FC = () => {
-  const { data } = useSession()
+  const { data, status } = useSession()
   return (
     <>
-      {data ? <TopNavigationAuth /> : <TopNavigation />}
+      {status === "loading" ? (
+        <TopNavigationAuth />
+      ) : data ? (
+        <TopNavigationAuth />
+      ) : (
+        <TopNavigation />
+      )}
       <div className="flex size-full pt-[72px] xl:space-y-16">
         <div className="flex size-full flex-col">
           <div className="flex min-h-[calc(100vh-72px)] flex-col items-center justify-center space-y-4 text-center">
