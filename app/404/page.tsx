@@ -2,13 +2,16 @@
 /* eslint-disable max-len */
 import React from "react"
 import TopNavigation from "@/components/top-navigation"
+import TopNavigationAuth from "@/components/top-navigation-auth"
 import Footer from "@/components/footer"
 import Link from "next/link"
+import { useSession } from "next-auth/react"
 
 const Page404: React.FC = () => {
+  const { data } = useSession()
   return (
     <>
-      <TopNavigation />
+      {data ? <TopNavigationAuth /> : <TopNavigation />}
       <div className="flex size-full pt-[72px] xl:space-y-16">
         <div className="flex size-full flex-col">
           <div className="flex min-h-[calc(100vh-72px)] flex-col items-center justify-center space-y-4 text-center">
