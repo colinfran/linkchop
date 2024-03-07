@@ -6,7 +6,6 @@ import TopNavigationAuth from "@/components/top-navigation-auth"
 import Footer from "@/components/footer"
 import Link from "next/link"
 import { useSession } from "next-auth/react"
-import { Skeleton } from "@/components/ui/skeleton"
 
 const Page404: React.FC = () => {
   const { data, status } = useSession()
