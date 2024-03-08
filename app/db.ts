@@ -11,8 +11,6 @@ import ShortUniqueId from "short-unique-id"
 const client = postgres(`${process.env.POSTGRES_URL!}?sslmode=require`)
 const db = drizzle(client)
 
-type UsersQueryType = { name: string | null; email: string | null; password: string | null }
-
 const users = pgTable("users", {
   id: varchar("id"),
   name: varchar("name"),
@@ -46,8 +44,17 @@ const clicks = pgTable("clicks", {
   os_version: varchar("os_version"),
 })
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getUser = async (email: string): Promise<any[]> => {
+export type UserType = {
+  id: string | null
+  name: string | null
+  email: string | null
+  password: string | null
+  is_premium_user: boolean | null
+  created_at: Date | null
+  updated_at: Date | null
+}
+
+export const getUser = async (email: string): Promise<UserType[]> => {
   const cleanedEmail = email.toLowerCase()
   return await db.select().from(users).where(eq(users.email, cleanedEmail))
 }
@@ -56,7 +63,7 @@ export const createUser = async (
   email: string,
   password: string,
   name: string,
-): Promise<UsersQueryType[]> => {
+): Promise<UserType[]> => {
   const salt = genSaltSync(10)
   const hash = hashSync(password, salt)
   const cleanedEmail = email.toLowerCase()
@@ -69,7 +76,7 @@ export const createUrl = async (
   idVal: string,
   originalUrl: string,
   userId: string | null,
-): Promise<CreateUrlsQueryType[]> => { // eslint-disable-line
+): Promise<CreateUrlsQueryType[]> => {
   let id = idVal
   // check to see if idVal exists (it shoudlnt but theres like a .00000001 chance it could)
   // if it does exist, get a new Id. keep checking until one of the generated Id's is unique.
@@ -84,10 +91,15 @@ export const createUrl = async (
   return await db.insert(urls).values(values)
 }
 
-// type GetUrlsQueryType = { id: string; original_url: string; user_id: string; created_at: string }
+type GetUrlsType = {
+  id: string
+  original_url: string
+  created_at: string
+  user_id: string
+  click_count: number
+}
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getUrls = async (userId: string): Promise<any[]> => {
+export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
   // return await db.select().from(urls).where(eq(urls.user_id, userId))
   return await db
     .select({
@@ -103,22 +115,57 @@ export const getUrls = async (userId: string): Promise<any[]> => {
     .groupBy(urls.id, urls.original_url)
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const deleteUrl = async (id: string): Promise<any[]> => {
-  return await db.delete(urls).where(eq(urls.id, id))
+export const deleteUrl = async (id: string): Promise<boolean> => {
+  try {
+    await db.delete(urls).where(eq(urls.id, id))
+    return true
+  } catch (error) {
+    console.error("Error deleting URL:", error)
+    return false
+  }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const editUrl = async (id: string, newUrl: string): Promise<any[]> => {
-  return await db.update(urls).set({ original_url: newUrl }).where(eq(urls.id, id))
+export const editUrl = async (id: string, newUrl: string): Promise<boolean> => {
+  try {
+    await db.update(urls).set({ original_url: newUrl }).where(eq(urls.id, id))
+    return true
+  } catch (error) {
+    console.error("Error editing URL:", error)
+    return false
+  }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getUrl = async (id: string): Promise<any[]> => {
+type GetUrlType = {
+  id: string | null
+  original_url: string | null
+  created_at: Date | null
+  user_id: string | null
+}
+
+export const getUrl = async (id: string): Promise<GetUrlType[]> => {
   return await db.select().from(urls).where(eq(urls.id, id))
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addClick = async (data: any): Promise<any[]> => {
-  return await db.insert(clicks).values(data)
+type ClickData = {
+  url_id: string
+  device_type: string | undefined
+  device_model: string | undefined
+  device_vendor: string | undefined
+  is_a_bot: boolean | undefined
+  browser_name: string | undefined
+  browser_version: string | undefined
+  engine_name: string | undefined
+  engine_version: string | undefined
+  os_name: string | undefined
+  os_version: string | undefined
+}
+
+export const addClick = async (data: ClickData): Promise<boolean> => {
+  try {
+    await db.insert(clicks).values(data)
+    return true
+  } catch (error) {
+    console.error("Error adding click:", error)
+    return false
+  }
 }

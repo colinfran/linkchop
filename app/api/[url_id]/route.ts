@@ -1,18 +1,26 @@
-// import { signIn } from "@/app/auth/auth"
 import { getUrl, addClick } from "app/db"
 import { NextResponse, userAgent } from "next/server"
 
+/**
+ * Handles GET requests to the '/[url_id]' and '/api/[url_id]' endpoints.
+ * Retrieves URL information based on the provided URL ID and redirects the user to the original URL.
+ * Tracks click data if the URL was created by an authenticated user.
+ * @param {Request} request - The incoming request object.
+ * @returns {Promise<Response>} - Returns a response object.
+ */
+
 export async function GET(request: Request): Promise<Response> {
   try {
+    // Parse the request URL to extract the URL ID.
     const requestUrl = new URL(request.url)
     const id = requestUrl.pathname.slice(1)
-    // check if url id is valid, go to link if valid
+    // Retrieve URL information from the database based on the provided ID.
     const data = await getUrl(id)
+    // If the URL data is found, redirect the user to the original URL.
     if (data[0]) {
       const { original_url, user_id } = data[0]
       const { device, isBot, browser, engine, os } = userAgent(request)
-      // we only want to track click data if the
-      // chopped link was made by an authenticated user.
+      // Track click data if the URL was created by an authenticated user.
       if (user_id !== null && user_id !== "") {
         const clickData = {
           url_id: id,
@@ -29,11 +37,14 @@ export async function GET(request: Request): Promise<Response> {
         }
         await addClick(clickData)
       }
-      return NextResponse.redirect(original_url)
+      // Redirect the user to the original URL.
+      return NextResponse.redirect(original_url as string)
     } else {
+      // If the URL data is not found, redirect the user to the 404 page.
       return NextResponse.redirect(new URL("/404", request.url))
     }
   } catch (err) {
+    // Handle any errors and redirect the user to the 404 page.
     console.error(err)
     return NextResponse.redirect(new URL("/404", request.url))
   }
