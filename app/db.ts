@@ -92,11 +92,11 @@ export const createUrl = async (
 }
 
 type GetUrlsType = {
-  id: string
-  original_url: string
-  created_at: string
-  user_id: string
-  click_count: number
+  id: string | null
+  original_url: string | null
+  created_at: Date | null
+  user_id: string | null
+  click_count: number | null
 }
 
 export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
