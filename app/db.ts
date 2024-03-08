@@ -100,7 +100,6 @@ type GetUrlsType = {
 }
 
 export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
-  // return await db.select().from(urls).where(eq(urls.user_id, userId))
   return await db
     .select({
       id: urls.id,
