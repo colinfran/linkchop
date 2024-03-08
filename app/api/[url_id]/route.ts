@@ -6,12 +6,11 @@ export async function GET(request: Request): Promise<Response> {
   try {
     const requestUrl = new URL(request.url)
     const id = requestUrl.pathname.slice(1)
-    // check if url id is valid
-
-    const { device, isBot, browser, engine, os } = userAgent(request)
+    // check if url id is valid, go to link if valid
     const data = await getUrl(id)
     if (data[0]) {
       const { original_url, user_id } = data[0]
+      const { device, isBot, browser, engine, os } = userAgent(request)
       // we only want to track click data if the
       // chopped link was made by an authenticated user.
       if (user_id !== null && user_id !== "") {
