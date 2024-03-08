@@ -22,7 +22,6 @@ const UserNavigation: React.FC = () => {
   const router = useRouter()
 
   useEffect(() => {
-    console.log(data)
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     setUserData(data?.user?.data as any)
   }, [data])

@@ -40,7 +40,6 @@ const SignInForm: React.FC = () => {
 
   const [loading, setLoading] = useState(false)
   const params = useSearchParams()
-  // console.log("status", params.get("error"))
   const formSignIn = useForm<UserLoginFormValues>({
     resolver: zodResolver(userLoginFormSchema),
     mode: "onChange",
@@ -68,8 +67,7 @@ const SignInForm: React.FC = () => {
           password: formData.password,
         })
       } catch (e) {
-        console.log(e)
-        console.log("Invalid credentials.")
+        console.error(e)
         setError("An error Occured while trying to sign in.")
       }
       setLoading(false)

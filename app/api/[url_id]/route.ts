@@ -34,7 +34,7 @@ export async function GET(request: Request): Promise<Response> {
       return NextResponse.redirect(new URL("/404", request.url))
     }
   } catch (err) {
-    console.log(err)
+    console.error(err)
     return NextResponse.redirect(new URL("/404", request.url))
   }
 }
