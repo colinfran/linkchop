@@ -34,6 +34,16 @@ const clicks = pgTable("clicks", {
   id: varchar("id"),
   url_id: varchar("url_id") || "",
   timestamp: timestamp("timestamp"),
+  device_type: varchar("device_type"),
+  device_model: varchar("device_model"),
+  device_vendor: varchar("device_vendor"),
+  is_a_bot: boolean("is_a_bot"),
+  browser_name: varchar("browser_name"),
+  browser_version: varchar("browser_version"),
+  engine_name: varchar("engine_name"),
+  engine_version: varchar("engine_version"),
+  os_name: varchar("os_name"),
+  os_version: varchar("os_version"),
 })
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -109,6 +119,6 @@ export const getUrl = async (id: string): Promise<any[]> => {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const addClick = async (id: string): Promise<any[]> => {
-  return await db.insert(clicks).values({ url_id: id })
+export const addClick = async (data: any): Promise<any[]> => {
+  return await db.insert(clicks).values(data)
 }
