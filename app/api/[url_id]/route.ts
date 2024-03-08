@@ -12,7 +12,8 @@ export async function GET(request: Request): Promise<Response> {
     const data = await getUrl(id)
     if (data[0]) {
       const { original_url, user_id } = data[0]
-      console.log(user_id)
+      // we only want to track click data if the
+      // chopped link was made by an authenticated user.
       if (user_id !== null && user_id !== "") {
         const clickData = {
           url_id: id,
