@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://linkchop.com/
+
+# Sitemaps
+Sitemap: https://linkchop.com/sitemap.xml
