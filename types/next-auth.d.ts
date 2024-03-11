@@ -10,7 +10,7 @@ declare module "next-auth" {
         id: string
         name: string
         email: string
-        is_premium_user: string
+        is_premium_user: boolean
         created_at: string
         updated_at: string
       }

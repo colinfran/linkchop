@@ -4,10 +4,11 @@ import React, { useEffect, useState } from "react"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import { DataTable } from "./data-table"
 import UrlMakerAuth from "@/components/url-maker-auth"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import { Input } from "@/components/ui/input"
 import { XCircle } from "lucide-react"
 import Footer from "@/components/footer"
+import { useUser } from "@/components/user-provider"
 
 export type UrlsProps = {
   id: string
@@ -23,7 +24,7 @@ const HomeAuthenticatedPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>(urls)
 
-  const { data, status } = useSession()
+  const { data, status } = useUser()
 
   useEffect(() => {
     if (status === "authenticated") {

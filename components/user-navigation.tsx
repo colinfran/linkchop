@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,47 +7,40 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { useSession, signOut } from "next-auth/react"
+import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Home, LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
-import { UserData } from "@/types/user"
 import { Badge } from "./ui/badge"
+import { useUser } from "./user-provider"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const [userData, setUserData] = useState<UserData | null>(null)
-  const { data } = useSession()
+  const { user } = useUser()
   const router = useRouter()
-
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    setUserData(data?.user?.data as any)
-  }, [data])
 
   const logoutUser = async (): Promise<void> => {
     await signOut()
     router.push("/")
   }
-
   return (
     <div className="mr-3 w-auto md:mr-0 md:w-[150px]">
       <DropdownMenu>
-        {userData?.name ? (
-          <DropdownMenuTrigger>{userData?.name}</DropdownMenuTrigger>
+        {user?.name ? (
+          <DropdownMenuTrigger>{user?.name}</DropdownMenuTrigger>
         ) : (
           <Skeleton className="h-[30px] w-[150px] " />
         )}
         <DropdownMenuContent className="w-52">
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              {userData?.name ? (
-                <p className="text-sm font-medium leading-none">{userData?.name}</p>
+              {user?.name ? (
+                <p className="text-sm font-medium leading-none">{user?.name}</p>
               ) : (
                 <Skeleton className="h-[20px] w-[100px] rounded-full" />
               )}
-              <p className="text-xs leading-none text-muted-foreground">{userData?.email}</p>
+              <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
@@ -57,22 +50,26 @@ const UserNavigation: React.FC = () => {
               Home
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem className="cursor-pointer" disabled={!userData?.is_premium_user}>
+          <DropdownMenuItem className="cursor-pointer" disabled={!user?.is_premium_user}>
             <LineChart className="mr-2 size-4" />
             <span className="w-full">Analytics</span>
             <Badge>Premium</Badge>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          {userData?.is_premium_user ? (
-            <DropdownMenuItem className="cursor-pointer">
-              <XOctagon className="mr-2 size-4" />
-              Cancel Premium
-            </DropdownMenuItem>
+          {user?.is_premium_user ? (
+            <Link href="/subscribe/cancel">
+              <DropdownMenuItem className="cursor-pointer">
+                <XOctagon className="mr-2 size-4" />
+                Cancel Premium
+              </DropdownMenuItem>
+            </Link>
           ) : (
-            <DropdownMenuItem className="cursor-pointer">
-              <Unlock className="mr-2 size-4" />
-              <span className="w-full">Unlock Premium</span>
-            </DropdownMenuItem>
+            <Link href="/subscribe">
+              <DropdownMenuItem className="cursor-pointer">
+                <Unlock className="mr-2 size-4" />
+                <span className="w-full">Unlock Premium</span>
+              </DropdownMenuItem>
+            </Link>
           )}
           <DropdownMenuSeparator />
           {/* <Link href="/settings/profile"> */}

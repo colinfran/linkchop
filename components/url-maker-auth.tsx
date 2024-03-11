@@ -10,9 +10,10 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import { UrlsProps } from "@/app/home/page"
 import { useIsMobile } from "@/lib/utils"
+import { useUser } from "./user-provider"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {
@@ -32,7 +33,7 @@ type UrlMakeAuthProp = {
 }
 
 const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthProp) => {
-  const { data } = useSession()
+  const { data } = useUser()
   const isMobile = useIsMobile()
   const [shortUrl, setShortUrl] = useState(null)
   const [loading, setLoading] = useState(false)

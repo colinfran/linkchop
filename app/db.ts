@@ -168,3 +168,13 @@ export const addClick = async (data: ClickData): Promise<boolean> => {
     return false
   }
 }
+
+export const setSubscriber = async (email: string): Promise<boolean> => {
+  try {
+    await db.update(users).set({ is_premium_user: true }).where(eq(users.email, email))
+    return true
+  } catch (error) {
+    console.error("Error adding click:", error)
+    return false
+  }
+}

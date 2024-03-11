@@ -2,11 +2,12 @@
 import React from "react"
 import TopNavigation from "@/components/top-navigation"
 import TopNavigationAuth from "@/components/top-navigation-auth"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 import Footer from "@/components/footer"
+import { useUser } from "@/components/user-provider"
 
 const TermsOfService: React.FC = () => {
-  const { data } = useSession()
+  const { data } = useUser()
   return (
     <>
       {data ? <TopNavigationAuth /> : <TopNavigation />}

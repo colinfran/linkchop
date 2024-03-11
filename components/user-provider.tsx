@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import React, { createContext, useContext, useState, useEffect } from "react"
+import React, { createContext, useContext, useEffect, useState } from "react"
+import { useSession } from "next-auth/react"
 
 // Define the shape of your user object
 // interface User {
@@ -12,14 +14,18 @@ type User = any
 
 // Define the shape of your context
 interface UserContextType {
+  data: User | null
+  status: User | null
+  update: () => void
   user: User | null
-  setUser: (user: User | null) => void
 }
 
 // Create the context
 const UserContext = createContext<UserContextType>({
+  data: null,
+  status: null,
+  update: () => {},
   user: null,
-  setUser: () => {},
 })
 
 // Define a custom hook to access the context
@@ -30,13 +36,48 @@ type Props = {
 }
 // Define the provider component
 export const UserProvider: React.FC<Props> = ({ children }: Props) => {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState(null)
+  const [data, setData] = useState(null)
+  const [status, setStatus] = useState(null)
 
-  // Fetch user data from your session or wherever you store it
+  const { data: sessionData, status: sessionStatus } = useSession()
+
+  const getUserData = async (email: string): Promise<any> => {
+    const response = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email }),
+    })
+    return await response.json()
+  }
+
   useEffect(() => {
-    // You can implement logic here to fetch user data from session or localStorage
-    // For the sake of simplicity, I'm leaving it empty
-  }, [])
+    if (sessionData?.user.data.email) {
+      setData(sessionData as any)
+      const setUserData = async (): Promise<void> => {
+        const userVal = await getUserData(sessionData?.user.data.email)
+        setUser(userVal[0])
+      }
+      setUserData()
+    }
+  }, [sessionData])
 
-  return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
+  const update = (): void => {
+    const setUserData = async (): Promise<void> => {
+      const userVal = await getUserData(sessionData?.user.data.email)
+      // console.log(userVal)
+      setUser(userVal[0])
+    }
+    setUserData()
+  }
+
+  useEffect(() => {
+    setStatus(sessionStatus as any)
+  }, [sessionStatus])
+
+  return (
+    <UserContext.Provider value={{ data, status, update, user }}>{children}</UserContext.Provider>
+  )
 }

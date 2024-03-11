@@ -5,6 +5,7 @@ import { SessionProvider } from "next-auth/react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Session } from "next-auth/types"
 import { VercelAnalytics } from "@/components/analytics-provider"
+import { UserProvider } from "@/components/user-provider"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -45,7 +46,9 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
           disableTransitionOnChange
           enableSystem
         >
-          <SessionProvider session={session}>{children}</SessionProvider>
+          <SessionProvider session={session}>
+            <UserProvider>{children}</UserProvider>
+          </SessionProvider>
         </ThemeProvider>
         <VercelAnalytics />
       </body>
