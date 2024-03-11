@@ -5,10 +5,11 @@ import TopNavigation from "@/components/top-navigation"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import Footer from "@/components/footer"
 import Link from "next/link"
-import { useSession } from "next-auth/react"
+import { useUser } from "@/components/user-provider"
+// import { useSession } from "next-auth/react"
 
 const Page404: React.FC = () => {
-  const { data, status } = useSession()
+  const { data, status } = useUser()
   return (
     <>
       {status === "loading" ? (

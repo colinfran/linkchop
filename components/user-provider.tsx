@@ -66,7 +66,7 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
 
   const update = (): void => {
     const setUserData = async (): Promise<void> => {
-      const userVal = await getUserData(sessionData?.user.data.email)
+      const userVal = await getUserData(sessionData?.user.data.email || "")
       // console.log(userVal)
       setUser(userVal[0])
     }
