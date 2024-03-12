@@ -64,8 +64,8 @@ const Subscribe: React.FC = () => {
     <>
       <TopNavigationAuth />
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
-        <div className="container mt-[5%] space-y-2 p-5 sm:p-12 md:mt-[8%] md:p-12">
-          <Card className="bg-white p-20 md:min-h-[1079px]">
+        <div className="container mt-[10%] md:mt-5 space-y-2 p-5 sm:p-12  md:p-12">
+          <Card className="bg-white p-5 md:p-20 md:min-h-[1079px]">
             <div className="space-y-2 text-center">
               <h1 className="text-3xl font-bold text-black">Subscribe</h1>
               <p className="text-gray-500 ">
