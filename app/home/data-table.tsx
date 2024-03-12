@@ -83,7 +83,7 @@ export const DataTable: React.FC<DataTableProps> = ({
           <TableBody className="text-black dark:text-white">
             {loading ? (
               <TableRow className="h-[400px] md:h-[700px]">
-                <TableCell className="h-24" colSpan={4}>
+                <TableCell className="h-24" colSpan={5}>
                   <div className="flex items-center justify-center">
                     <Icons.spinner className="size-16 animate-spin" />
                   </div>
@@ -143,7 +143,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell className="h-24" colSpan={4}>
+                    <TableCell className="h-24" colSpan={5}>
                       <div className="flex items-center justify-center">No results.</div>
                     </TableCell>
                   </TableRow>
