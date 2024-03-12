@@ -24,6 +24,7 @@ import EditUrl from "@/components/edit-url"
 import { UrlsProps } from "./page"
 import { Separator } from "@radix-ui/react-separator"
 import { useIsMobile } from "@/lib/utils"
+import { useUser } from "@/components/user-provider"
 
 type DataTableProps = {
   data: UrlsProps[]
@@ -65,6 +66,8 @@ export const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage((prevPage) => Math.min(prevPage + 1, Math.ceil(data.length / itemsPerPage)))
   }
 
+  const { data: session, user } = useUser()
+
   return (
     <div className="">
       <div
@@ -81,7 +84,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             </TableRow>
           </TableHeader>
           <TableBody className="text-black dark:text-white">
-            {loading ? (
+            {loading || !session || !user ? (
               <TableRow className="h-[400px] md:h-[700px]">
                 <TableCell className="h-24" colSpan={5}>
                   <div className="flex items-center justify-center">

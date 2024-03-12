@@ -218,7 +218,7 @@ export const updateUser = async (data: any): Promise<any> => {
     }
     updatedData.created_at = new Date(data.created_at).toISOString()
     updatedData.updated_at = new Date().toISOString()
-    console.log(updatedData)
+    // console.log(updatedData)
     await db.update(users).set(updatedData).where(eq(users.id, data.id))
     return { success: true }
   } catch (error) {

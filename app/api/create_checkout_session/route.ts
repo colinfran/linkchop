@@ -18,7 +18,7 @@ const env = process.env.NODE_ENV
 export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
   const { email } = res
-  console.log(email)
+  // console.log(email)
 
   const headersList = headers()
   const origin = headersList.get("origin")
@@ -44,7 +44,7 @@ export async function POST(request: Request): Promise<Response> {
   } catch (err) {
     // Handle any errors and redirect the user to the 404 page.
     console.error(err)
-    console.log("HERERERE")
+    // console.log("HERERERE")
     return NextResponse.redirect(new URL("/404", request.url))
   }
 }

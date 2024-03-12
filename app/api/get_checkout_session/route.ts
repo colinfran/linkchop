@@ -29,7 +29,7 @@ export async function GET(request: Request): Promise<Response> {
   } catch (err) {
     // Handle any errors and redirect the user to the 404 page.
     console.error(err)
-    console.log("herereerere")
+    // console.log("herereerere")
     return NextResponse.redirect(new URL("/404", request.url))
   }
 }

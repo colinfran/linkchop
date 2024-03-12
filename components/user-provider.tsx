@@ -67,7 +67,7 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
 
   useEffect(() => {
     if (sessionData?.user.data.id) {
-      console.log(sessionData)
+      // console.log(sessionData)
       setData(sessionData as any)
       const setUserData = async (): Promise<void> => {
         const userVal = await getUserData(sessionData?.user.data.id)
@@ -92,7 +92,8 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
   }, [sessionStatus])
 
   const TopNav: React.FC = () => {
-    if (status === "loading") {
+    // console.log(status)
+    if (status === "loading" || status === null) {
       return <TopNavigationAuth />
     }
     if (status === "authenticated") {
