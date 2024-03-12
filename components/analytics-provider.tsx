@@ -9,7 +9,6 @@ const validAppRoutes = [
   "/settings",
   "/settings/profile",
   "/settings/display",
-  "/settings/notifications",
   "/settings/account",
   "/privacy",
   "/terms",

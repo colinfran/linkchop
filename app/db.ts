@@ -1,8 +1,8 @@
 import { drizzle } from "drizzle-orm/postgres-js"
-import { pgTable, varchar, boolean, timestamp } from "drizzle-orm/pg-core"
+import { pgTable, varchar, boolean, date } from "drizzle-orm/pg-core"
 import { count, eq } from "drizzle-orm"
 import postgres from "postgres"
-import { genSaltSync, hashSync } from "bcrypt-ts"
+import { compare, genSaltSync, hashSync } from "bcrypt-ts"
 import ShortUniqueId from "short-unique-id"
 
 // Optionally, if not using email/pass login, you can
@@ -17,21 +17,21 @@ const users = pgTable("users", {
   email: varchar("email"),
   password: varchar("password"),
   is_premium_user: boolean("is_premium_user"),
-  created_at: timestamp("created_at"),
-  updated_at: timestamp("updated_at"),
+  created_at: date("created_at"),
+  updated_at: date("updated_at"),
 })
 
 const urls = pgTable("urls", {
   id: varchar("id"),
   original_url: varchar("original_url"),
   user_id: varchar("user_id") || "",
-  created_at: timestamp("created_at"),
+  created_at: date("created_at"),
 })
 
 const clicks = pgTable("clicks", {
   id: varchar("id"),
   url_id: varchar("url_id") || "",
-  timestamp: timestamp("timestamp"),
+  timestamp: date("timestamp"),
   device_type: varchar("device_type"),
   device_model: varchar("device_model"),
   device_vendor: varchar("device_vendor"),
@@ -50,13 +50,17 @@ export type UserType = {
   email: string | null
   password: string | null
   is_premium_user: boolean | null
-  created_at: Date | null
-  updated_at: Date | null
+  created_at: string | null
+  updated_at: string | null
 }
 
 export const getUser = async (email: string): Promise<UserType[]> => {
   const cleanedEmail = email.toLowerCase()
   return await db.select().from(users).where(eq(users.email, cleanedEmail))
+}
+
+export const getUserById = async (id: string): Promise<UserType[]> => {
+  return await db.select().from(users).where(eq(users.id, id))
 }
 
 export const createUser = async (
@@ -94,7 +98,7 @@ export const createUrl = async (
 type GetUrlsType = {
   id: string | null
   original_url: string | null
-  created_at: Date | null
+  created_at: string | null
   user_id: string | null
   click_count: number | null
 }
@@ -137,7 +141,7 @@ export const editUrl = async (id: string, newUrl: string): Promise<boolean> => {
 type GetUrlType = {
   id: string | null
   original_url: string | null
-  created_at: Date | null
+  created_at: string | null
   user_id: string | null
 }
 
@@ -176,5 +180,49 @@ export const setSubscriber = async (email: string): Promise<boolean> => {
   } catch (error) {
     console.error("Error adding click:", error)
     return false
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const updateUser = async (data: any): Promise<any> => {
+  const updatedData = { ...data }
+  delete updatedData.updated_at
+  try {
+    if (updatedData.newEmail) {
+      delete updatedData.newEmail
+      // check if someone is using new email
+      const newEmail = data.newEmail
+      const result = await db.select().from(users).where(eq(users.email, newEmail))
+      if (result.length !== 0) {
+        return {
+          success: false,
+          errorMessage: "Email address is currently being used by another account.",
+        }
+      } else {
+        updatedData.email = data.newEmail
+      }
+    }
+    if (updatedData.newPassword) {
+      const passwordsMatch = await compare(updatedData.oldPassword, data.password)
+      if (!passwordsMatch) {
+        return {
+          success: false,
+          errorMessage: "Incorrect old password.",
+        }
+      }
+      delete updatedData.oldPassword
+      delete updatedData.newPassword
+      const salt = genSaltSync(10)
+      const hash = hashSync(data.newPassword, salt)
+      updatedData.password = hash
+    }
+    updatedData.created_at = new Date(data.created_at).toISOString()
+    updatedData.updated_at = new Date().toISOString()
+    console.log(updatedData)
+    await db.update(users).set(updatedData).where(eq(users.id, data.id))
+    return { success: true }
+  } catch (error) {
+    console.error("Error", error)
+    return { success: false, errorMessage: error }
   }
 }

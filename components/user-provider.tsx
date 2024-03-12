@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-import React, { createContext, useContext, useEffect, useState } from "react"
+import React, {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 import { useSession } from "next-auth/react"
 
 // Define the shape of your user object
@@ -18,6 +25,7 @@ interface UserContextType {
   status: User | null
   update: () => void
   user: User | null
+  setUser: Dispatch<SetStateAction<null>>
 }
 
 // Create the context
@@ -26,6 +34,7 @@ const UserContext = createContext<UserContextType>({
   status: null,
   update: () => {},
   user: null,
+  setUser: () => {},
 })
 
 // Define a custom hook to access the context
@@ -42,31 +51,33 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
 
   const { data: sessionData, status: sessionStatus } = useSession()
 
-  const getUserData = async (email: string): Promise<any> => {
-    const response = await fetch("/api/user", {
+  const getUserData = async (id: string): Promise<any> => {
+    const response = await fetch("/api/user/info", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ id }),
     })
     return await response.json()
   }
 
   useEffect(() => {
-    if (sessionData?.user.data.email) {
+    if (sessionData?.user.data.id) {
+      console.log(sessionData)
       setData(sessionData as any)
       const setUserData = async (): Promise<void> => {
-        const userVal = await getUserData(sessionData?.user.data.email)
+        const userVal = await getUserData(sessionData?.user.data.id)
         setUser(userVal[0])
       }
       setUserData()
     }
-  }, [sessionData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionData?.user.data.id])
 
   const update = (): void => {
     const setUserData = async (): Promise<void> => {
-      const userVal = await getUserData(sessionData?.user.data.email || "")
+      const userVal = await getUserData(sessionData?.user.data.id || "")
       // console.log(userVal)
       setUser(userVal[0])
     }
@@ -78,6 +89,8 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
   }, [sessionStatus])
 
   return (
-    <UserContext.Provider value={{ data, status, update, user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ data, status, update, user, setUser }}>
+      {children}
+    </UserContext.Provider>
   )
 }

@@ -1,4 +1,4 @@
-import { getUser } from "app/db"
+import { updateUser } from "app/db"
 
 /**
  * Handles POST requests to the '/api/urls/get' endpoint.
@@ -8,17 +8,12 @@ import { getUser } from "app/db"
  */
 
 export async function POST(request: Request): Promise<Response> {
-  // Extract the user ID from the request body.
   const res = await request.json()
-  const { email } = res
   try {
-    // Retrieve the list of shortened URLs associated with the user ID from the database.
-    const user = await getUser(email)
-    // Return a response object containing the list of shortened URLs.
-    return Response.json(user)
+    const response = await updateUser(res)
+    return Response.json(response)
   } catch (error) {
-    // Handle errors that occur during URL retrieval and return a server error response.
     console.error("Error getting URL:", error)
-    return res.status(500).json({ error: "Server Error" })
+    return Response.json({ status: 500, error: "Server Error", success: false })
   }
 }

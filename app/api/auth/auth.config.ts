@@ -4,9 +4,8 @@ const privateRoutes = [
   "/home",
   "/settings",
   "/settings/profile",
-  "/settings/account",
+  "/settings/subscription",
   "/settings/display",
-  "/settings/notifications",
 ]
 
 export const authConfig = {

@@ -40,21 +40,14 @@ export const {
       return session
     },
     // JWT callback to format JWT token data.
-    jwt: async ({ token, user, trigger }) => {
+    jwt: async ({ token, user }) => {
       let newVal = token
-
-      if (trigger === "update" && token.email) {
-        const latestUser = await getUser(token.email as string)
-
-        if (latestUser) {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          user = latestUser as any
-        }
-      }
-
       if (user) {
         newVal = {
-          data: user,
+          data: {
+            id: user.id,
+            email: user.email,
+          },
           exp: token.exp,
           iat: token.iat,
           jti: token.jti,

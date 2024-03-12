@@ -1,15 +1,14 @@
 "use client"
-import React from "react"
+import React, { useEffect, useState } from "react"
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useFieldArray, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
 
 import { Separator } from "@/components/ui/separator"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -17,71 +16,91 @@ import {
 } from "@/components/ui/form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+
+import { useUser } from "@/components/user-provider"
+import { Icons } from "@/assets/icons"
 import { toast } from "@/components/ui/use-toast"
-import { cn } from "@/lib/utils"
 
 const profileFormSchema = z.object({
-  username: z
+  email: z
+    .string()
+    .min(1, { message: "This is not a valid email." })
+    .email("This is not a valid email."),
+  name: z
     .string()
     .min(2, {
-      message: "Username must be at least 2 characters.",
+      message: "Name must be at least 2 characters.",
     })
     .max(30, {
-      message: "Username must not be longer than 30 characters.",
+      message: "Name can not be longer than 30 characters.",
     }),
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  bio: z.string().max(160).min(4),
-  urls: z
-    .array(
-      z.object({
-        value: z.string().url({ message: "Please enter a valid URL." }),
-      }),
-    )
-    .optional(),
 })
 
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  username: "",
-  bio: "I own a computer.",
-  urls: [{ value: "https://shadcn.com" }, { value: "http://twitter.com/shadcn" }],
-}
-
 const SettingsProfile: React.FC = () => {
+  const { user, setUser } = useUser()
+  const [loading, setLoading] = useState(false)
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
     mode: "onChange",
   })
 
-  const { fields, append } = useFieldArray({
-    name: "urls",
-    control: form.control,
-  })
+  const { handleSubmit, reset, watch } = form
+  const formData = watch()
 
-  const onSubmit = (data: unknown): void => {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  useEffect(() => {
+    if (user?.email) {
+      reset({ email: user.email, name: user.name })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.email])
+
+  const onSubmit = async (): Promise<void> => {
+    try {
+      let values = {}
+      let submissionForStr = ""
+      if (formData.email !== user?.email && formData.name !== user?.name) {
+        values = { ...user, newEmail: formData.email, name: formData.name }
+        submissionForStr = "both the name and email address"
+      } else if (formData.email !== user?.email) {
+        submissionForStr = "the email address"
+        values = { ...user, newEmail: formData.email }
+      } else if (formData.name !== user?.name) {
+        submissionForStr = "the name"
+        values = { ...user, name: formData.name }
+      }
+      setLoading(true)
+      const response = await fetch("/api/user/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      })
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error)
+      }
+      const { success, errorMessage } = await response.json()
+      if (success) {
+        setUser({ ...user, email: formData.email, name: formData.name })
+        toast({
+          title: "Success",
+          description: `You have successfully changed ${submissionForStr} associated with this account.`,
+        })
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: `There was a problem with your request: ${errorMessage}`,
+        })
+      }
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -89,107 +108,50 @@ const SettingsProfile: React.FC = () => {
       <div>
         <h3 className="text-lg font-medium">Profile</h3>
         <p className="text-sm text-muted-foreground">
-          This is how others will see you on the site.
+          Update the email address and name associated with your account.
         </p>
       </div>
       <Separator />
       <div>
         <Form {...form}>
-          <form className="space-y-8" onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="shadcn" {...field} />
-                  </FormControl>
-                  <FormDescription>
-                    This is your public display name. It can be your real name or a pseudonym. You
-                    can only change this once every 30 days.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
             <FormField
               control={form.control}
               name="email"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
-                  <Select defaultValue={field.value} onValueChange={field.onChange}>
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a verified email to display" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="m@example.com">m@example.com</SelectItem>
-                      <SelectItem value="m@google.com">m@google.com</SelectItem>
-                      <SelectItem value="m@support.com">m@support.com</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormDescription>
-                    You can manage verified email addresses in your{" "}
-                    {/* <Link href="/examples/forms">email settings</Link>. */}
-                  </FormDescription>
+                  <FormControl>
+                    <Input {...field} placeholder="" />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="bio"
+              name="name"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Bio</FormLabel>
+                  <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Textarea
-                      className="resize-none"
-                      placeholder="Tell us a little bit about yourself"
-                      {...field}
-                    />
+                    <Input {...field} placeholder="" />
                   </FormControl>
-                  <FormDescription>
-                    You can <span>@mention</span> other users and organizations to link to them.
-                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <div>
-              {fields.map((field, index) => (
-                <FormField
-                  control={form.control}
-                  key={field.id}
-                  name={`urls.${index}.value`}
-                  render={({ field: field1 }) => (
-                    <FormItem>
-                      <FormLabel className={cn(index !== 0 && "sr-only")}>URLs</FormLabel>
-                      <FormDescription className={cn(index !== 0 && "sr-only")}>
-                        Add links to your website, blog, or social media profiles.
-                      </FormDescription>
-                      <FormControl>
-                        <Input {...field1} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              ))}
-              <Button
-                className="mt-2"
-                size="sm"
-                type="button"
-                variant="outline"
-                onClick={() => append({ value: "" })}
-              >
-                Add URL
-              </Button>
-            </div>
-            <Button type="submit">Update profile</Button>
+            <Button
+              className="w-full md:w-52"
+              disabled={
+                loading ||
+                ((formData.email === user?.email || formData.email === "") &&
+                  (formData.name === user?.name || formData.name === ""))
+              }
+              type="submit"
+            >
+              {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Update profile"}
+            </Button>
           </form>
         </Form>
       </div>

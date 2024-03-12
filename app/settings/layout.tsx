@@ -11,12 +11,12 @@ const sidebarNavItems = [
     href: "/settings/profile",
   },
   {
-    title: "Account",
-    href: "/settings/account",
+    title: "Security",
+    href: "/settings/security",
   },
   {
-    title: "Notifications",
-    href: "/settings/notifications",
+    title: "Subscription",
+    href: "/settings/subscription",
   },
   {
     title: "Display",

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Session } from "next-auth/types"
 import { VercelAnalytics } from "@/components/analytics-provider"
 import { UserProvider } from "@/components/user-provider"
+import { Toaster } from "@/components/ui/toaster"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -47,7 +48,10 @@ const RootLayout: React.FC<any> = ({ children, session }: Props) => {
           enableSystem
         >
           <SessionProvider session={session}>
-            <UserProvider>{children}</UserProvider>
+            <UserProvider>
+              <main>{children}</main>
+              <Toaster />
+            </UserProvider>
           </SessionProvider>
         </ThemeProvider>
         <VercelAnalytics />
