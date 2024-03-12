@@ -32,8 +32,8 @@ export async function POST(request: Request): Promise<Response> {
           // the product you want to sell
           price:
             env === "development"
-              ? "price_1OsxH5CBKLwk8JAFwFqJoStE"
-              : "price_1Osx8WCBKLwk8JAFWdCgyOc9",
+              ? "price_1OtM6SCtlzQ04XrcVWfevWEH"
+              : "price_1OtM37CtlzQ04Xrc2QlJK09d",
           quantity: 1,
         },
       ],
