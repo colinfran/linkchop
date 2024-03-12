@@ -94,7 +94,7 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
   return (
     <UserContext.Provider value={{ data, status, update, user, setUser }}>
       <>
-        {status === "loading" ? (
+        {status === "loading" || !data || !user ? (
           <TopNavigationAuth />
         ) : data ? (
           <TopNavigationAuth />
