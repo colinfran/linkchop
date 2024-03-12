@@ -7,12 +7,28 @@ import { loadStripe } from "@stripe/stripe-js"
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from "@stripe/react-stripe-js"
 import { useUser } from "@/components/user-provider"
 // import { useSession } from "next-auth/react"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const Subscribe: React.FC = () => {
   const [clientSecret, setClientSecret] = useState("")
   const { user } = useUser()
+  const router = useRouter()
+  const { status } = useSession()
+
+  const [ready, setReady] = useState(false)
+
+  useEffect(() => {
+    if (user?.email) {
+      if (status === "authenticated" && user?.is_premium_user) {
+        router.push("/subscribe/cancel")
+      }
+      setReady(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user])
 
   useEffect(() => {
     const fetchSession = async (): Promise<void> => {
@@ -28,10 +44,21 @@ const Subscribe: React.FC = () => {
       }
     }
 
-    if (user?.email) {
+    if (ready) {
       fetchSession()
     }
-  }, [user?.email])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ready])
+
+  if (!user?.email || !clientSecret) {
+    return (
+      <>
+        <TopNavigationAuth />
+        <div></div>
+        <Footer />
+      </>
+    )
+  }
 
   return (
     <>
