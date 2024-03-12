@@ -91,16 +91,23 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
     setStatus(sessionStatus as any)
   }, [sessionStatus])
 
+  const TopNav: React.FC = () => {
+    if (status === "loading") {
+      return <TopNavigationAuth />
+    }
+    if (status === "authenticated") {
+      if (!data || !user) {
+        return <TopNavigationAuth />
+      }
+      return <TopNavigationAuth />
+    }
+    return <TopNavigation />
+  }
+
   return (
     <UserContext.Provider value={{ data, status, update, user, setUser }}>
       <>
-        {status === "loading" || !data || !user ? (
-          <TopNavigationAuth />
-        ) : data ? (
-          <TopNavigationAuth />
-        ) : (
-          <TopNavigation />
-        )}
+        <TopNav />
         {children}
         <Footer />
       </>
