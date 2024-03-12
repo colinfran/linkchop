@@ -11,8 +11,8 @@ const TopNavigationAuth: React.FC = () => {
   return (
     <div className="flex size-full">
       <nav className="fixed start-0 top-0 z-20 w-full">
-        <div className={"top-0 size-full"}>
-          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+        <div className={"top-0 md:m-auto md:max-w-[1400px] md:container"}>
+          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4 sm:px-12 md:m-auto md:w-[80%] md:px-0">
             <Link className="flex items-center space-x-3 rtl:space-x-reverse" href="/home">
               <Image
                 alt="LinkChop Logo"

@@ -25,7 +25,7 @@ const UserNavigation: React.FC = () => {
     router.push("/")
   }
   return (
-    <div className="mr-3 w-auto md:mr-0 md:w-[150px]">
+    <div className="w-auto md:w-[150px]">
       <DropdownMenu>
         {user?.name ? (
           <DropdownMenuTrigger>{user?.name}</DropdownMenuTrigger>
