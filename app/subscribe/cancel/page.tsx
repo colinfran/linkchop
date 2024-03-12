@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import TopNavigationAuth from "@/components/top-navigation-auth"
 import { useRouter } from "next/navigation"
 import { useUser } from "@/components/user-provider"
 
