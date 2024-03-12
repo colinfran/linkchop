@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from "react"
 import { redirect } from "next/navigation"
 import { Card } from "@/components/ui/card"
-import TopNavigationAuth from "@/components/top-navigation-auth"
-import Footer from "@/components/footer"
 import { useUser } from "@/components/user-provider"
 
 const Return: React.FC = () => {
@@ -40,7 +38,6 @@ const Return: React.FC = () => {
   if (status === "complete") {
     return (
       <>
-        <TopNavigationAuth />
         <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
           <div className="container mt-[5%] space-y-2 p-5 sm:p-12 md:mt-[8%] md:p-12">
             <Card className="p-20">
@@ -54,7 +51,6 @@ const Return: React.FC = () => {
             </Card>
           </div>
         </div>
-        <Footer />
       </>
     )
   }

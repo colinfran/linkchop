@@ -9,6 +9,9 @@ import React, {
   useState,
 } from "react"
 import { useSession } from "next-auth/react"
+import TopNavigationAuth from "./top-navigation-auth"
+import TopNavigation from "./top-navigation"
+import Footer from "./footer"
 
 // Define the shape of your user object
 // interface User {
@@ -90,7 +93,17 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
 
   return (
     <UserContext.Provider value={{ data, status, update, user, setUser }}>
-      {children}
+      <>
+        {status === "loading" ? (
+          <TopNavigationAuth />
+        ) : data ? (
+          <TopNavigationAuth />
+        ) : (
+          <TopNavigation />
+        )}
+        {children}
+        <Footer />
+      </>
     </UserContext.Provider>
   )
 }

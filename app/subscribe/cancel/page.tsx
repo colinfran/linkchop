@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import Footer from "@/components/footer"
 import TopNavigationAuth from "@/components/top-navigation-auth"
 import { useRouter } from "next/navigation"
 import { useUser } from "@/components/user-provider"
@@ -24,7 +23,6 @@ const Cancel: React.FC = () => {
 
   return (
     <>
-      <TopNavigationAuth />
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
         <div className="container mt-[5%] space-y-2 p-5 sm:p-12 md:mt-[8%] md:p-12">
           <Card className="p-20">
@@ -56,7 +54,6 @@ const Cancel: React.FC = () => {
           </Card>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

@@ -1,13 +1,10 @@
 "use client"
 
 import React, { useEffect, useState } from "react"
-import TopNavigationAuth from "@/components/top-navigation-auth"
 import { DataTable } from "./data-table"
 import UrlMakerAuth from "@/components/url-maker-auth"
-// import { useSession } from "next-auth/react"
 import { Input } from "@/components/ui/input"
 import { XCircle } from "lucide-react"
-import Footer from "@/components/footer"
 import { useUser } from "@/components/user-provider"
 
 export type UrlsProps = {
@@ -108,7 +105,6 @@ const HomeAuthenticatedPage: React.FC = () => {
 
   return (
     <>
-      <TopNavigationAuth />
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
         <div className="container space-y-2 p-5 sm:p-12 md:p-12">
           <div className="md:m-auto md:flex md:w-4/5">
@@ -143,7 +139,6 @@ const HomeAuthenticatedPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

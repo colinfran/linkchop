@@ -45,6 +45,10 @@ const SettingsProfile: React.FC = () => {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     mode: "onChange",
+    defaultValues: {
+      email: "",
+      name: "",
+    },
   })
 
   const { handleSubmit, reset, watch } = form

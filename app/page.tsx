@@ -5,13 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import UrlMaker from "@/components/url-maker"
-import TopNavigation from "@/components/top-navigation"
-import Footer from "@/components/footer"
 
 const HomePage: React.FC = () => {
   return (
     <>
-      <TopNavigation />
       <div className="flex size-full pt-[72px] xl:space-y-16">
         <div className="flex size-full flex-col">
           <div className="flex size-full flex-col">
@@ -285,7 +282,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

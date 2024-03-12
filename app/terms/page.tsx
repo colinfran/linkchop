@@ -1,16 +1,9 @@
 "use client"
 import React from "react"
-import TopNavigation from "@/components/top-navigation"
-import TopNavigationAuth from "@/components/top-navigation-auth"
-// import { useSession } from "next-auth/react"
-import Footer from "@/components/footer"
-import { useUser } from "@/components/user-provider"
 
 const TermsOfService: React.FC = () => {
-  const { data } = useUser()
   return (
     <>
-      {data ? <TopNavigationAuth /> : <TopNavigation />}
       <div className="w-full space-y-6 py-6 xl:space-y-16">
         <div className="container space-y-2 p-12 md:p-40">
           <div className="w-full space-y-6 py-6">
@@ -118,7 +111,6 @@ const TermsOfService: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }

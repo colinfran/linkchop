@@ -1,16 +1,13 @@
 "use client"
 import React, { Suspense } from "react"
-import TopNavigation from "@/components/top-navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 import SignInForm from "./sign-in-form"
 import SignUpForm from "./sign-up-form"
-import Footer from "@/components/footer"
 
 const Auth: React.FC = () => {
   return (
     <>
-      <TopNavigation />
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
         <div className="px-8 md:container md:space-y-2 md:p-12">
           <div className="flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center">
@@ -33,7 +30,6 @@ const Auth: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   )
 }
