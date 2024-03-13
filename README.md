@@ -17,6 +17,7 @@ LinkChop is a versatile URL shortener application designed to simplify the proce
 [![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000000?style=for-the-badge&logo=shadcnui&logoColor=white)](https://ui.shadcn.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000000?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Stripe](https://img.shields.io/badge/Stripe-000000?style=for-the-badge&logo=stripe&logoColor=white)](https://stripe.com/)
+[![Zoho](https://img.shields.io/badge/Zoho-000000?style=for-the-badge&logo=zoho&logoColor=white)](https://zoho.com/)
 
 ## Installation
 
