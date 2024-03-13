@@ -73,6 +73,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
             original_url: formData.url,
             user_id: data?.user.data.id,
             created_at: new Date(),
+            click_count: 0,
           },
           ...urls,
         ]
@@ -118,12 +119,19 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
                                 className="ml-5"
                                 disabled={
                                   formData.url === "" ||
-                                  formState.errors.url?.message === "Invalid url"
+                                  formState.errors.url?.message === "Invalid url" ||
+                                  loading
                                 }
                                 type="submit"
                                 onClick={generateUrl}
                               >
-                                Create
+                                {loading ? (
+                                  <div className="flex w-[78px] items-center justify-center	">
+                                    <Icons.spinner className="size-3 animate-spin" />
+                                  </div>
+                                ) : (
+                                  "Create URL"
+                                )}
                               </Button>
                             </div>
                           </FormControl>

@@ -98,7 +98,15 @@ export const DataTable: React.FC<DataTableProps> = ({
                   data.slice(startIndex - 1, endIndex).map((url) => (
                     <TableRow className="h-[80px]" key={url.id}>
                       <TableCell className="h-24">
-                        <div className="flex">{url.original_url}</div>
+                        <div className="flex">
+                          {
+                            // if the url is longer than 30 characters, slice the first 28 chars
+                            // and then add '...'
+                            url.original_url.length > 30
+                              ? url.original_url.slice(0, 28) + "..."
+                              : url.original_url
+                          }
+                        </div>
                       </TableCell>
                       <TableCell className="h-24">
                         <div className="flex">{`https://linkchop.com/${url.id}`}</div>
