@@ -39,7 +39,7 @@ const ForgotPassword: React.FC = () => {
     },
   })
 
-  const { watch, handleSubmit, formState } = form
+  const { watch, handleSubmit } = form
   const formData = watch()
 
   const submitEmail = async (): Promise<void> => {
