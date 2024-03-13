@@ -16,7 +16,7 @@ import { toast } from "@/components/ui/use-toast"
 import { useIsMobile } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter, useSearchParams } from "next/navigation"
-import React, { useEffect, useState } from "react"
+import React, { Suspense, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import PasswordStrengthBar from "react-password-strength-bar"
 import { z } from "zod"
@@ -128,145 +128,149 @@ const PasswordReset: React.FC = () => {
 
   return (
     <>
-      <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
-        <div className="px-8 md:container md:space-y-2 md:p-12">
-          <div className="flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center">
-            <div className="mb-20 flex h-full justify-center xl:mb-0 ">
-              <Card className="mt-20">
-                <CardHeader>
-                  <CardTitle>Forgot Password</CardTitle>
-                  <CardDescription>
-                    Enter your email and we will send you a link to reset your password.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div>
+      <Suspense>
+        <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
+          <div className="px-8 md:container md:space-y-2 md:p-12">
+            <div className="flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center">
+              <div className="mb-20 flex h-full justify-center xl:mb-0 ">
+                <Card className="mt-20">
+                  <CardHeader>
+                    <CardTitle>Forgot Password</CardTitle>
+                    <CardDescription>
+                      Enter your email and we will send you a link to reset your password.
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
                     <div>
-                      <Form {...form}>
-                        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-                          <FormField
-                            control={form.control}
-                            name="newPassword"
-                            render={({ field }) => (
-                              <>
-                                <FormItem className={"relative w-full"}>
-                                  <FormLabel>New Password</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      {...field}
-                                      className={isMobile ? "text-base" : ""}
-                                      type={showPassword2 ? "text" : "password"}
-                                    />
-                                  </FormControl>
-                                  <Button
-                                    className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
-                                    size="icon"
-                                    type="button"
-                                    onClick={() => setShowPassword2(!showPassword2)}
-                                  >
-                                    <PasswordEye showPassword={showPassword2} />
-                                  </Button>
-                                </FormItem>
-                                <FormMessage />
-                              </>
-                            )}
-                          />
-                          <PasswordStrengthBar
-                            className={`mt-2 ${formData.newPassword === "" && "invisible"}`}
-                            password={formData.newPassword}
-                            scoreWordStyle={
-                              formData.newPassword === "" ? { visibility: "hidden" } : {}
-                            }
-                            onChangeScore={(s) => setPasswordScore(s)}
-                          />
+                      <div>
+                        <Form {...form}>
+                          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+                            <FormField
+                              control={form.control}
+                              name="newPassword"
+                              render={({ field }) => (
+                                <>
+                                  <FormItem className={"relative w-full"}>
+                                    <FormLabel>New Password</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        {...field}
+                                        className={isMobile ? "text-base" : ""}
+                                        type={showPassword2 ? "text" : "password"}
+                                      />
+                                    </FormControl>
+                                    <Button
+                                      className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                                      size="icon"
+                                      type="button"
+                                      onClick={() => setShowPassword2(!showPassword2)}
+                                    >
+                                      <PasswordEye showPassword={showPassword2} />
+                                    </Button>
+                                  </FormItem>
+                                  <FormMessage />
+                                </>
+                              )}
+                            />
+                            <PasswordStrengthBar
+                              className={`mt-2 ${formData.newPassword === "" && "invisible"}`}
+                              password={formData.newPassword}
+                              scoreWordStyle={
+                                formData.newPassword === "" ? { visibility: "hidden" } : {}
+                              }
+                              onChangeScore={(s) => setPasswordScore(s)}
+                            />
 
-                          <FormField
-                            control={form.control}
-                            name="newPassword2"
-                            render={({ field }) => (
-                              <>
-                                <FormItem className={"relative w-full"}>
-                                  <FormLabel>Verify Password</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      {...field}
-                                      className={isMobile ? "text-base" : ""}
-                                      type={showPassword3 ? "text" : "password"}
-                                    />
-                                  </FormControl>
-                                  <Button
-                                    className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
-                                    size="icon"
-                                    type="button"
-                                    onClick={() => setShowPassword3(!showPassword3)}
-                                  >
-                                    <PasswordEye showPassword={showPassword3} />
-                                  </Button>
-                                </FormItem>
-                                <FormMessage />
-                              </>
-                            )}
-                          />
+                            <FormField
+                              control={form.control}
+                              name="newPassword2"
+                              render={({ field }) => (
+                                <>
+                                  <FormItem className={"relative w-full"}>
+                                    <FormLabel>Verify Password</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        {...field}
+                                        className={isMobile ? "text-base" : ""}
+                                        type={showPassword3 ? "text" : "password"}
+                                      />
+                                    </FormControl>
+                                    <Button
+                                      className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                                      size="icon"
+                                      type="button"
+                                      onClick={() => setShowPassword3(!showPassword3)}
+                                    >
+                                      <PasswordEye showPassword={showPassword3} />
+                                    </Button>
+                                  </FormItem>
+                                  <FormMessage />
+                                </>
+                              )}
+                            />
 
-                          <Button
-                            className="w-full md:w-52"
-                            disabled={
-                              loading ||
-                              passwordScore !== 4 ||
-                              formData.newPassword === "" ||
-                              formData.newPassword2 === "" ||
-                              formData.newPassword !== formData.newPassword2
-                            }
-                            type="submit"
-                          >
-                            {loading ? (
-                              <Icons.spinner className="mr-2 size-4 animate-spin" />
-                            ) : (
-                              "Update Password"
-                            )}
-                          </Button>
-                        </form>
-                      </Form>
-                    </div>
-                    <div>
-                      <div className="space-y-2">
-                        {successful === null && (
-                          <div className="invisible">
-                            <h2 className="text-2xl font-bold">Null</h2>
-                            <p>asdfasdfasdfasdf asdf asd fasdf asdfasd fasd fasdf asf as f asdf</p>
-                          </div>
-                        )}
-                        {successful === true && (
-                          <div>
-                            <h2 className="text-2xl font-bold">
-                              A password reset request has been sent.
-                            </h2>
-                            <p>
-                              Please check your inbox for this email. It will provide a link that
-                              will allow you to reset password
-                            </p>
-                          </div>
-                        )}
-                        {successful === false && (
-                          <div>
-                            <h2 className="text-2xl font-bold">
-                              There was an issue with the password reset request.
-                            </h2>
-                            <p>
-                              Please reach out to colin@linkchop.com for help if this continues to
-                              occur.
-                            </p>
-                          </div>
-                        )}
+                            <Button
+                              className="w-full md:w-52"
+                              disabled={
+                                loading ||
+                                passwordScore !== 4 ||
+                                formData.newPassword === "" ||
+                                formData.newPassword2 === "" ||
+                                formData.newPassword !== formData.newPassword2
+                              }
+                              type="submit"
+                            >
+                              {loading ? (
+                                <Icons.spinner className="mr-2 size-4 animate-spin" />
+                              ) : (
+                                "Update Password"
+                              )}
+                            </Button>
+                          </form>
+                        </Form>
+                      </div>
+                      <div>
+                        <div className="space-y-2">
+                          {successful === null && (
+                            <div className="invisible">
+                              <h2 className="text-2xl font-bold">Null</h2>
+                              <p>
+                                asdfasdfasdfasdf asdf asd fasdf asdfasd fasd fasdf asf as f asdf
+                              </p>
+                            </div>
+                          )}
+                          {successful === true && (
+                            <div>
+                              <h2 className="text-2xl font-bold">
+                                A password reset request has been sent.
+                              </h2>
+                              <p>
+                                Please check your inbox for this email. It will provide a link that
+                                will allow you to reset password
+                              </p>
+                            </div>
+                          )}
+                          {successful === false && (
+                            <div>
+                              <h2 className="text-2xl font-bold">
+                                There was an issue with the password reset request.
+                              </h2>
+                              <p>
+                                Please reach out to colin@linkchop.com for help if this continues to
+                                occur.
+                              </p>
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </Suspense>
     </>
   )
 }
