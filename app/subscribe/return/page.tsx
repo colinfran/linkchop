@@ -14,7 +14,7 @@ const Return: React.FC = () => {
       const urlParams = new URLSearchParams(queryString)
       const sessionId = urlParams.get("session_id")
 
-      fetch(`/api/get_checkout_session?session_id=${sessionId}&email=${user.email}`, {
+      fetch(`/api/checkout/get?session_id=${sessionId}&email=${user.email}`, {
         method: "GET",
       })
         .then((res) => res.json())

@@ -28,7 +28,7 @@ const Subscribe: React.FC = () => {
   useEffect(() => {
     const fetchSession = async (): Promise<void> => {
       try {
-        const response = await fetch("/api/create_checkout_session", {
+        const response = await fetch("/api/checkout/create", {
           method: "POST",
           body: JSON.stringify({ email: user.email }),
         })
