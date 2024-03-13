@@ -45,7 +45,7 @@ const Return: React.FC = () => {
                 <p>
                   We appreciate your business! A confirmation email will be sent to {user.email}. If
                   you have any questions, please email{" "}
-                  <a href="mailto:support@linkchop.com">support@linkchop.com</a>.
+                  <a href="mailto:colin@linkchop.com">colin@linkchop.com</a>.
                 </p>
               </section>
             </Card>
@@ -54,8 +54,7 @@ const Return: React.FC = () => {
       </>
     )
   }
-
-  return null
+  return redirect("/404")
 }
 
 export default Return

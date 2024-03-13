@@ -1,5 +1,5 @@
 import { createUser, getUser } from "app/db"
-import sendEmail from "../../email/sendEmail"
+import sendEmail from "./sendEmail"
 
 /**
  * Handles POST requests to the '/api/auth/register' endpoint.
@@ -12,24 +12,13 @@ import sendEmail from "../../email/sendEmail"
 export async function POST(request: Request): Promise<Response> {
   // Extract user registration data from the request body.
   const res = await request.json()
-  const { email, name, password } = res
   try {
-    // Check if the user already exists in the database.
-    const userExists = await getUser(email)
-    // If the user already exists, return an error response.
-    if (userExists.length > 0) {
-      return Response.json({ error: "User already exists" })
+    const success = await sendEmail(res)
+    if (!success) {
+      return Response.json({ success: false, error: "Registration failed" })
     }
-    // Create a new user in the database.
-    await createUser(email, password, name)
-    await sendEmail({
-      subject: `Welcome to LinkChop, ${name}!`,
-      type: "signup",
-      email: email,
-      name: name,
-    })
     // Return a success response if the user is registered successfully.
-    return Response.json({ success: true, message: "User registered successfully" })
+    return Response.json({ success: true, message: "Email sent" })
   } catch (error) {
     // Handle registration errors and return an error response.
     console.error("Registration error:", error)

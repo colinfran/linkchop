@@ -217,7 +217,7 @@ const HomePage: React.FC = () => {
                   </p>
                 </div>
                 <div className="flex flex-col gap-2 md:flex-row md:gap-4 lg:gap-2">
-                  <a href="mailto:support@linkchop.com">
+                  <a href="mailto:colin@linkchop.com">
                     <Button className="w-full md:w-auto">
                       <svg
                         className="size-4"

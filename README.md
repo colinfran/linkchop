@@ -61,4 +61,4 @@ To run LinkChop locally, follow these steps:
 
 ## Contact
 
-For inquiries or support regarding LinkChop, please contact [support@linkchop.com](mailto:support@linkchop.com).
+For inquiries or support regarding LinkChop, please contact [colin@linkchop.com](mailto:colin@linkchop.com).

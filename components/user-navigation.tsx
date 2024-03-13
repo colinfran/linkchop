@@ -11,7 +11,7 @@ import { signOut } from "next-auth/react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Home, LineChart, LogOut, Settings, Unlock, XOctagon } from "lucide-react"
+import { Home, LineChart, LogOut, Settings, Unlock } from "lucide-react"
 import { Badge } from "./ui/badge"
 import { useUser } from "./user-provider"
 
@@ -50,26 +50,30 @@ const UserNavigation: React.FC = () => {
               Home
             </DropdownMenuItem>
           </Link>
-          <DropdownMenuItem className="cursor-pointer" disabled={!user?.is_premium_user}>
-            <LineChart className="mr-2 size-4" />
-            <span className="w-full">Analytics</span>
-            <Badge>Premium</Badge>
-          </DropdownMenuItem>
           <DropdownMenuSeparator />
           {user?.is_premium_user ? (
-            <Link href="/subscribe/cancel">
-              <DropdownMenuItem className="cursor-pointer">
-                <XOctagon className="mr-2 size-4" />
-                Cancel Premium
-              </DropdownMenuItem>
-            </Link>
+            <>
+              <Link href="/analytics">
+                <DropdownMenuItem className="cursor-pointer">
+                  <LineChart className="mr-2 size-4" />
+                  <span className="w-full">Analytics</span>
+                </DropdownMenuItem>
+              </Link>
+            </>
           ) : (
-            <Link href="/subscribe">
-              <DropdownMenuItem className="cursor-pointer">
-                <Unlock className="mr-2 size-4" />
-                <span className="w-full">Unlock Premium</span>
+            <>
+              <DropdownMenuItem className="cursor-pointer" disabled>
+                <LineChart className="mr-2 size-4" />
+                <span className="w-full">Analytics</span>
+                <Badge>Premium</Badge>
               </DropdownMenuItem>
-            </Link>
+              <Link href="/subscribe">
+                <DropdownMenuItem className="cursor-pointer">
+                  <Unlock className="mr-2 size-4" />
+                  <span className="w-full">Unlock Premium</span>
+                </DropdownMenuItem>
+              </Link>
+            </>
           )}
           <DropdownMenuSeparator />
           <Link href="/settings/profile">

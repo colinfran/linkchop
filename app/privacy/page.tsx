@@ -88,7 +88,7 @@ const PrivacyPolicy: React.FC = () => {
                   </h3>
                   <p className="pt-4">
                     If you would like to review, correct, update, or delete the personal information
-                    that you have provided to us, please contact us at support@linkchop.com.
+                    that you have provided to us, please contact us at colin@linkchop.com.
                   </p>
                 </div>
                 <div className="pt-10">
@@ -107,7 +107,7 @@ const PrivacyPolicy: React.FC = () => {
                   </h3>
                   <p className="pt-4">
                     If you have any questions about our Privacy Policy, the practices of this site,
-                    or your dealings with this site, please contact us at support@linkchop.com.
+                    or your dealings with this site, please contact us at colin@linkchop.com.
                   </p>
                 </div>
               </div>

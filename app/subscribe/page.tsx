@@ -45,7 +45,7 @@ const Subscribe: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ready])
 
-  if (!user?.email || !clientSecret) {
+  if (!user?.email || !clientSecret || !ready) {
     return (
       <>
         <div></div>
