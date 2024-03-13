@@ -23,6 +23,7 @@ import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
 import { errorMessages, useIsMobile } from "@/lib/utils"
 import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 
 const userLoginFormSchema = z.object({
   email: z
@@ -181,6 +182,9 @@ const SignInForm: React.FC = () => {
               <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
                 <Icons.apple className="mr-2 size-4" /> Apple
               </Button>
+            </div>
+            <div className="text-center mt-10">
+              <Link href="/auth/forgot-password">Forgot Password</Link>
             </div>
           </div>
         </CardContent>

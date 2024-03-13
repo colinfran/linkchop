@@ -6,6 +6,7 @@ const validAppRoutes = [
   "/",
   "/home",
   "/auth",
+  "/auth/forgot-password",
   "/settings",
   "/settings/profile",
   "/settings/display",

@@ -1,4 +1,4 @@
-export const unsubscribeTemplate = `
+export const forgotPasswordTemplate = `
 <!doctype html>
 <html>
   <head>
@@ -28,22 +28,16 @@ export const unsubscribeTemplate = `
                     <tr>
                       <td width="36"></td>
                       <td width="454" align="left" style="color:#444444; border-collapse:collapse; font-size: 11pt; font-family: 'Helvetica Neue', Arial, Helvetica, 'sans-serif'; max-width: 454px;" valign="top">
-                        <p>Hello Admin,</p>
-                        <p class="paragraph">
-                        A user has requested to unsubscribe. Below is the user's information:
-                        </p>
-                        <p>
-                            Email: {email}
-                        </p>
-                        <p>
-                            ID: {id}
-                        </p>
-                        <p >
-                            Name: {name}
-                        </p>
-                        <p >
-                            Reason: {reason}
-                        </p>
+                      <p>Hello,</p>
+                      <p>You have requested to reset your password.</p>
+                      <p>Please use the below link to reset your password:</p>
+                      <a href="https://linkchop.com/auth/password-reset?id={id}">https://linkchop.com/auth/password-reset</a>
+                      <br />
+                      <p>Do not share this link with anyone!</p>
+                      <br />
+                      <div>Best regards,</div>
+                      <div>Colin from the LinkChop Team</div>
+                      <div>colin@linkchop.com</div>
                       </td>
                       <td width="36"></td>
                     </tr>

@@ -185,7 +185,7 @@ export const setSubscriber = async (email: string): Promise<boolean> => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const updateUser = async (data: any): Promise<any> => {
-  const updatedData = { ...data }
+  let updatedData = { ...data }
   delete updatedData.updated_at
   try {
     if (updatedData.newEmail) {
@@ -203,18 +203,29 @@ export const updateUser = async (data: any): Promise<any> => {
       }
     }
     if (updatedData.newPassword) {
-      const passwordsMatch = await compare(updatedData.oldPassword, data.password)
-      if (!passwordsMatch) {
-        return {
-          success: false,
-          errorMessage: "Incorrect old password.",
+      if (updatedData.oldPassword) {
+        const passwordsMatch = await compare(updatedData.oldPassword, data.password)
+        if (!passwordsMatch) {
+          return {
+            success: false,
+            errorMessage: "Incorrect old password.",
+          }
         }
+        delete updatedData.oldPassword
+        delete updatedData.newPassword
+        const salt = genSaltSync(10)
+        const hash = hashSync(data.newPassword, salt)
+        updatedData.password = hash
+      } else {
+        const user = await getUserById(data.id)
+        updatedData = { ...user[0] }
+        data.created_at = updatedData.created_at
+        delete updatedData.updated_at
+        delete updatedData.newPassword
+        const salt = genSaltSync(10)
+        const hash = hashSync(data.newPassword, salt)
+        updatedData.password = hash
       }
-      delete updatedData.oldPassword
-      delete updatedData.newPassword
-      const salt = genSaltSync(10)
-      const hash = hashSync(data.newPassword, salt)
-      updatedData.password = hash
     }
     updatedData.created_at = new Date(data.created_at).toISOString()
     updatedData.updated_at = new Date().toISOString()

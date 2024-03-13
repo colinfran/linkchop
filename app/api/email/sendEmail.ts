@@ -1,6 +1,8 @@
 import nodemailer from "nodemailer"
 import { signupTemplate } from "./signup-template"
 import { unsubscribeTemplate } from "./unsubscribe-template"
+import { forgotPasswordTemplate } from "./forgot-password-template"
+import { getUser } from "@/app/db"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const replaceKeysWithValue = (string: string, object: any): string => {
@@ -48,6 +50,21 @@ const sendEmail = async (data: Props): Promise<boolean> => {
     emailHtml = replaceKeysWithValue(signupTemplate, {
       "{name}": data.name,
       "{email}": data.email,
+    })
+    values = {
+      from: process.env.ZOHO_EMAIL, // Sender adddatas
+      to: data.email, // List of recipients
+      subject: data.subject, // Subject line
+      html: emailHtml, // Plain text body
+    }
+  }
+  if (data.type === "forgot-password") {
+    const vals = await getUser(data.email)
+    if (vals.length === 0) throw Error("Email does not exist.")
+    const id = vals[0].id
+    console.log(id)
+    emailHtml = replaceKeysWithValue(forgotPasswordTemplate, {
+      "{id}": id,
     })
     values = {
       from: process.env.ZOHO_EMAIL, // Sender adddatas

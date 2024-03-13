@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,13 +17,22 @@ import { useUser } from "./user-provider"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { user } = useUser()
+  const { user, data } = useUser()
   const router = useRouter()
+  const [loggedOut, setLoggedOut] = useState(false)
+
+  useEffect(() => {
+    if (!data && loggedOut) {
+      router.push("/")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loggedOut, data])
 
   const logoutUser = async (): Promise<void> => {
     router.push("/")
     await signOut()
     router.push("/")
+    setLoggedOut(true)
   }
   return (
     <div className="w-auto md:w-[150px]">
