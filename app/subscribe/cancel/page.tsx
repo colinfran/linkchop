@@ -46,7 +46,7 @@ const Cancel: React.FC = () => {
       })
       const { success } = await response.json()
       if (!success) {
-        console.log("success")
+        // console.log("not successful")
       } else {
         setText("")
       }

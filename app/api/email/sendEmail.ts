@@ -62,7 +62,6 @@ const sendEmail = async (data: Props): Promise<boolean> => {
     const vals = await getUser(data.email)
     if (vals.length === 0) throw Error("Email does not exist.")
     const id = vals[0].id
-    console.log(id)
     emailHtml = replaceKeysWithValue(forgotPasswordTemplate, {
       "{id}": id,
     })

@@ -66,7 +66,6 @@ const PasswordReset: React.FC = () => {
   }, [count, successful])
 
   useEffect(() => {
-    console.log(count)
     if (count === 0) {
       router.push("/auth")
     }
