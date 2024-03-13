@@ -183,7 +183,7 @@ const SignInForm: React.FC = () => {
                 <Icons.apple className="mr-2 size-4" /> Apple
               </Button>
             </div>
-            <div className="text-center mt-10">
+            <div className="mt-10 text-center">
               <Link href="/auth/forgot-password">Forgot Password</Link>
             </div>
           </div>
