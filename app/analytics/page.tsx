@@ -25,6 +25,7 @@ const AnalyticsPage: React.FC = () => {
         setLoading(false)
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
   if (loading) return null

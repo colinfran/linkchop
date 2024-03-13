@@ -20,8 +20,9 @@ const UserNavigation: React.FC = () => {
   const { user } = useUser()
   const router = useRouter()
 
-  const logoutUser = (): void => {
-    signOut()
+  const logoutUser = async (): Promise<void> => {
+    router.push("/")
+    await signOut()
     router.push("/")
   }
   return (
