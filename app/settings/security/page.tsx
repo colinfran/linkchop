@@ -36,15 +36,14 @@ const securityFormSchema = z
       .min(8, "The password must be at least 8 characters long")
       .max(32, "The password must be a maximun 32 characters"),
   })
-  .refine(
-    (values) => {
-      return values.newPassword === values.newPassword2
-    },
-    {
-      message: "Passwords do not match!",
-      path: ["confirmPassword"],
-    },
-  )
+  .refine((data) => data.newPassword === data.newPassword2, {
+    message: "The passwords do not match",
+    path: ["newPassword2"],
+  })
+  .refine((data) => data.newPassword !== data.oldPassword, {
+    message: "The new password must be different from the old password",
+    path: ["newPassword"],
+  })
 
 type SecurityFormValues = z.infer<typeof securityFormSchema>
 
