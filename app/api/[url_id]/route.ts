@@ -1,10 +1,10 @@
-import { getUrl, addClick } from "app/db"
+import { getUrl, addVisit } from "app/db"
 import { NextResponse, userAgent } from "next/server"
 
 /**
  * Handles GET requests to the '/[url_id]' and '/api/[url_id]' endpoints.
  * Retrieves URL information based on the provided URL ID and redirects the user to the original URL.
- * Tracks click data if the URL was created by an authenticated user.
+ * Tracks visit data if the URL was created by an authenticated user.
  * @param {Request} request - The incoming request object.
  * @returns {Promise<Response>} - Returns a response object.
  */
@@ -20,9 +20,9 @@ export async function GET(request: Request): Promise<Response> {
     if (data[0]) {
       const { original_url, user_id } = data[0]
       const { device, isBot, browser, engine, os } = userAgent(request)
-      // Track click data if the URL was created by an authenticated user.
+      // Track visit data if the URL was created by an authenticated user.
       if (user_id !== null && user_id !== "") {
-        const clickData = {
+        const visitData = {
           url_id: id,
           device_type: device.type,
           device_model: device.model,
@@ -35,7 +35,7 @@ export async function GET(request: Request): Promise<Response> {
           os_name: os.name,
           os_version: os.version,
         }
-        await addClick(clickData)
+        await addVisit(visitData)
       }
       // Redirect the user to the original URL.
       return NextResponse.redirect(original_url as string)

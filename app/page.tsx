@@ -26,7 +26,7 @@ const HomePage: React.FC = () => {
                     </h2>
                     <p className="max-w-[600px] text-gray-500 dark:text-gray-400 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                       The easiest way to share links. Turn long, complex URLs into short, simple
-                      links with a click. Share them across the web, track clicks, and know your
+                      links with a click. Share them across the web, track visits, and know your
                       audience.
                     </p>
                   </div>

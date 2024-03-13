@@ -78,7 +78,7 @@ export const DataTable: React.FC<DataTableProps> = ({
             <TableRow>
               <TableHead>Original URL</TableHead>
               <TableHead>Chopped URL</TableHead>
-              <TableHead>Clicks</TableHead>
+              <TableHead>Visits</TableHead>
               <TableHead>Created</TableHead>
               <TableHead></TableHead>
             </TableRow>
@@ -112,7 +112,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                         <div className="flex">{`https://linkchop.com/${url.id}`}</div>
                       </TableCell>
                       <TableCell className="h-24">
-                        <div className="flex">{url.click_count}</div>
+                        <div className="flex">{url.visit_count}</div>
                       </TableCell>
                       <TableCell className="h-24">
                         <div className="flex">{`Created on ${format(new Date(url.created_at), "Pp")}`}</div>
@@ -183,7 +183,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                         <div>{url.original_url}</div>
                         <div>{`https://linkchop.com/${url.id}`}</div>
                         <div>{`Created: ${format(new Date(url.created_at), "Pp")}`}</div>
-                        <div>{`Clicks: ${url.click_count}`}</div>
+                        <div>{`Visits: ${url.visit_count}`}</div>
                       </div>
                       <div className="flex flex-col justify-center">
                         <DropdownMenu>

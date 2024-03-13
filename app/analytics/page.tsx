@@ -8,7 +8,7 @@ export type UrlsProps = {
   id: string
   original_url: string
   created_at: string
-  click_count?: number
+  visit_count?: number
 }
 
 const AnalyticsPage: React.FC = () => {

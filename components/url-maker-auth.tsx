@@ -73,7 +73,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
             original_url: formData.url,
             user_id: data?.user.data.id,
             created_at: new Date(),
-            click_count: 0,
+            visit_count: 0,
           },
           ...urls,
         ]

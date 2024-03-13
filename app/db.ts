@@ -28,7 +28,7 @@ const urls = pgTable("urls", {
   created_at: date("created_at"),
 })
 
-const clicks = pgTable("clicks", {
+const visits = pgTable("visits", {
   id: varchar("id"),
   url_id: varchar("url_id") || "",
   timestamp: date("timestamp"),
@@ -100,7 +100,7 @@ type GetUrlsType = {
   original_url: string | null
   created_at: string | null
   user_id: string | null
-  click_count: number | null
+  visit_count: number | null
 }
 
 export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
@@ -110,10 +110,10 @@ export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
       original_url: urls.original_url,
       created_at: urls.created_at,
       user_id: urls.user_id,
-      click_count: count(clicks.id),
+      visit_count: count(visits.id),
     })
     .from(urls)
-    .leftJoin(clicks, eq(urls.id, clicks.url_id))
+    .leftJoin(visits, eq(urls.id, visits.url_id))
     .where(eq(urls.user_id, userId))
     .groupBy(urls.id, urls.original_url)
 }
@@ -149,7 +149,7 @@ export const getUrl = async (id: string): Promise<GetUrlType[]> => {
   return await db.select().from(urls).where(eq(urls.id, id))
 }
 
-type ClickData = {
+type VisitData = {
   url_id: string
   device_type: string | undefined
   device_model: string | undefined
@@ -163,12 +163,12 @@ type ClickData = {
   os_version: string | undefined
 }
 
-export const addClick = async (data: ClickData): Promise<boolean> => {
+export const addVisit = async (data: VisitData): Promise<boolean> => {
   try {
-    await db.insert(clicks).values(data)
+    await db.insert(visits).values(data)
     return true
   } catch (error) {
-    console.error("Error adding click:", error)
+    console.error("Error adding visit:", error)
     return false
   }
 }
@@ -178,7 +178,7 @@ export const setSubscriber = async (email: string): Promise<boolean> => {
     await db.update(users).set({ is_premium_user: true }).where(eq(users.email, email))
     return true
   } catch (error) {
-    console.error("Error adding click:", error)
+    console.error("Error setting subscriber:", error)
     return false
   }
 }
