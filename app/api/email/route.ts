@@ -1,4 +1,3 @@
-import { createUser, getUser } from "app/db"
 import sendEmail from "./sendEmail"
 
 /**

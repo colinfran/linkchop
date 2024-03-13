@@ -1,7 +1,4 @@
 import nodemailer from "nodemailer"
-import { render } from "@react-email/render"
-import { SignUpTemplate } from "@/components/email-templates/sign-up"
-import UnsubscribeTemplate from "@/components/email-templates/unsubscribe"
 import { signupTemplate } from "./signup-template"
 import { unsubscribeTemplate } from "./unsubscribe-template"
 
