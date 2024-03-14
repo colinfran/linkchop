@@ -49,7 +49,7 @@ const PasswordResetForm: React.FC = () => {
   const [showPassword2, setShowPassword2] = useState(false)
   const [showPassword3, setShowPassword3] = useState(false)
 
-  const [count, setCount] = useState(8)
+  const [count, setCount] = useState(6)
 
   const router = useRouter()
 
@@ -66,6 +66,10 @@ const PasswordResetForm: React.FC = () => {
   }, [count, successful])
 
   useEffect(() => {
+    const toastDescriptionElement = document.querySelector(".ToastDescription")
+    if (toastDescriptionElement) {
+      toastDescriptionElement.textContent = `You have successfully reset the password associated with this account. Redirecting you to the auth page in ${count > 1 ? `${count} seconds` : `${count} second`}.`
+    }
     if (count === 0) {
       router.push("/auth")
     }
