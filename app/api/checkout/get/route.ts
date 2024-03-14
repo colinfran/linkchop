@@ -1,4 +1,3 @@
-"use server"
 import { setSubscriber } from "@/app/db"
 import { NextResponse } from "next/server"
 import stripe from "stripe"
@@ -15,8 +14,9 @@ const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY!)
 
 export async function GET(request: Request): Promise<Response> {
   try {
-    const url = new URL(request.url)
-    const sessionId = url.searchParams.get("session_id")
+    const requstUrl = request.url
+    const url = new URL(requstUrl)
+    const sessionId = url.searchParams.get("session_id") || ""
     const email = url.searchParams.get("email") || ""
     const session = await stripeInstance.checkout.sessions.retrieve(sessionId!)
     await setSubscriber(email)
