@@ -12,12 +12,10 @@ const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY!)
  * @returns {Promise<Response>} - Returns a response object.
  */
 
-export async function GET(request: Request): Promise<Response> {
+export async function POST(request: Request): Promise<Response> {
   try {
-    const requstUrl = request.url
-    const url = new URL(requstUrl)
-    const sessionId = url.searchParams.get("session_id") || ""
-    const email = url.searchParams.get("email") || ""
+    const res = await request.json()
+    const { email, sessionId } = res
     const session = await stripeInstance.checkout.sessions.retrieve(sessionId!)
     await setSubscriber(email)
     return NextResponse.json({

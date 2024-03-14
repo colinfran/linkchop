@@ -9,24 +9,54 @@ const Return: React.FC = () => {
   const [status, setStatus] = useState(null)
 
   useEffect(() => {
-    if (user?.email) {
+    const getSessionId = async (): Promise<void> => {
       const queryString = window.location.search
       const urlParams = new URLSearchParams(queryString)
       const sessionId = urlParams.get("session_id")
-
-      fetch(`/api/checkout/get?session_id=${sessionId}&email=${user.email}`, {
-        method: "GET",
+      if (!sessionId) {
+        return redirect("/404")
+      }
+      const response = await fetch("/api/checkout/get", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: user.email,
+          sessionId,
+        }),
       })
-        .then((res) => res.json())
-        .then((val) => {
-          setStatus(val.status)
-        })
+      const val = await response.json()
+      console.log(val)
+      setStatus(val.status)
+    }
+    if (user?.email) {
+      getSessionId()
     }
   }, [user?.email])
 
   useEffect(() => {
+    const sendEmail = async (): Promise<void> => {
+      try {
+        await fetch("/api/email", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: user.name,
+            email: user.email,
+            subject: "Thank you for purchasing the premium subscription!",
+            type: "subscribe",
+          }),
+        })
+      } catch (error) {
+        console.error(error)
+      }
+    }
     if (status === "complete") {
       update()
+      sendEmail()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
@@ -54,7 +84,6 @@ const Return: React.FC = () => {
       </>
     )
   }
-  return redirect("/404")
 }
 
 export default Return

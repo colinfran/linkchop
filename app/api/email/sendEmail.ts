@@ -3,6 +3,7 @@ import { signupTemplate } from "./signup-template"
 import { unsubscribeTemplate } from "./unsubscribe-template"
 import { forgotPasswordTemplate } from "./forgot-password-template"
 import { getUser } from "@/app/db"
+import { subscribeTemplate } from "./subscribe-template"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const replaceKeysWithValue = (string: string, object: any): string => {
@@ -41,10 +42,10 @@ const sendEmail = async (data: Props): Promise<boolean> => {
     "{email}": data.email,
   })
   let values = {
-    from: process.env.ZOHO_EMAIL, // Sender adddatas
-    to: data.email, // List of recipients
-    subject: data.subject, // Subject line
-    html: emailHtml, // Plain text body
+    from: process.env.ZOHO_EMAIL,                                              
+    to: data.email,
+    subject: data.subject,
+    html: emailHtml,
   }
   if (data.type === "signup") {
     emailHtml = replaceKeysWithValue(signupTemplate, {
@@ -52,10 +53,10 @@ const sendEmail = async (data: Props): Promise<boolean> => {
       "{email}": data.email,
     })
     values = {
-      from: process.env.ZOHO_EMAIL, // Sender adddatas
-      to: data.email, // List of recipients
-      subject: data.subject, // Subject line
-      html: emailHtml, // Plain text body
+      from: process.env.ZOHO_EMAIL,
+      to: data.email,
+      subject: data.subject,
+      html: emailHtml,
     }
   }
   if (data.type === "forgot-password") {
@@ -66,10 +67,10 @@ const sendEmail = async (data: Props): Promise<boolean> => {
       "{id}": id,
     })
     values = {
-      from: process.env.ZOHO_EMAIL, // Sender adddatas
-      to: data.email, // List of recipients
-      subject: data.subject, // Subject line
-      html: emailHtml, // Plain text body
+      from: process.env.ZOHO_EMAIL,
+      to: data.email,
+      subject: data.subject,
+      html: emailHtml,
     }
   }
   if (data.type === "unsubscribe") {
@@ -80,10 +81,21 @@ const sendEmail = async (data: Props): Promise<boolean> => {
       "{reason}": data.reason,
     })
     values = {
-      from: process.env.ZOHO_EMAIL, // Sender adddatas
-      to: process.env.ZOHO_UNSUBSCRIBE_SEND_EMAIL, // List of recipients
-      subject: data.subject, // Subject line
-      html: emailHtml, // Plain text body
+      from: process.env.ZOHO_EMAIL,
+      to: process.env.ZOHO_UNSUBSCRIBE_SEND_EMAIL,
+      subject: data.subject,
+      html: emailHtml,
+    }
+  }
+  if (data.type === "subscribe") {
+    emailHtml = replaceKeysWithValue(subscribeTemplate, {
+      "{name}": data.name,
+    })
+    values = {
+      from: process.env.ZOHO_EMAIL,
+      to: data.email,
+      subject: data.subject,
+      html: emailHtml,
     }
   }
   try {
