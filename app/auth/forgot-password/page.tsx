@@ -70,7 +70,7 @@ const ForgotPassword: React.FC = () => {
         <div className="px-8 md:container md:space-y-2 md:p-12">
           <div className="flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center">
             <div className="mb-20 flex h-full justify-center xl:mb-0 ">
-              <Card className="mt-20">
+              <Card className="mt-20 max-w-[514px]">
                 <CardHeader>
                   <CardTitle>Forgot Password</CardTitle>
                   <CardDescription>
@@ -119,7 +119,7 @@ const ForgotPassword: React.FC = () => {
                         </form>
                       </Form>
                     </div>
-                    <div>
+                    <div className="mt-[20px]">
                       <div className="space-y-2">
                         {successful === null && (
                           <div className="invisible">
