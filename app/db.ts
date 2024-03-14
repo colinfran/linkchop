@@ -270,6 +270,7 @@ export const isIdExpired = async (id: string): Promise<any> => {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const deleteExpiredResets = async (): Promise<any> => {
+  console.log("RUNNING CRON TO DELETE EXPIRED RESETS")
   try {
     await db.delete(passwordResets).where(lt(passwordResets.expiration, new Date().toISOString()))
   } catch (error) {
