@@ -1,27 +1,17 @@
 import nodemailer from "nodemailer"
-import { signupTemplate } from "./signup-template"
-import { unsubscribeTemplate } from "./unsubscribe-template"
-import { forgotPasswordTemplate } from "./forgot-password-template"
+import { signupTemplate } from "./templates/signup-template"
+import { unsubscribeTemplate } from "./templates/unsubscribe-template"
+import { forgotPasswordTemplate } from "./templates/forgot-password-template"
 import { getUser } from "@/app/db"
-import { subscribeTemplate } from "./subscribe-template"
+import { subscribeTemplate } from "./templates/subscribe-template"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const replaceKeysWithValue = (string: string, object: any): string => {
   // Create a regular expression pattern to match all keys in the object
   const pattern = new RegExp(Object.keys(object).join("|"), "g")
-
   // Replace all occurrences of keys with their corresponding values
   return string.replace(pattern, (match: string | number) => object[match])
 }
-
-/**
- * Handles POST requests to the '/api/urls/create' endpoint.
- * Creates a new shortened URL with the provided original URL and optional user ID.
- * Generates a unique URL ID using ShortUniqueId library.
- * @param {Request} request - The incoming request object containing the original URL and user ID (if provided).
- * @returns {Promise<Response>} - Returns a response object containing the generated URL ID or an error message.
- */
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Props = any
 

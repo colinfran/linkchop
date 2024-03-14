@@ -2,9 +2,9 @@ import sendEmail from "./sendEmail"
 
 /**
  * Handles POST requests to the '/api/email' endpoint.
- * Allows for the automation of sending emails to users.
- * @param {Request} request - The incoming request object containing user registration data.
- * @returns {Promise<Response>} - Returns a response object indicating the success or failure of the registration process.
+ * Initiates the process of sending an email to the specified recipient.
+ * @param {Request} request - The incoming request object containing email details.
+ * @returns {Promise<Response>} - Returns a response object indicating the success or failure of the email sending process.
  */
 
 export async function POST(request: Request): Promise<Response> {

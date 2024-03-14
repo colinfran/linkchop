@@ -1,11 +1,10 @@
 import { isIdExpired } from "app/db"
 
 /**
- * Handles POST requests to the '/api/auth/register' endpoint.
- * Registers a new user with the provided email, name, and password.
- * Checks if the user already exists in the database before registration.
- * @param {Request} request - The incoming request object containing user registration data.
- * @returns {Promise<Response>} - Returns a response object indicating the success or failure of the registration process.
+ * Handles POST requests to the '/api/auth/forgot-password/check-id' endpoint.
+ * Checks if the provided ID is expired or not.
+ * @param {Request} request - The incoming request object containing the ID to check.
+ * @returns {Promise<Response>} - Returns a response object indicating the validity of the provided ID.
  */
 
 export async function POST(request: Request): Promise<Response> {

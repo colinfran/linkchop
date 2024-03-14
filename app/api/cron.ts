@@ -1,3 +1,4 @@
+// delete all expired password resets to clear up database table
 import { deleteExpiredResets } from "../db"
 
 export async function GET(request: Request): Promise<Response> {

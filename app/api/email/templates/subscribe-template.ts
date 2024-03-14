@@ -1,4 +1,5 @@
-export const forgotPasswordTemplate = `
+// this template is used to thank users for subscribing
+export const subscribeTemplate = `
 <!doctype html>
 <html>
   <head>
@@ -16,7 +17,7 @@ export const forgotPasswordTemplate = `
               </tr>
               <tr style="line-height: 20px;">
                 <td width="100%" style="font-size: 14px;" align="center" height="1">
-                  <div class="brand" style="padding:10px 0" id="brand"><img style='width:80px' src="https://linkchop.com/icons/logo.png" /></div>
+                  <div style="padding:10px 0" id="brand"><img style='width:80px' src="https://linkchop.com/icons/logo.png" /></div>
                 </td>
               </tr>
               <tr>
@@ -28,16 +29,14 @@ export const forgotPasswordTemplate = `
                     <tr>
                       <td width="36"></td>
                       <td width="454" align="left" style="color:#444444; border-collapse:collapse; font-size: 11pt; font-family: 'Helvetica Neue', Arial, Helvetica, 'sans-serif'; max-width: 454px;" valign="top">
-                      <p>Hello,</p>
-                      <p>You have requested to reset your password.</p>
-                      <p>Please use the below link to reset your password:</p>
-                      <a href="https://linkchop.com/auth/password-reset?id={id}&email={email}">https://linkchop.com/auth/password-reset</a>
-                      <br />
-                      <p>Do not share this link with anyone!</p>
-                      <br />
-                      <div>Best regards,</div>
-                      <div>Colin from the LinkChop Team</div>
-                      <div>colin@linkchop.com</div>
+                        <p>Hello {name},</p>
+                        <p>Thank you for purchasing the premium monthly subscription. </p>
+                        <p>You should receive the purchase receipt in another email.</p>
+                        <p>If you decide to cancel your premium subscription, you can do so <a href="/subscribe/cancel">here</a></p>
+                        <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="mailto:colin@linkchop.com">colin@linkchop.com</a>. Thanks again for signing up for the LinkChop premium features! We hope you enjoy your experience. </p><br>
+                        <div>Best regards,</div>
+                        <div>Colin from the LinkChop Team</div>
+                        <div>colin@linkchop.com</div>
                       </td>
                       <td width="36"></td>
                     </tr>
