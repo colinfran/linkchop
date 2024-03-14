@@ -69,8 +69,7 @@ const HomePage: React.FC = () => {
                     </ul>
                   </div>
                 </div>
-                {/* <div className="mx-auto max-w-[calc(100vw-32px)]"></div> */}
-                <Separator className="m-auto mt-2 w-[60%]" />
+                <Separator className="m-auto mt-2 w-3/5" />
                 <div className="space-y-12">
                   <div className="flex flex-col items-center justify-center space-y-4 text-center">
                     <div className="space-y-2">

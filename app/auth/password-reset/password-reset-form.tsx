@@ -96,7 +96,7 @@ const PasswordResetForm: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
 
-  const { watch, handleSubmit, formState } = form
+  const { watch, handleSubmit } = form
   const formData = watch()
 
   const onSubmit = async (): Promise<void> => {

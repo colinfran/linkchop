@@ -17,7 +17,7 @@ import { useUser } from "./user-provider"
 
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const { user, data } = useUser()
+  const { user } = useUser()
   const router = useRouter()
   const [loggedOut, setLoggedOut] = useState(false)
 
