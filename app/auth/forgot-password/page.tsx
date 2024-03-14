@@ -134,7 +134,7 @@ const ForgotPassword: React.FC = () => {
                             </h2>
                             <p>
                               Please check your inbox for this email. It will provide a link that
-                              will allow you to reset password
+                              will allow you to reset your password.
                             </p>
                           </div>
                         )}

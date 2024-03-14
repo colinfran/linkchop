@@ -239,38 +239,6 @@ const PasswordResetForm: React.FC = () => {
                         </form>
                       </Form>
                     </div>
-                    <div>
-                      <div className="space-y-2">
-                        {successful === null && (
-                          <div className="invisible">
-                            <h2 className="text-2xl font-bold">Null</h2>
-                            <p>asdfasdfasdfasdf asdf asd fasdf asdfasd fasd fasdf asf as f asdf</p>
-                          </div>
-                        )}
-                        {successful === true && (
-                          <div>
-                            <h2 className="text-2xl font-bold">
-                              A password reset request has been sent.
-                            </h2>
-                            <p>
-                              Please check your inbox for this email. It will provide a link that
-                              will allow you to reset password
-                            </p>
-                          </div>
-                        )}
-                        {successful === false && (
-                          <div>
-                            <h2 className="text-2xl font-bold">
-                              There was an issue with the password reset request.
-                            </h2>
-                            <p>
-                              Please reach out to colin@linkchop.com for help if this continues to
-                              occur.
-                            </p>
-                          </div>
-                        )}
-                      </div>
-                    </div>
                   </div>
                 </CardContent>
               </Card>
