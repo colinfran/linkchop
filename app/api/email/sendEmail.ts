@@ -61,10 +61,12 @@ const sendEmail = async (data: Props): Promise<boolean> => {
   }
   if (data.type === "forgot-password") {
     const vals = await getUser(data.email)
-    if (vals.length === 0) throw Error("Email does not exist.")
-    const id = vals[0].id
+    if (vals.length === 0) {
+      return true
+    }
     emailHtml = replaceKeysWithValue(forgotPasswordTemplate, {
-      "{id}": id,
+      "{id}": data.id,
+      "{email}": data.email,
     })
     values = {
       from: process.env.ZOHO_EMAIL,

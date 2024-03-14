@@ -42,6 +42,9 @@ type FormValues = z.infer<typeof FormSchema>
 const PasswordResetForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [successful, setSuccessful] = useState<null | boolean>(null)
+
+  const [expiredToken, setExpiredToken] = useState(false)
+
   const isMobile = useIsMobile()
 
   const [passwordScore, setPasswordScore] = useState(0)
@@ -79,6 +82,7 @@ const PasswordResetForm: React.FC = () => {
   const searchParams = useSearchParams()
 
   const id = searchParams.get("id")
+  const email = searchParams.get("email")
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -90,8 +94,25 @@ const PasswordResetForm: React.FC = () => {
   })
 
   useEffect(() => {
+    const checkId = async (): Promise<void> => {
+      const response = await fetch("/api/auth/forgot-password/check-id", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+        }),
+      })
+      const { message } = await response.json()
+      if (message === "expired token") {
+        setExpiredToken(true)
+      }
+    }
     if (!id) {
       router.push("/auth")
+    } else {
+      checkId()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
@@ -102,7 +123,7 @@ const PasswordResetForm: React.FC = () => {
   const onSubmit = async (): Promise<void> => {
     try {
       const values = {
-        id,
+        email: email,
         newPassword: formData.newPassword,
       }
       setLoading(true)
@@ -151,95 +172,99 @@ const PasswordResetForm: React.FC = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div>
+                  {expiredToken ? (
+                    <div>Expired Token</div>
+                  ) : (
                     <div>
-                      <Form {...form}>
-                        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-                          <FormField
-                            control={form.control}
-                            name="newPassword"
-                            render={({ field }) => (
-                              <>
-                                <FormItem className={"relative w-full"}>
-                                  <FormLabel>New Password</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      {...field}
-                                      className={isMobile ? "text-base" : ""}
-                                      type={showPassword2 ? "text" : "password"}
-                                    />
-                                  </FormControl>
-                                  <Button
-                                    className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
-                                    size="icon"
-                                    type="button"
-                                    onClick={() => setShowPassword2(!showPassword2)}
-                                  >
-                                    <PasswordEye showPassword={showPassword2} />
-                                  </Button>
-                                </FormItem>
-                                <FormMessage />
-                              </>
-                            )}
-                          />
-                          <PasswordStrengthBar
-                            className={`mt-2 ${formData.newPassword === "" && "invisible"}`}
-                            password={formData.newPassword}
-                            scoreWordStyle={
-                              formData.newPassword === "" ? { visibility: "hidden" } : {}
-                            }
-                            onChangeScore={(s) => setPasswordScore(s)}
-                          />
+                      <div>
+                        <Form {...form}>
+                          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+                            <FormField
+                              control={form.control}
+                              name="newPassword"
+                              render={({ field }) => (
+                                <>
+                                  <FormItem className={"relative w-full"}>
+                                    <FormLabel>New Password</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        {...field}
+                                        className={isMobile ? "text-base" : ""}
+                                        type={showPassword2 ? "text" : "password"}
+                                      />
+                                    </FormControl>
+                                    <Button
+                                      className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                                      size="icon"
+                                      type="button"
+                                      onClick={() => setShowPassword2(!showPassword2)}
+                                    >
+                                      <PasswordEye showPassword={showPassword2} />
+                                    </Button>
+                                  </FormItem>
+                                  <FormMessage />
+                                </>
+                              )}
+                            />
+                            <PasswordStrengthBar
+                              className={`mt-2 ${formData.newPassword === "" && "invisible"}`}
+                              password={formData.newPassword}
+                              scoreWordStyle={
+                                formData.newPassword === "" ? { visibility: "hidden" } : {}
+                              }
+                              onChangeScore={(s) => setPasswordScore(s)}
+                            />
 
-                          <FormField
-                            control={form.control}
-                            name="newPassword2"
-                            render={({ field }) => (
-                              <>
-                                <FormItem className={"relative w-full"}>
-                                  <FormLabel>Verify Password</FormLabel>
-                                  <FormControl>
-                                    <Input
-                                      {...field}
-                                      className={isMobile ? "text-base" : ""}
-                                      type={showPassword3 ? "text" : "password"}
-                                    />
-                                  </FormControl>
-                                  <Button
-                                    className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
-                                    size="icon"
-                                    type="button"
-                                    onClick={() => setShowPassword3(!showPassword3)}
-                                  >
-                                    <PasswordEye showPassword={showPassword3} />
-                                  </Button>
-                                </FormItem>
-                                <FormMessage />
-                              </>
-                            )}
-                          />
+                            <FormField
+                              control={form.control}
+                              name="newPassword2"
+                              render={({ field }) => (
+                                <>
+                                  <FormItem className={"relative w-full"}>
+                                    <FormLabel>Verify Password</FormLabel>
+                                    <FormControl>
+                                      <Input
+                                        {...field}
+                                        className={isMobile ? "text-base" : ""}
+                                        type={showPassword3 ? "text" : "password"}
+                                      />
+                                    </FormControl>
+                                    <Button
+                                      className="absolute bottom-[4px] right-[2px] !ml-0 h-[calc(2.5rem-8px)] w-12"
+                                      size="icon"
+                                      type="button"
+                                      onClick={() => setShowPassword3(!showPassword3)}
+                                    >
+                                      <PasswordEye showPassword={showPassword3} />
+                                    </Button>
+                                  </FormItem>
+                                  <FormMessage />
+                                </>
+                              )}
+                            />
 
-                          <Button
-                            className="w-full md:w-52"
-                            disabled={
-                              loading ||
-                              passwordScore !== 4 ||
-                              formData.newPassword === "" ||
-                              formData.newPassword2 === "" ||
-                              formData.newPassword !== formData.newPassword2
-                            }
-                            type="submit"
-                          >
-                            {loading ? (
-                              <Icons.spinner className="mr-2 size-4 animate-spin" />
-                            ) : (
-                              "Update Password"
-                            )}
-                          </Button>
-                        </form>
-                      </Form>
+                            <Button
+                              className="w-full md:w-52"
+                              disabled={
+                                loading ||
+                                passwordScore !== 4 ||
+                                formData.newPassword === "" ||
+                                formData.newPassword2 === "" ||
+                                formData.newPassword !== formData.newPassword2
+                              }
+                              type="submit"
+                            >
+                              {loading ? (
+                                <Icons.spinner className="mr-2 size-4 animate-spin" />
+                              ) : (
+                                "Update Password"
+                              )}
+                            </Button>
+                          </form>
+                        </Form>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

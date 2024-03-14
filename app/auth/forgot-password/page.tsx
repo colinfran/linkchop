@@ -45,7 +45,7 @@ const ForgotPassword: React.FC = () => {
   const submitEmail = async (): Promise<void> => {
     try {
       setLoading(true)
-      const response = await fetch("/api/email", {
+      const response1 = await fetch("/api/auth/forgot-password", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ const ForgotPassword: React.FC = () => {
           type: "forgot-password",
         }),
       })
-      const { success } = await response.json()
+      const { success } = await response1.json()
       setSuccessful(success)
     } catch (error) {
       console.error(error)
@@ -134,7 +134,7 @@ const ForgotPassword: React.FC = () => {
                             </h2>
                             <p>
                               Please check your inbox for this email. It will provide a link that
-                              will allow you to reset your password.
+                              will allow you to reset your password
                             </p>
                           </div>
                         )}

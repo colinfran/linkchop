@@ -31,7 +31,7 @@ export const forgotPasswordTemplate = `
                       <p>Hello,</p>
                       <p>You have requested to reset your password.</p>
                       <p>Please use the below link to reset your password:</p>
-                      <a href="https://linkchop.com/auth/password-reset?id={id}">https://linkchop.com/auth/password-reset</a>
+                      <a href="https://linkchop.com/auth/password-reset?id={id}&email={email}">https://linkchop.com/auth/password-reset</a>
                       <br />
                       <p>Do not share this link with anyone!</p>
                       <br />

@@ -1,6 +1,6 @@
 import { drizzle } from "drizzle-orm/postgres-js"
 import { pgTable, varchar, boolean, date } from "drizzle-orm/pg-core"
-import { count, eq } from "drizzle-orm"
+import { count, eq, lt } from "drizzle-orm"
 import postgres from "postgres"
 import { compare, genSaltSync, hashSync } from "bcrypt-ts"
 import ShortUniqueId from "short-unique-id"
@@ -42,6 +42,12 @@ const visits = pgTable("visits", {
   engine_version: varchar("engine_version"),
   os_name: varchar("os_name"),
   os_version: varchar("os_version"),
+})
+
+const passwordResets = pgTable("password_resets", {
+  id: varchar("id"),
+  email: varchar("email"),
+  expiration: date("expiration"),
 })
 
 export type UserType = {
@@ -217,9 +223,11 @@ export const updateUser = async (data: any): Promise<any> => {
         const hash = hashSync(data.newPassword, salt)
         updatedData.password = hash
       } else {
-        const user = await getUserById(data.id)
+        const user = await getUser(data.email)
+        console.log(user)
         updatedData = { ...user[0] }
         data.created_at = updatedData.created_at
+        data.id = updatedData.id
         delete updatedData.updated_at
         delete updatedData.newPassword
         const salt = genSaltSync(10)
@@ -229,11 +237,42 @@ export const updateUser = async (data: any): Promise<any> => {
     }
     updatedData.created_at = new Date(data.created_at).toISOString()
     updatedData.updated_at = new Date().toISOString()
-    // console.log(updatedData)
     await db.update(users).set(updatedData).where(eq(users.id, data.id))
     return { success: true }
   } catch (error) {
     console.error("Error", error)
     return { success: false, errorMessage: error }
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createPasswordResetToken = async (email: string): Promise<any> => {
+  try {
+    return await db.insert(passwordResets).values({ email }).returning()
+  } catch (error) {
+    console.error("Error resetting password:", error)
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const isIdExpired = async (id: string): Promise<any> => {
+  try {
+    const query = await db.select().from(passwordResets).where(eq(passwordResets.id, id))
+    // Check if the result has any rows
+    const idExists = query.length > 0
+
+    // Check if the expiration has expired
+    return idExists ? new Date(query[0].expiration!) < new Date() : true
+  } catch (error) {
+    console.error("Error resetting password:", error)
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const deleteExpiredResets = async (): Promise<any> => {
+  try {
+    await db.delete(passwordResets).where(lt(passwordResets.expiration, new Date().toISOString()))
+  } catch (error) {
+    console.error("Error resetting password:", error)
   }
 }
