@@ -22,17 +22,18 @@ const UserNavigation: React.FC = () => {
   const [loggedOut, setLoggedOut] = useState(false)
 
   useEffect(() => {
-    if (!data && loggedOut) {
+    if (loggedOut) {
       router.push("/")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loggedOut, data])
+  }, [loggedOut])
 
   const logoutUser = async (): Promise<void> => {
     router.push("/")
     await signOut()
     router.push("/")
     setLoggedOut(true)
+    router.push("/")
   }
   return (
     <div className="w-auto md:w-[150px]">
