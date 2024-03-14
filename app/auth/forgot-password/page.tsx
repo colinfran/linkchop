@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useUser } from "@/components/user-provider"
 import { useIsMobile } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import React, { useState } from "react"
@@ -30,6 +31,7 @@ const ForgotPassword: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [successful, setSuccessful] = useState(null)
   const isMobile = useIsMobile()
+  const { data } = useUser()
 
   const form = useForm<UserEmailFormValues>({
     resolver: zodResolver(userLoginFormSchema),
@@ -68,9 +70,11 @@ const ForgotPassword: React.FC = () => {
     <>
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
         <div className="px-8 md:container md:space-y-2 md:p-12">
-          <div className="flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center">
+          <div
+            className={`${!data?.user && "mt-20"} flex flex-col items-center justify-center bg-background xl:flex-row xl:justify-center`}
+          >
             <div className="mb-20 flex h-full justify-center xl:mb-0 ">
-              <Card className="mt-20 max-w-[514px]">
+              <Card className="max-w-[514px]">
                 <CardHeader>
                   <CardTitle>Forgot Password</CardTitle>
                   <CardDescription>

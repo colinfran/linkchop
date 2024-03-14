@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/postgres-js"
-import { pgTable, varchar, boolean, date } from "drizzle-orm/pg-core"
+import { pgTable, varchar, boolean, date, timestamp } from "drizzle-orm/pg-core"
 import { count, eq, lt } from "drizzle-orm"
 import postgres from "postgres"
 import { compare, genSaltSync, hashSync } from "bcrypt-ts"
@@ -47,7 +47,7 @@ const visits = pgTable("visits", {
 const passwordResets = pgTable("password_resets", {
   id: varchar("id"),
   email: varchar("email"),
-  expiration: date("expiration"),
+  expiration: timestamp("expiration", { mode: "date" }),
 })
 
 export type UserType = {
@@ -260,9 +260,9 @@ export const isIdExpired = async (id: string): Promise<any> => {
     const query = await db.select().from(passwordResets).where(eq(passwordResets.id, id))
     // Check if the result has any rows
     const idExists = query.length > 0
-
+    if (!idExists) return true
     // Check if the expiration has expired
-    return idExists ? new Date(query[0].expiration!) < new Date() : true
+    return new Date(query[0].expiration!) < new Date()
   } catch (error) {
     console.error("Error resetting password:", error)
   }
@@ -272,7 +272,8 @@ export const isIdExpired = async (id: string): Promise<any> => {
 export const deleteExpiredResets = async (): Promise<any> => {
   console.log("RUNNING CRON TO DELETE EXPIRED RESETS")
   try {
-    await db.delete(passwordResets).where(lt(passwordResets.expiration, new Date().toISOString()))
+    await db.delete(passwordResets).where(lt(passwordResets.expiration, new Date()))
+    console.log("Expired password resets deleted successfully.")
   } catch (error) {
     console.error("Error resetting password:", error)
   }

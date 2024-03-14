@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
-import { useIsMobile } from "@/lib/utils"
+import { checkIfValidUUID, useIsMobile } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter, useSearchParams } from "next/navigation"
 import React, { useEffect, useState } from "react"
@@ -43,7 +43,7 @@ const PasswordResetForm: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [successful, setSuccessful] = useState<null | boolean>(null)
 
-  const [expiredToken, setExpiredToken] = useState(false)
+  const [status, setStatus] = useState<null | string>(null)
 
   const isMobile = useIsMobile()
 
@@ -64,7 +64,6 @@ const PasswordResetForm: React.FC = () => {
         setCount((prevCount) => prevCount - 1)
       }, 1000)
     }
-
     return () => clearInterval(timer)
   }, [count, successful])
 
@@ -104,14 +103,21 @@ const PasswordResetForm: React.FC = () => {
           id,
         }),
       })
-      const { message } = await response.json()
+      const { message, success } = await response.json()
+      console.log
       if (message === "expired token") {
-        setExpiredToken(true)
+        setStatus("Expired Token")
+      }
+      if (success) {
+        setStatus("Valid Token")
       }
     }
     if (!id) {
       router.push("/auth")
     } else {
+      if (!checkIfValidUUID(id)) {
+        return setStatus("Invalid Token")
+      }
       checkId()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -158,6 +164,8 @@ const PasswordResetForm: React.FC = () => {
     }
   }
 
+  console.log(status)
+
   return (
     <>
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
@@ -172,9 +180,15 @@ const PasswordResetForm: React.FC = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {expiredToken ? (
-                    <div>Expired Token</div>
-                  ) : (
+                  {status === null && (
+                    <div>
+                      <Icons.spinner className="mr-2 size-4 animate-spin" />
+                    </div>
+                  )}
+                  {(status === "Invalid Token" || status === "Expired Token") && (
+                    <div>{status}</div>
+                  )}
+                  {status === "Valid Token" && (
                     <div>
                       <div>
                         <Form {...form}>
