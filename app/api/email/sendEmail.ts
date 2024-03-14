@@ -42,7 +42,7 @@ const sendEmail = async (data: Props): Promise<boolean> => {
     "{email}": data.email,
   })
   let values = {
-    from: process.env.ZOHO_EMAIL,                                              
+    from: process.env.ZOHO_EMAIL,
     to: data.email,
     subject: data.subject,
     html: emailHtml,
