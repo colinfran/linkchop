@@ -89,6 +89,13 @@ const PasswordResetForm: React.FC = () => {
     },
   })
 
+  useEffect(() => {
+    if (!id) {
+      router.push("/auth")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id])
+
   const { watch, handleSubmit, formState } = form
   const formData = watch()
 
