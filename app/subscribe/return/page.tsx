@@ -27,7 +27,6 @@ const Return: React.FC = () => {
         }),
       })
       const val = await response.json()
-      console.log(val)
       setStatus(val.status)
     }
     if (user?.email) {

@@ -14,7 +14,6 @@ export async function POST(request: Request): Promise<Response> {
   try {
     // check if id is expired
     const isExpired = await isIdExpired(id)
-    console.log(isExpired)
     if (isExpired) return Response.json({ success: false, message: "expired token" })
     return Response.json({ success: true, message: "Id is valid" })
   } catch (error) {

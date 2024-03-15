@@ -104,7 +104,6 @@ const PasswordResetForm: React.FC = () => {
         }),
       })
       const { message, success } = await response.json()
-      console.log
       if (message === "expired token") {
         setStatus("Expired Token")
       }
@@ -163,8 +162,6 @@ const PasswordResetForm: React.FC = () => {
       console.error(error)
     }
   }
-
-  console.log(status)
 
   return (
     <>
