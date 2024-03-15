@@ -41,9 +41,7 @@ const Page: React.FC = () => {
           }
           const urlsArr = await response.json()
           const val = urlsArr.sort(
-            (a: UrlsProps, b: UrlsProps) =>
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (new Date(b.created_at) as any) - (new Date(a.created_at) as any),
+            (a: UrlsProps, b: UrlsProps) => +new Date(b.created_at) - +new Date(a.created_at),
           )
           setUrls(val)
           setFilteredUrls(val)

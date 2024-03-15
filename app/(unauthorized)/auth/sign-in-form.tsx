@@ -1,8 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
-/* eslint-disable tailwindcss/no-custom-classname */
-/* eslint-disable max-len */
-/* eslint-disable no-useless-escape */
 import React, { useState, Suspense } from "react"
 import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"

@@ -6,10 +6,8 @@ import { getUser } from "@/db/tasks"
 import { subscribeTemplate } from "./templates/subscribe-template"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const replaceKeysWithValue = (string: string, object: any): string => {
-  // Create a regular expression pattern to match all keys in the object
+const replaceKeysWithValue = (string: string, object: { [x: string]: string }): string => {
   const pattern = new RegExp(Object.keys(object).join("|"), "g")
-  // Replace all occurrences of keys with their corresponding values
   return string.replace(pattern, (match: string | number) => object[match])
 }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -2,9 +2,15 @@ import { eq } from "drizzle-orm"
 import { compare, genSaltSync, hashSync } from "bcrypt-ts"
 import { db } from "../init"
 import { users } from "../tables"
+import { getUser } from "./get-user"
+
+type Props = {
+  success: boolean
+  errorMessage?: string
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const updateUser = async (data: any): Promise<any> => {
+export const updateUser = async (data: any): Promise<Props> => {
   let updatedData = { ...data }
   delete updatedData.updated_at
   try {
@@ -55,6 +61,6 @@ export const updateUser = async (data: any): Promise<any> => {
     return { success: true }
   } catch (error) {
     console.error("Error", error)
-    return { success: false, errorMessage: error }
+    return { success: false, errorMessage: `${error}` }
   }
 }

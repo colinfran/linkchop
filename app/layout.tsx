@@ -36,8 +36,7 @@ type Props = {
   children?: React.ReactNode
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const RootLayout: React.FC<any> = ({ children, session }: Props) => {
+const RootLayout: React.FC<Props> = ({ children, session }: Props) => {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${GeistSans.variable}`}>

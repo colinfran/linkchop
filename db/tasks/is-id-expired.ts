@@ -2,8 +2,7 @@ import { eq } from "drizzle-orm"
 import { db } from "../init"
 import { passwordResets } from "../tables"
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isIdExpired = async (id: string): Promise<any> => {
+export const isIdExpired = async (id: string): Promise<boolean> => {
   try {
     const query = await db.select().from(passwordResets).where(eq(passwordResets.id, id))
     // Check if the result has any rows
@@ -13,5 +12,6 @@ export const isIdExpired = async (id: string): Promise<any> => {
     return new Date(query[0].expiration!) < new Date()
   } catch (error) {
     console.error("Error resetting password:", error)
+    return true
   }
 }

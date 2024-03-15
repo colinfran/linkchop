@@ -57,8 +57,7 @@ const PasswordResetForm: React.FC = () => {
   const router = useRouter()
 
   useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    let timer: any
+    let timer: ReturnType<typeof setInterval>
     if (successful && count > 0) {
       timer = setInterval(() => {
         setCount((prevCount) => prevCount - 1)

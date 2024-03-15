@@ -39,8 +39,7 @@ export const useIsMobile = (): boolean => {
   return isMobile
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const errorMessages: any = {
+export const errorMessages = {
   Signin: "Try signing with a different account.",
   OAuthSignin: "Try signing with a different account.",
   OAuthCallback: "Try signing with a different account.",
