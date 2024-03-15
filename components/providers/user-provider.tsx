@@ -57,7 +57,7 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
   }
 
   useEffect(() => {
-    if (sessionData?.user.data.id) {
+    if (sessionData?.user) {
       setData(sessionData)
       const setUserData = async (): Promise<void> => {
         const userVal = await getUserData(sessionData?.user.data.id)
@@ -65,8 +65,7 @@ export const UserProvider: React.FC<Props> = ({ children }: Props) => {
       }
       setUserData()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sessionData?.user.data.id])
+  }, [sessionData])
 
   const update = (): void => {
     const setUserData = async (): Promise<void> => {

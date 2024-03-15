@@ -1,4 +1,3 @@
-"use client"
 import React from "react"
 import Link from "next/link"
 
@@ -17,7 +16,7 @@ const Page: React.FC = () => {
                   <p className="pt-10">
                     Your privacy is important to us. It is LinkChop&quot;s policy to respect your
                     privacy regarding any information we may collect from you across our website,{" "}
-                    <Link className="underline" href="#">
+                    <Link className="underline" href="/">
                       https://linkchop.com
                     </Link>
                     , and other sites we own and operate.
