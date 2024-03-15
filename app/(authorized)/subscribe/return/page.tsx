@@ -22,7 +22,7 @@ const Page: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: user.email,
+          email: user?.email,
           sessionId,
         }),
       })
@@ -43,8 +43,8 @@ const Page: React.FC = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            name: user.name,
-            email: user.email,
+            name: user?.name,
+            email: user?.email,
             subject: "Thank you for purchasing the premium subscription!",
             type: "subscribe",
           }),
@@ -72,8 +72,8 @@ const Page: React.FC = () => {
             <Card className="p-20">
               <section id="success">
                 <p>
-                  We appreciate your business! A confirmation email will be sent to {user.email}. If
-                  you have any questions, please email{" "}
+                  We appreciate your business! A confirmation email will be sent to {user?.email}.
+                  If you have any questions, please email{" "}
                   <a href="mailto:colin@linkchop.com">colin@linkchop.com</a>.
                 </p>
               </section>

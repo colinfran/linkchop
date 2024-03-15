@@ -19,7 +19,7 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     if (user) {
-      if (!user.is_premium_user) {
+      if (!user?.is_premium_user) {
         router.push("/404")
       } else {
         setLoading(false)

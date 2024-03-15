@@ -30,7 +30,7 @@ const Page: React.FC = () => {
       try {
         const response = await fetch("/api/checkout/create", {
           method: "POST",
-          body: JSON.stringify({ email: user.email }),
+          body: JSON.stringify({ email: user?.email }),
         })
         const val = await response.json()
         setClientSecret(val.clientSecret)

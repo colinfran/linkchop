@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input"
 import { useUser } from "@/components/providers/user-provider"
 import { Icons } from "@/assets/icons"
 import { toast } from "@/components/ui/use-toast"
+import { UserData } from "@/types/user"
 
 const profileFormSchema = z.object({
   email: z
@@ -56,7 +57,7 @@ const Page: React.FC = () => {
 
   useEffect(() => {
     if (user?.email) {
-      reset({ email: user.email, name: user.name })
+      reset({ email: user?.email, name: user?.name })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.email])
@@ -89,7 +90,7 @@ const Page: React.FC = () => {
       }
       const { success, errorMessage } = await response.json()
       if (success) {
-        setUser({ ...user, email: formData.email, name: formData.name })
+        setUser({ ...user, email: formData.email, name: formData.name } as UserData)
         toast({
           title: "Success",
           description: `You have successfully changed ${submissionForStr} associated with this account.`,

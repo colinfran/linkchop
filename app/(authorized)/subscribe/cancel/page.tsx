@@ -36,9 +36,9 @@ const Page: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: user.email,
-          name: user.name,
-          id: user.id,
+          email: user?.email,
+          name: user?.name,
+          id: user?.id,
           subject: "Unsubscribe request",
           type: "unsubscribe",
           reason: text,

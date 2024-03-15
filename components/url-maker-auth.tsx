@@ -49,8 +49,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
   const { watch, handleSubmit, formState } = form
   const formData = watch()
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const generateUrl = (e: any): void => {
+  const generateUrl = (): void => {
     const createUrl = async (): Promise<void> => {
       setLoading(true)
       try {
@@ -76,15 +75,13 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
             visit_count: 0,
           },
           ...urls,
-        ]
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setUrls(arr as any)
+        ] as UrlsProps[]
+        setUrls(arr)
       } catch (error) {
         console.error(error)
       }
       setLoading(false)
     }
-    e.preventDefault()
     createUrl()
   }
 

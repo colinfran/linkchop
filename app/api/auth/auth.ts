@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { User } from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { compare } from "bcrypt-ts"
 import { getUser } from "@/db/tasks"
@@ -21,14 +21,13 @@ export const {
   providers: [
     Credentials({
       // Authorization function for credentials provider.
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      async authorize(credentials): Promise<any> {
+      async authorize(credentials): Promise<User | null> {
         const { email, password } = credentials
         const user = await getUser(email as string)
         // Check if user exists and compare passwords.
-        if (user.length === 0) return null
+        if (user?.length === 0) return null
         const passwordsMatch = await compare(password as string, user[0].password!)
-        if (passwordsMatch) return user[0]
+        if (passwordsMatch) return user[0] as User
         return null
       },
     }),
@@ -45,8 +44,8 @@ export const {
       if (user) {
         newVal = {
           data: {
-            id: user.id,
-            email: user.email,
+            id: user?.id,
+            email: user?.email,
           },
           exp: token.exp,
           iat: token.iat,

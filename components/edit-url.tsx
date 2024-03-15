@@ -61,12 +61,10 @@ const EditUrl: React.FC<EditUrlProps> = ({
       }
       const { success } = await response.json()
       if (success) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const newData = urls.map((obj: any) =>
+        const newData = urls.map((obj: UrlsProps) =>
           obj.id === id ? Object.assign({}, obj, { ...obj, original_url: updatedUrl }) : obj,
         )
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        setUrls(newData as any)
+        setUrls(newData)
       }
     } catch (error) {
       console.error(error)

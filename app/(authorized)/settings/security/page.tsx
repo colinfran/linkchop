@@ -23,6 +23,7 @@ import { toast } from "@/components/ui/use-toast"
 import PasswordStrengthBar from "react-password-strength-bar"
 import PasswordEye from "@/components/password-eye"
 import { useIsMobile } from "@/lib/utils"
+import { UserData } from "@/types/user"
 
 const securityFormSchema = z
   .object({
@@ -91,7 +92,7 @@ const Page: React.FC = () => {
       }
       const { success, errorMessage } = await response.json()
       if (success) {
-        setUser({ ...user, password: formData.newPassword })
+        setUser({ ...user, password: formData.newPassword } as UserData)
         toast({
           title: "Success",
           description: "You have successfully changed the password associated with this account.",

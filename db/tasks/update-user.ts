@@ -33,8 +33,8 @@ export const updateUser = async (
       }
     }
     if (updatedData.newPassword) {
+      // authenticated user is updating password
       if (updatedData.oldPassword) {
-        // authenticated user is updating password
         const passwordsMatch = await compare(updatedData.oldPassword, data.password)
         if (!passwordsMatch) {
           return {
@@ -47,8 +47,9 @@ export const updateUser = async (
         const salt = genSaltSync(10)
         const hash = hashSync(data.newPassword, salt)
         updatedData.password = hash
-      } else {
-        // user forgot password
+      }
+      // user forgot password
+      else {
         const user = await getUser(data.email)
         console.log(user)
         updatedData = { ...user[0] }

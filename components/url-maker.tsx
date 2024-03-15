@@ -40,8 +40,7 @@ const UrlMaker: React.FC = () => {
 
   const { watch, handleSubmit } = form
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const generateUrl = (e: any): void => {
+  const generateUrl = (): void => {
     const createUrl = async (): Promise<void> => {
       setLoading(true)
       const formData = watch()
@@ -64,7 +63,6 @@ const UrlMaker: React.FC = () => {
       }
       setLoading(false)
     }
-    e.preventDefault()
     createUrl()
   }
 
