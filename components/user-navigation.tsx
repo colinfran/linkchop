@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { signOut } from "next-auth/react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Home, LineChart, LogOut, Settings, Unlock } from "lucide-react"
 import { Badge } from "./ui/badge"
@@ -18,8 +17,6 @@ import { useUser } from "./user-provider"
 const UserNavigation: React.FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user } = useUser()
-  const router = useRouter()
-  const [loggedOut, setLoggedOut] = useState(false)
 
   const logoutUser = async (): Promise<void> => {
     await signOut({ redirect: true })
