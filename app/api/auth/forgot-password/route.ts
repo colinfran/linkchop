@@ -14,7 +14,7 @@ export async function POST(request: Request): Promise<Response> {
   const { email, subject, type } = res
   try {
     const data = await createPasswordResetToken(email)
-    const { id } = data[0]
+    const { id } = data ? data[0] : { id: "" }
     await sendEmail({ subject, email, id, type })
     return Response.json({ success: true, message: "Reset token created" })
   } catch (error) {
