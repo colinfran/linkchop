@@ -1,16 +1,15 @@
 import { genSaltSync, hashSync } from "bcrypt-ts"
 import { users } from "../tables"
 import { db } from "../init"
+import { UserType } from "../types"
 
-export type UserType = {
-  id: string | null
-  name: string | null
-  email: string | null
-  password: string | null
-  is_premium_user: boolean | null
-  created_at: string | null
-  updated_at: string | null
-}
+/**
+ * Creates a user in the database.
+ * @param {string} email - The email of the user.
+ * @param {string} password - The password of the user.
+ * @param {string} name - The name of the user.
+ * @returns {Promise<UserType[]>} A promise that resolves to an array containing the created user.
+ */
 
 export const createUser = async (
   email: string,

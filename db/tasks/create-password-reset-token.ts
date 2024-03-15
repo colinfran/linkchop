@@ -1,8 +1,14 @@
 import { db } from "../init"
 import { passwordResets } from "../tables"
+import { PasswordResetTokenProps } from "../types"
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createPasswordResetToken = async (email: string): Promise<any> => {
+/**
+ * Creates a password reset token in the database.
+ * @param {string} email - The email associated with the password reset.
+ * @returns {Promise<PasswordResetTokenProps>} A promise that resolves to the created password reset token.
+ */
+
+export const createPasswordResetToken = async (email: string): Promise<PasswordResetTokenProps> => {
   try {
     return await db.insert(passwordResets).values({ email }).returning()
   } catch (error) {

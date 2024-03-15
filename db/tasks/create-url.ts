@@ -2,8 +2,15 @@ import { eq } from "drizzle-orm"
 import ShortUniqueId from "short-unique-id"
 import { db } from "../init"
 import { urls } from "../tables"
+import { CreateUrlsQueryType } from "../types"
 
-type CreateUrlsQueryType = { id: string; original_url: string; user_id: string }
+/**
+ * Creates a shortened URL in the database.
+ * @param {string} idVal - The unique identifier for the shortened URL.
+ * @param {string} originalUrl - The original URL to be shortened.
+ * @param {string | null} userId - The user ID associated with the shortened URL (if any).
+ * @returns {Promise<CreateUrlsQueryType[]>} A promise that resolves to an array containing the created shortened URL.
+ */
 
 export const createUrl = async (
   idVal: string,
@@ -11,9 +18,7 @@ export const createUrl = async (
   userId: string | null,
 ): Promise<CreateUrlsQueryType[]> => {
   let id = idVal
-  // check to see if idVal exists (it shoudlnt but theres like a .00000001 chance it could)
-  // if it does exist, get a new Id. keep checking until one of the generated Id's is unique.
-  // this while loop will probably never run but better safe than sorry!
+  // Check to see if idVal exists; if it does, generate a new ID until a unique one is found.
   let result = await db.select().from(urls).where(eq(urls.id, id))
   while (result.length !== 0) {
     const uid = new ShortUniqueId({ length: 6 })

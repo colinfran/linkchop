@@ -1,14 +1,13 @@
 import { count, eq } from "drizzle-orm"
 import { db } from "../init"
 import { urls, visits } from "../tables"
+import { GetUrlsType } from "../types"
 
-type GetUrlsType = {
-  id: string | null
-  original_url: string | null
-  created_at: string | null
-  user_id: string | null
-  visit_count: number | null
-}
+/**
+ * Retrieves URLs from the database associated with a specific user ID.
+ * @param {string} userId - The ID of the user whose URLs are to be retrieved.
+ * @returns {Promise<GetUrlsType[]>} A promise that resolves to an array containing the retrieved URLs.
+ */
 
 export const getUrls = async (userId: string): Promise<GetUrlsType[]> => {
   return await db

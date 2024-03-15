@@ -1,18 +1,13 @@
-import { count, eq, lt } from "drizzle-orm"
-import { compare, genSaltSync, hashSync } from "bcrypt-ts"
-import ShortUniqueId from "short-unique-id"
+import { eq } from "drizzle-orm"
 import { db } from "../init"
 import { users } from "../tables"
+import { UserType } from "../types"
 
-type UserType = {
-  id: string | null
-  name: string | null
-  email: string | null
-  password: string | null
-  is_premium_user: boolean | null
-  created_at: string | null
-  updated_at: string | null
-}
+/**
+ * Retrieves a user from the database by their email.
+ * @param {string} email - The email of the user to retrieve.
+ * @returns {Promise<UserType[]>} A promise that resolves to an array containing the retrieved user.
+ */
 
 export const getUser = async (email: string): Promise<UserType[]> => {
   const cleanedEmail = email.toLowerCase()

@@ -4,19 +4,23 @@ import { db } from "../init"
 import { users } from "../tables"
 import { getUser } from "./get-user"
 
-type Props = {
-  success: boolean
-  errorMessage?: string
-}
+/**
+ * Updates user data in the database.
+ * @param {object} data - The data to update.
+ * @returns {Promise<Props>} A promise that resolves to an object indicating the success of the update operation.
+ */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const updateUser = async (data: any): Promise<Props> => {
+type Props = { success: boolean; errorMessage?: string }
+
+export const updateUser = async (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data: any,
+): Promise<Props> => {
   let updatedData = { ...data }
   delete updatedData.updated_at
   try {
     if (updatedData.newEmail) {
       delete updatedData.newEmail
-      // check if someone is using new email
       const newEmail = data.newEmail
       const result = await db.select().from(users).where(eq(users.email, newEmail))
       if (result.length !== 0) {
