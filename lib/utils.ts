@@ -39,8 +39,7 @@ export const useIsMobile = (): boolean => {
   return isMobile
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const errorMessages: any = {
+export const errorMessages = {
   Signin: "Try signing with a different account.",
   OAuthSignin: "Try signing with a different account.",
   OAuthCallback: "Try signing with a different account.",
@@ -52,7 +51,7 @@ export const errorMessages: any = {
   EmailSignin: "Invalid email address and/or password.",
   CredentialsSignin: "Invalid email address and/or password.",
   default: "Unable to sign in.",
-}
+} as { [key: string]: string }
 
 export const checkIfValidUUID = (str: string): boolean => {
   // Regular expression to check if string is a valid UUID
