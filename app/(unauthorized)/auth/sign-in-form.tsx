@@ -64,10 +64,10 @@ const SignInForm: React.FC = () => {
           password: formData.password,
         })
       } catch (e) {
+        setLoading(false)
         console.error(e)
-        setError("An error Occured while trying to sign in.")
+        setError("An error occured while trying to sign in.")
       }
-      setLoading(false)
     }
     runSignIn()
   }
