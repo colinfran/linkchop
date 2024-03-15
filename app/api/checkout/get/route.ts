@@ -1,4 +1,4 @@
-import { setSubscriber } from "@/app/db"
+import { setSubscriber } from "@/db/tasks"
 import { NextResponse } from "next/server"
 import stripe from "stripe"
 

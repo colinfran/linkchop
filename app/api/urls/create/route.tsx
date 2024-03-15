@@ -1,4 +1,4 @@
-import { createUrl } from "app/db"
+import { createUrl } from "@/db/tasks"
 import ShortUniqueId from "short-unique-id"
 
 /**

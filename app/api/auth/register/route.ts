@@ -1,4 +1,4 @@
-import { createUser, getUser } from "app/db"
+import { createUser, getUser } from "@/db/tasks"
 import sendEmail from "../../email/sendEmail"
 
 /**

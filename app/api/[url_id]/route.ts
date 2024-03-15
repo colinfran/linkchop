@@ -1,4 +1,4 @@
-import { getUrl, addVisit } from "app/db"
+import { getUrl, addVisit } from "@/db/tasks"
 import { NextResponse, userAgent } from "next/server"
 
 /**

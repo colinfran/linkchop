@@ -15,7 +15,6 @@ import { Badge } from "./ui/badge"
 import { useUser } from "./user-provider"
 
 const UserNavigation: React.FC = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const { user } = useUser()
 
   const logoutUser = async (): Promise<void> => {

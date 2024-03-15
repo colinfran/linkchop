@@ -1,4 +1,4 @@
-import { getUserById } from "app/db"
+import { getUserById } from "@/db/tasks"
 
 /**
  * Handles POST requests to the '/api/urls/get' endpoint.

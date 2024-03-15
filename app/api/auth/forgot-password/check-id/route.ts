@@ -1,4 +1,4 @@
-import { isIdExpired } from "app/db"
+import { isIdExpired } from "@/db/tasks"
 
 /**
  * Handles POST requests to the '/api/auth/forgot-password/check-id' endpoint.

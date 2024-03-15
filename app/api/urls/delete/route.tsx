@@ -1,4 +1,4 @@
-import { deleteUrl } from "app/db"
+import { deleteUrl } from "@/db/tasks"
 
 /**
  * Handles POST requests to the '/api/urls/delete' endpoint.

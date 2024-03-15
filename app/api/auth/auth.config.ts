@@ -6,6 +6,10 @@ const privateRoutes = [
   "/settings/profile",
   "/settings/subscription",
   "/settings/display",
+  "/settings/security",
+  "/subscribe",
+  "/subscribe/cancel",
+  "/subscribe/return",
 ]
 
 export const authConfig = {

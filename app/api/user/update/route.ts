@@ -1,4 +1,4 @@
-import { updateUser } from "app/db"
+import { updateUser } from "@/db/tasks"
 
 /**
  * Handles POST requests to the '/api/urls/get' endpoint.

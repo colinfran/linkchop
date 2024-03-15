@@ -1,4 +1,4 @@
-import { editUrl } from "app/db"
+import { editUrl } from "@/db/tasks"
 /**
  * Handles POST requests to the '/api/urls/edit' endpoint.
  * Edits the original URL of a shortened URL in the database based on the provided URL ID.

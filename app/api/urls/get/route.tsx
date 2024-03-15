@@ -1,4 +1,4 @@
-import { getUrls } from "app/db"
+import { getUrls } from "@/db/tasks"
 
 /**
  * Handles POST requests to the '/api/urls/get' endpoint.

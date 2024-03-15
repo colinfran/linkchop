@@ -1,4 +1,4 @@
-import { createPasswordResetToken } from "app/db"
+import { createPasswordResetToken } from "@/db/tasks"
 import sendEmail from "../../email/sendEmail"
 
 /**
