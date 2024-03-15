@@ -11,7 +11,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { isValidUrl } from "@/lib/utils"
-import { UrlsProps } from "@/app/home/page"
+import { UrlsProps } from "@/app/(authorized)/home/page"
 
 type EditUrlProps = {
   original_url: string

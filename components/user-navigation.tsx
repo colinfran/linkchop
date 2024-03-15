@@ -12,7 +12,7 @@ import Link from "next/link"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Home, LineChart, LogOut, Settings, Unlock } from "lucide-react"
 import { Badge } from "./ui/badge"
-import { useUser } from "./user-provider"
+import { useUser } from "./providers/user-provider"
 
 const UserNavigation: React.FC = () => {
   const { user } = useUser()
