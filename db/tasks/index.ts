@@ -12,6 +12,7 @@ import { getUserById } from "./get-user-by-id"
 import { isIdExpired } from "./is-id-expired"
 import { setSubscriber } from "./set-subscriber"
 import { updateUser } from "./update-user"
+import { getSubscriptionInfo } from "./get-subscription-info"
 
 export {
   addVisit,
@@ -28,4 +29,5 @@ export {
   isIdExpired,
   setSubscriber,
   updateUser,
+  getSubscriptionInfo,
 }

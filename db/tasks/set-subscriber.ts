@@ -1,6 +1,5 @@
-import { eq } from "drizzle-orm"
 import { db } from "../init"
-import { users } from "../tables"
+import { subscriptions } from "../tables"
 
 /**
  * Sets a user as a subscriber in the database.
@@ -8,9 +7,14 @@ import { users } from "../tables"
  * @returns {Promise<boolean>} A promise that resolves to a boolean if the user was set as a subscriber
  */
 
-export const setSubscriber = async (email: string): Promise<boolean> => {
+export const setSubscriber = async (id: string): Promise<boolean> => {
   try {
-    await db.update(users).set({ is_premium_user: true }).where(eq(users.email, email))
+    await db.insert(subscriptions).values({
+      user_id: id,
+      start_date: new Date().toISOString(),
+      status: "active",
+      expiration_day: new Date().getDate(),
+    })
     return true
   } catch (error) {
     console.error("Error setting subscriber:", error)

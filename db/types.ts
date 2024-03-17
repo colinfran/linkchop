@@ -64,6 +64,14 @@ type PasswordResetTokenProps =
     }[]
   | undefined
 
+type GetSubscriptionType = {
+  subscription_id: string | null
+  user_id: string | null
+  start_date: string | null
+  expiration_day: number | null
+  status: string | null
+}
+
 export type {
   UserType,
   UpdateUserType,
@@ -72,4 +80,5 @@ export type {
   GetUrlsType,
   VisitData,
   PasswordResetTokenProps,
+  GetSubscriptionType,
 }

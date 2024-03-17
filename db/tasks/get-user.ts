@@ -1,5 +1,5 @@
-import { eq } from "drizzle-orm"
 import { db } from "../init"
+import { eq as equals } from "drizzle-orm"
 import { users } from "../tables"
 import { UserType } from "../types"
 
@@ -11,5 +11,28 @@ import { UserType } from "../types"
 
 export const getUser = async (email: string): Promise<UserType[]> => {
   const cleanedEmail = email.toLowerCase()
-  return await db.select().from(users).where(eq(users.email, cleanedEmail))
+
+  const userArr = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(equals(users.email, cleanedEmail))
+  const { id } = userArr[0]
+
+  console.log(id)
+  const activeSubscription = !!(await db.query.subscriptions.findFirst({
+    where: (subscription, { eq, gte }) =>
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      eq(subscription.user_id as any, id as any) &&
+      eq(subscription.status, "active") &&
+      gte(subscription.expiration_day, new Date().getDate()),
+  }))
+
+  const user = await db.select().from(users).where(equals(users.email, cleanedEmail))
+
+  const value = {
+    ...user[0],
+    is_premium_user: activeSubscription,
+  }
+  console.log(value)
+  return [value]
 }

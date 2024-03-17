@@ -15,9 +15,9 @@ const stripeInstance = new stripe(process.env.STRIPE_SECRET_KEY!)
 export async function POST(request: Request): Promise<Response> {
   try {
     const res = await request.json()
-    const { email, sessionId } = res
+    const { id, sessionId } = res
     const session = await stripeInstance.checkout.sessions.retrieve(sessionId!)
-    await setSubscriber(email)
+    await setSubscriber(id)
     return NextResponse.json({
       status: session.status,
     })

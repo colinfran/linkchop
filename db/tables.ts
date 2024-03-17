@@ -1,21 +1,42 @@
-import { pgTable, varchar, boolean, date, timestamp } from "drizzle-orm/pg-core"
+import { pgTable, varchar, boolean, date, timestamp, integer } from "drizzle-orm/pg-core"
+import { relations } from "drizzle-orm"
 
 export const users = pgTable("users", {
   id: varchar("id"),
   name: varchar("name"),
   email: varchar("email"),
   password: varchar("password"),
-  is_premium_user: boolean("is_premium_user"),
   created_at: date("created_at"),
   updated_at: date("updated_at"),
 })
 
+export const subscriptions = pgTable("subscriptions", {
+  subscription_id: varchar("subscription_id"),
+  user_id: varchar("user_id"),
+  start_date: date("start_date"),
+  expiration_day: integer("expiration_day"),
+  status: varchar("status"),
+  end_date: date("end_date"),
+})
+
+export const usersRelations = relations(users, ({ one }) => ({
+  subscriptions: one(subscriptions),
+}))
+
 export const urls = pgTable("urls", {
   id: varchar("id"),
   original_url: varchar("original_url"),
-  user_id: varchar("user_id") || "",
+  user_id: varchar("user_id").references(() => users.id) || "",
   created_at: date("created_at"),
 })
+
+export const urlsRelations = relations(urls, ({ one, many }) => ({
+  user: one(users, {
+    fields: [urls.user_id],
+    references: [users.id],
+  }),
+  urls: many(urls),
+}))
 
 export const visits = pgTable("visits", {
   id: varchar("id"),

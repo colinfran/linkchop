@@ -22,7 +22,7 @@ const Page: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          email: user?.email,
+          id: user?.id,
           sessionId,
         }),
       })
