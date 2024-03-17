@@ -69,20 +69,6 @@ const sendEmail = async (data: Props): Promise<boolean> => {
       html: emailHtml,
     }
   }
-  if (data.type === "unsubscribe") {
-    emailHtml = replaceKeysWithValue(unsubscribeTemplate, {
-      "{name}": data.name || "",
-      "{email}": data.email || "",
-      "{id}": data.id || "",
-      "{reason}": data.reason || "",
-    })
-    values = {
-      from: process.env.ZOHO_EMAIL,
-      to: process.env.ZOHO_UNSUBSCRIBE_SEND_EMAIL || "",
-      subject: data.subject,
-      html: emailHtml,
-    }
-  }
   if (data.type === "subscribe") {
     emailHtml = replaceKeysWithValue(subscribeTemplate, {
       "{name}": data.name || "",

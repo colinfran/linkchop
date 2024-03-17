@@ -32,7 +32,7 @@ export const subscribeTemplate = `
                         <p>Hello {name},</p>
                         <p>Thank you for purchasing the premium monthly subscription. </p>
                         <p>You should receive the purchase receipt in another email.</p>
-                        <p>If you decide to cancel your premium subscription, you can do so <a href="/subscribe/cancel">here</a></p>
+                        <p>If you decide to cancel your premium subscription, you can do so <a href="https://linkchop.com/settings/subscription">here</a></p>
                         <p>If you have any questions or need assistance, feel free to reach out to our support team at <a href="mailto:colin@linkchop.com">colin@linkchop.com</a>. Thanks again for signing up for the LinkChop premium features! We hope you enjoy your experience. </p><br>
                         <div>Best regards,</div>
                         <div>Colin from the LinkChop Team</div>
