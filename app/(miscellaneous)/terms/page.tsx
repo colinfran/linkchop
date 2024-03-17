@@ -1,6 +1,6 @@
 import React from "react"
 
-const Page: React.FC = () => {
+const Page: React.FC = async () => {
   return (
     <>
       <div className="w-full space-y-6 py-6 xl:space-y-16">
