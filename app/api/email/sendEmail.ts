@@ -1,6 +1,5 @@
 import nodemailer from "nodemailer"
 import { signupTemplate } from "./templates/signup-template"
-import { unsubscribeTemplate } from "./templates/unsubscribe-template"
 import { forgotPasswordTemplate } from "./templates/forgot-password-template"
 import { getUser } from "@/db/tasks"
 import { subscribeTemplate } from "./templates/subscribe-template"
