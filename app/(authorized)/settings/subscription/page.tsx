@@ -29,7 +29,6 @@ const Page: React.FC = () => {
     status: "",
   })
   const [nextPaymentDate, setNextPaymentDate] = useState<string | null>(null)
-  const [startDate, setStartDate] = useState()
   const [remainingDays, setRemainingDays] = useState<number>(0)
   const [unsubscribeLoading, setUnsubscribeLoading] = useState(false)
 

@@ -1,4 +1,3 @@
-import { getUrls } from "@/db/tasks"
 import { unsubscribeUser } from "@/db/tasks/unsubscribe-user"
 
 /**

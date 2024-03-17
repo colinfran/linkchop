@@ -32,7 +32,7 @@ const Page: React.FC = () => {
     if (user?.email) {
       getSessionId()
     }
-  }, [user?.email])
+  }, [user])
 
   useEffect(() => {
     const sendEmail = async (): Promise<void> => {
