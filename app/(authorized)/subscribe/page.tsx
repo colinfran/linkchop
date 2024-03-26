@@ -60,10 +60,6 @@ const Page: React.FC = () => {
           <Card className="bg-white p-5 md:min-h-[1079px] md:p-20">
             <div className="space-y-2 text-center">
               <h1 className="text-3xl font-bold text-black">Subscribe</h1>
-              <p className="text-gray-500 ">
-                We&apos;re sorry to see you go. Please fill out the form below to cancel your
-                subscription.
-              </p>
             </div>
             <div className="w-full space-y-4">
               <div id="checkout">

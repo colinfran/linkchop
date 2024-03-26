@@ -19,24 +19,12 @@ export const subscriptions = pgTable("subscriptions", {
   end_date: date("end_date"),
 })
 
-export const usersRelations = relations(users, ({ one }) => ({
-  subscriptions: one(subscriptions),
-}))
-
 export const urls = pgTable("urls", {
   id: varchar("id"),
   original_url: varchar("original_url"),
-  user_id: varchar("user_id").references(() => users.id) || "",
+  user_id: varchar("user_id"),
   created_at: date("created_at"),
 })
-
-export const urlsRelations = relations(urls, ({ one, many }) => ({
-  user: one(users, {
-    fields: [urls.user_id],
-    references: [users.id],
-  }),
-  urls: many(urls),
-}))
 
 export const visits = pgTable("visits", {
   id: varchar("id"),
