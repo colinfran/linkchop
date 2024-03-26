@@ -3,9 +3,9 @@
 LinkChop is a versatile URL shortener application designed to simplify the process of sharing long URLs by generating concise and memorable shortened links. With both limited and premium features, LinkChop caters to a wide range of users, offering an intuitive interface and robust functionality.
 
 ## Product Status:
-[![Website](https://img.shields.io/endpoint?style=for-the-badge&url=https://uptime-badge-linkchop.vercel.app/1788348?label=website&down_message=offline&up_message=online)](https://status.linkchop.com/)
-[![API](https://img.shields.io/endpoint?style=for-the-badge&url=https://uptime-badge-linkchop.vercel.app/1788458?label=API&down_message=offline&up_message=online)](https://status.linkchop.com/)
-[![Database](https://img.shields.io/endpoint?style=for-the-badge&url=https://uptime-badge-linkchop.vercel.app/1788511?label=Database&down_message=offline&up_message=online)](https://status.linkchop.com/)
+[![Website](https://img.shields.io/endpoint?style=for-the-badge&url=https://linkchop.com/api/uptime/1788348?label=website&down_message=offline&up_message=online)](https://status.linkchop.com/)
+[![API](https://img.shields.io/endpoint?style=for-the-badge&url=https://linkchop.com/api/uptime/1788458?label=API&down_message=offline&up_message=online)](https://status.linkchop.com/)
+[![Database](https://img.shields.io/endpoint?style=for-the-badge&url=https://linkchop.com/api/uptime/1788511?label=Database&down_message=offline&up_message=online)](https://status.linkchop.com/)
 
 ## Technologies Used
 
