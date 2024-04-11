@@ -17,14 +17,11 @@ export const getUser = async (email: string): Promise<UserType[]> => {
     .from(users)
     .where(equals(users.email, cleanedEmail))
   const { id } = userArr[0]
-
-  console.log(id)
   const activeSubscription = !!(await db.query.subscriptions.findFirst({
     where: (subscription, { eq, gte }) =>
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      eq(subscription.user_id as any, id as any) &&
+      eq(subscription.user_id, id as string) &&
       eq(subscription.status, "active") &&
-      gte(subscription.end_date, new Date().toISOString()),
+      gte(subscription.expiration_day, new Date().getDate()),
   }))
 
   const user = await db.select().from(users).where(equals(users.email, cleanedEmail))

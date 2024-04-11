@@ -24,6 +24,5 @@ export const getUserById = async (id: string): Promise<UserType[]> => {
     ...user[0],
     is_premium_user: activeSubscription,
   }
-  console.log(value)
   return [value]
 }

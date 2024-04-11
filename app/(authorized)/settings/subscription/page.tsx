@@ -72,7 +72,6 @@ const Page: React.FC = () => {
       const val = await response.json()
       setSubscriptionInfo(val[0])
       setNextPaymentDate(getNextPaymentDate(val[0].expiration_day))
-      console.log(val)
       setLoading(false)
     }
     if (user?.is_premium_user) {

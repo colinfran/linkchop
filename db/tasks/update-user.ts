@@ -61,7 +61,6 @@ export const updateUser = async (data: UserProps): Promise<Props> => {
       // user forgot password
       else {
         const user = await getUser(data.email)
-        console.log(user)
         updatedData = { ...user[0] } as UserProps
         data.created_at = updatedData.created_at
         data.id = updatedData.id

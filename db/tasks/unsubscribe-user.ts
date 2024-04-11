@@ -3,22 +3,24 @@ import { db } from "../init"
 import { subscriptions } from "../tables"
 
 /**
- * Sets a user as a subscriber in the database.
- * @param {string} email - The email of the user to set as a subscriber.
- * @returns {Promise<boolean>} A promise that resolves to a boolean if the user was set as a subscriber
+ * Unsubscribes a user from the LinkChop premium service.
+ * @param {string} id - The id of the user to set as unsubscriber.
+ * @param {string} remainingDays - The amount of days left for the user as a subscriber
+ * @returns {Promise<boolean>} A promise that resolves to a boolean if the user was successfully unsubscribed
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const unsubscribeUser = async (id: string, remainingDays: number): Promise<any> => {
+export const unsubscribeUser = async (id: string, remainingDays: number): Promise<boolean> => {
   const today = new Date()
   const futureDate = new Date(today)
   futureDate.setDate(today.getDate() + remainingDays)
   try {
-    return await db
+    await db
       .update(subscriptions)
       .set({ end_date: futureDate.toISOString(), status: "cancelled" })
       .where(eq(subscriptions.user_id, id))
+    return true
   } catch (error) {
     console.error("Error setting subscriber:", error)
+    return false
   }
 }
