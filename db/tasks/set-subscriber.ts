@@ -14,6 +14,7 @@ export const setSubscriber = async (id: string): Promise<boolean> => {
       start_date: new Date().toISOString(),
       status: "active",
       expiration_day: new Date().getDate(),
+      end_date: null,
     })
     return true
   } catch (error) {

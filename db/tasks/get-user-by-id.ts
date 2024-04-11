@@ -15,7 +15,7 @@ export const getUserById = async (id: string): Promise<UserType[]> => {
     where: (subscription, { eq, gte }) =>
       eq(subscription.user_id, id) &&
       eq(subscription.status, "active") &&
-      gte(subscription.expiration_day, new Date().getDate()),
+      gte(subscription.end_date, new Date().toISOString()),
   }))
 
   const user = await db.select().from(users).where(equals(users.id, id))
@@ -24,5 +24,6 @@ export const getUserById = async (id: string): Promise<UserType[]> => {
     ...user[0],
     is_premium_user: activeSubscription,
   }
+  console.log(value)
   return [value]
 }
