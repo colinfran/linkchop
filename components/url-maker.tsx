@@ -40,30 +40,27 @@ const UrlMaker: React.FC = () => {
 
   const { watch, handleSubmit } = form
 
-  const generateUrl = (): void => {
-    const createUrl = async (): Promise<void> => {
-      setLoading(true)
-      const formData = watch()
-      try {
-        const response = await fetch("/api/urls/create", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ originalUrl: formData.url }),
-        })
-        if (!response.ok) {
-          const errorData = await response.json()
-          throw new Error(errorData.error)
-        }
-        const { urlId } = await response.json()
-        setShortUrl(urlId)
-      } catch (error) {
-        console.error(error)
+  const createUrl = async (): Promise<void> => {
+    setLoading(true)
+    const formData = watch()
+    try {
+      const response = await fetch("/api/urls/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ originalUrl: formData.url }),
+      })
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error)
       }
-      setLoading(false)
+      const { urlId } = await response.json()
+      setShortUrl(urlId)
+    } catch (error) {
+      console.error(error)
     }
-    createUrl()
+    setLoading(false)
   }
 
   const showText = async (): Promise<void> => {
@@ -86,7 +83,7 @@ const UrlMaker: React.FC = () => {
         </div>
         <div className="mx-auto w-full space-y-2 md:w-[600px]">
           <Form {...form}>
-            <form className="space-y-8" onSubmit={handleSubmit(generateUrl)}>
+            <form className="space-y-8" onSubmit={handleSubmit(createUrl)}>
               <div>
                 <div>
                   <FormField
@@ -102,8 +99,12 @@ const UrlMaker: React.FC = () => {
                               type="text"
                               {...field}
                             />
-                            <Button className="ml-5" type="submit" onClick={generateUrl}>
-                              Create
+                            <Button className="ml-5 w-24" type="submit" onClick={createUrl}>
+                              {loading ? (
+                                <Icons.spinner className="size-3 animate-spin" />
+                              ) : (
+                                "Create"
+                              )}
                             </Button>
                           </div>
                         </FormControl>
