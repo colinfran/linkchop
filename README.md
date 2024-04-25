@@ -18,6 +18,7 @@ LinkChop is a versatile URL shortener application designed to simplify the proce
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-000000?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![Stripe](https://img.shields.io/badge/Stripe-000000?style=for-the-badge&logo=stripe&logoColor=white)](https://stripe.com/)
 [![Zoho](https://img.shields.io/badge/Zoho-000000?style=for-the-badge&logo=zoho&logoColor=white)](https://zoho.com/)
+[![Resend](https://img.shields.io/badge/Resend-000000?style=for-the-badge&logo=resend&logoColor=white)](https://resend.com/)
 
 ## Installation
 
@@ -59,6 +60,13 @@ To run LinkChop locally, follow these steps:
 - Sign in or create an account to access the full functionality of LinkChop.
 - Shorten URLs with ease and share them effortlessly with others.
 - Explore limited and premium features tailored to your needs.
+
+## Emails
+
+| Email                 | Provider | Limit                                   |
+|-----------------------|----------|-----------------------------------------|
+| no-reply@linkchop.com | Resend   | 100 emails a day / 3,000 emails a month |
+| colin@linkchop.com    | Zoho     | 5GB/User, 25MB attachment limit         |
 
 ## Contact
 

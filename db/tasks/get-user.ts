@@ -16,6 +16,9 @@ export const getUser = async (email: string): Promise<UserType[]> => {
     .select({ id: users.id })
     .from(users)
     .where(equals(users.email, cleanedEmail))
+  if (!userArr[0]) {
+    return []
+  }
   const { id } = userArr[0]
   const activeSubscription = !!(await db.query.subscriptions.findFirst({
     where: (subscription, { eq, gte }) =>

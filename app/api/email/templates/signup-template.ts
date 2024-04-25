@@ -43,6 +43,9 @@ export const signupTemplate = `
                     <tr>
                       <td colspan="3" height="36"></td>
                     </tr>
+                    <tr>
+                      <td colspan="3" align="center" style="font-size: 10px; color: #999;">This is an automated email. Please do not reply to this message.</td>
+                    </tr>
                   </table>
                 </td>
               </tr>
@@ -68,4 +71,4 @@ export const signupTemplate = `
     </center>
   </body>
 </html>
-`
+`;
