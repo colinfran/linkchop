@@ -28,7 +28,7 @@ const sleep = (ms: number): Promise<void> => {
 
 type UrlMakeAuthProp = {
   setUrls: (url: UrlsProps[]) => void
-  urls: UrlsProps[]
+  urls?: UrlsProps[]
 }
 
 const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthProp) => {
@@ -74,7 +74,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
             created_at: new Date(),
             visit_count: 0,
           },
-          ...urls,
+          ...(urls || []),
         ] as UrlsProps[]
         setUrls(arr)
       } catch (error) {
@@ -91,13 +91,13 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
     setShowingCopiedText(false)
   }
   useEffect(() => {
-    if (urls.length === 0) {
+    if (urls?.length === 0) {
       setShortUrl(null)
     }
   }, [urls])
   return (
     <section className="size-full py-12 pt-24 md:flex md:justify-center md:pt-32">
-      <div className="w-full md:max-w-[600px]">
+      <div className="w-full md:max-w-[600px] ">
         <div className="flex w-full flex-col items-center justify-center text-center">
           <div className="mx-auto w-full space-y-2">
             <Form {...form}>

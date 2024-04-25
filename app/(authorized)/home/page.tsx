@@ -16,10 +16,10 @@ export type UrlsProps = {
 
 const Page: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true)
-  const [urls, setUrls] = useState<UrlsProps[] | []>([])
+  const [urls, setUrls] = useState<UrlsProps[] | undefined>(undefined)
 
   const [searchQuery, setSearchQuery] = useState<string>("")
-  const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>(urls)
+  const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>([])
 
   const { data, status } = useUser()
 
@@ -56,7 +56,7 @@ const Page: React.FC = () => {
   }, [status])
 
   useEffect(() => {
-    setFilteredUrls(urls)
+    setFilteredUrls(urls || [])
   }, [urls])
 
   const deleteUrl = async (id: string): Promise<void> => {
@@ -74,8 +74,8 @@ const Page: React.FC = () => {
       }
       const { success } = await response.json()
       if (success) {
-        const filteredData = urls.filter((item) => item.id !== id)
-        setUrls(filteredData)
+        const filteredData = urls?.filter((item) => item.id !== id)
+        setUrls(filteredData || [])
       }
     } catch (error) {
       console.error(error)
@@ -87,18 +87,18 @@ const Page: React.FC = () => {
     setSearchQuery(query)
 
     // Filter data based on the search query
-    const filtered = urls.filter((item) =>
+    const filtered = urls?.filter((item) =>
       item.original_url.toLowerCase().includes(query.toLowerCase()),
     )
 
     // Update filtered data state
-    setFilteredUrls(filtered)
+    setFilteredUrls(filtered || [])
   }
 
   // Function to handle clearing the search input
   const clearSearch = (): void => {
     setSearchQuery("")
-    setFilteredUrls(urls)
+    setFilteredUrls(urls || [])
   }
 
   return (
@@ -110,7 +110,7 @@ const Page: React.FC = () => {
           </div>
           <div className="flex flex-col items-center justify-center space-y-5 text-white">
             <div className="w-full md:w-4/5">
-              {urls.length !== 0 && (
+              {urls && urls?.length > 0 && (
                 <div className="mb-5 w-full md:w-1/2">
                   <div className="relative text-black dark:text-white">
                     <Input
@@ -128,7 +128,9 @@ const Page: React.FC = () => {
                   </div>
                 </div>
               )}
-              {urls.length === 0 ? (
+              {!urls ? (
+                <div />
+              ) : urls?.length === 0 ? (
                 <div className="-mt-20 flex justify-center">
                   <div className="w-5/6 md:w-4/5">
                     <h1 className="scroll-m-20 text-center text-2xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
@@ -147,7 +149,7 @@ const Page: React.FC = () => {
                   deleteUrl={deleteUrl}
                   loading={loading}
                   setUrls={setUrls}
-                  urls={urls}
+                  urls={urls || []}
                 />
               )}
             </div>
