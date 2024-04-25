@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 "use client"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { z } from "zod"
@@ -90,6 +90,11 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
     await sleep(1000)
     setShowingCopiedText(false)
   }
+  useEffect(() => {
+    if (urls.length === 0) {
+      setShortUrl(null)
+    }
+  }, [urls])
   return (
     <section className="size-full py-12 pt-24 md:flex md:justify-center md:pt-32">
       <div className="w-full md:max-w-[600px]">

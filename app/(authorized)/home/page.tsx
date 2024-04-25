@@ -110,29 +110,46 @@ const Page: React.FC = () => {
           </div>
           <div className="flex flex-col items-center justify-center space-y-5 text-white">
             <div className="w-full md:w-4/5">
-              <div className="mb-5 w-full md:w-1/2">
-                <div className="relative text-black dark:text-white">
-                  <Input
-                    placeholder="Filter URLs"
-                    type="text"
-                    value={searchQuery}
-                    onChange={handleSearchInputChange}
-                  />
-                  <button
-                    className="absolute right-0 top-0 mr-2 size-4 h-full text-black active:text-neutral-500 dark:text-white dark:active:text-neutral-800"
-                    onClick={clearSearch}
-                  >
-                    <XCircle className="mr-2 size-4" />
-                  </button>
+              {urls.length !== 0 && (
+                <div className="mb-5 w-full md:w-1/2">
+                  <div className="relative text-black dark:text-white">
+                    <Input
+                      placeholder="Filter URLs"
+                      type="text"
+                      value={searchQuery}
+                      onChange={handleSearchInputChange}
+                    />
+                    <button
+                      className="absolute right-0 top-0 mr-2 size-4 h-full text-black active:text-neutral-500 dark:text-white dark:active:text-neutral-800"
+                      onClick={clearSearch}
+                    >
+                      <XCircle className="mr-2 size-4" />
+                    </button>
+                  </div>
                 </div>
-              </div>
-              <DataTable
-                data={filteredUrls}
-                deleteUrl={deleteUrl}
-                loading={loading}
-                setUrls={setUrls}
-                urls={urls}
-              />
+              )}
+              {urls.length === 0 ? (
+                <div className="-mt-20 flex justify-center">
+                  <div className="w-5/6 md:w-4/5">
+                    <h1 className="scroll-m-20 text-center text-2xl font-extrabold tracking-tight md:text-4xl lg:text-5xl">
+                      Welcome to your dashboard!
+                    </h1>
+                    <h3 className="mt-4 scroll-m-20 text-lg font-semibold tracking-tight md:text-xl">
+                      Start by creating your first shortened URL using the input field above and
+                      clicking the &apos;Create URL&apos; button. Once you&apos;ve created a link, a
+                      table will appear for easy access.
+                    </h3>
+                  </div>
+                </div>
+              ) : (
+                <DataTable
+                  data={filteredUrls}
+                  deleteUrl={deleteUrl}
+                  loading={loading}
+                  setUrls={setUrls}
+                  urls={urls}
+                />
+              )}
             </div>
           </div>
         </div>
