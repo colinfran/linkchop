@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 
 const userSignUpFormSchema = z.object({
   name: z

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog"
+
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { isValidUrl } from "@/lib/utils"
 import { UrlsProps } from "@/app/(authorized)/home/page"
+import { Icons } from "@/assets/icons"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "./ui/alert-dialog"
 
 type EditUrlProps = {
   original_url: string
@@ -30,6 +33,7 @@ const EditUrl: React.FC<EditUrlProps> = ({
   urls,
   setUrls,
 }: EditUrlProps) => {
+  const [loading, setloading] = useState(false)
   const [updatedUrl, setUpdatedUrl] = useState("")
   const [showError, setShowError] = useState(false)
   useEffect(() => {
@@ -44,9 +48,11 @@ const EditUrl: React.FC<EditUrlProps> = ({
     } else {
       setShowError(true)
     }
+    console.log("here", value, isValidUrl(value))
   }
 
   const onClick = async (): Promise<void> => {
+    setloading(true)
     try {
       const response = await fetch("/api/urls/edit", {
         method: "POST",
@@ -69,40 +75,38 @@ const EditUrl: React.FC<EditUrlProps> = ({
     } catch (error) {
       console.error(error)
     }
+    setloading(false)
     setIsOpen(false)
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
-      <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>Edit URL</DialogTitle>
-          <DialogDescription>
+    <AlertDialog open={isOpen}>
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Edit URL</AlertDialogTitle>
+          <AlertDialogDescription>
             Make changes to your url here. Click save when you&apos;re done.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right" htmlFor="url">
-              Original URL
-            </Label>
-            <Input className="col-span-3" id="url" value={updatedUrl} onChange={onChange} />
+          </AlertDialogDescription>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label className="text-right" htmlFor="url">
+                Original URL
+              </Label>
+              <Input className="col-span-3" id="url" value={updatedUrl} onChange={onChange} />
+            </div>
+            <div className={`text-center text-red-600 ${showError ? "visible" : "invisible"}`}>
+              Invalid Url
+            </div>
           </div>
-          <div className={`text-center text-red-600 ${showError ? "visible" : "invisible"}`}>
-            Invalid Url
-          </div>
-        </div>
-        <DialogFooter>
-          <Button
-            disabled={showError || updatedUrl === original_url}
-            type="submit"
-            onClick={onClick}
-          >
-            Save changes
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={() => setIsOpen(!isOpen)}>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={onClick} disabled={!isValidUrl(updatedUrl)}>
+            {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Save"}
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
   )
 }
 

@@ -22,7 +22,7 @@ import { Icons } from "@/assets/icons"
 import { toast } from "@/components/ui/use-toast"
 import PasswordStrengthBar from "react-password-strength-bar"
 import PasswordEye from "@/components/password-eye"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 import { UserData } from "@/types/user"
 
 const securityFormSchema = z

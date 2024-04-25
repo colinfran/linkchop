@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {

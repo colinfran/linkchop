@@ -13,7 +13,8 @@
           ["@/components", "./components"],
           ["@/app", "./app"],
           ["@/assets", "./assets"],
-          ["@/lib", "./lib"]
+          ["@/lib/hooks", "./lib/hooks"],
+          ["@/lib/utils", "./lib/utils"]
         ],
         "extensions": [".ts", ".tsx", ".json", "css"]
       },

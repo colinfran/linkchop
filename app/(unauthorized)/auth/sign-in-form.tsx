@@ -17,7 +17,8 @@ import {
 import { Icons } from "@/assets/icons"
 import { signIn } from "next-auth/react"
 import PasswordEye from "@/components/password-eye"
-import { errorMessages, useIsMobile } from "@/lib/utils"
+import { errorMessages } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 

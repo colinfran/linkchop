@@ -18,12 +18,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import DeleteAlert from "@/components/delete-alert"
 import { Icons } from "@/assets/icons"
 import EditUrl from "@/components/edit-url"
+import DeleteUrl from "@/components/delete-url"
 import { UrlsProps } from "./page"
 import { Separator } from "@radix-ui/react-separator"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 import { useUser } from "@/components/providers/user-provider"
 
 type DataTableProps = {
@@ -71,7 +71,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   return (
     <div className="">
       <div
-        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "h-[815px]" : "min-h-[580px]"}`}
+        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "max-h-[815px]" : "max-h-[580px]"}`}
       >
         <Table className="hidden md:table">
           <TableHeader>
@@ -159,7 +159,6 @@ export const DataTable: React.FC<DataTableProps> = ({
                     </TableCell>
                   </TableRow>
                 )}
-                {/* {endIndex - 7 !== startIndex && <Separator />} */}
               </>
             )}
           </TableBody>
@@ -178,7 +177,7 @@ export const DataTable: React.FC<DataTableProps> = ({
               {data.length ? (
                 data.slice(startIndex - 1, endIndex).map((url, index) => (
                   <div className="flex flex-col" key={url.id}>
-                    <div className="flex  size-full flex-row justify-between p-6 text-black dark:text-white">
+                    <div className="flex size-full flex-row justify-between p-6 text-black dark:text-white">
                       <div>
                         <div>{url.original_url}</div>
                         <div>{`linkchop.com/${url.id}`}</div>
@@ -217,7 +216,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                         </DropdownMenu>
                       </div>
                     </div>
-                    {index + 1 !== itemsPerPage && <Separator className="border" />}
+                    {index < itemsPerPage - 1 && <Separator className="border" />}
                   </div>
                 ))
               ) : (
@@ -239,26 +238,28 @@ export const DataTable: React.FC<DataTableProps> = ({
               : ""}
           </div>
         )}
-        <div className={"space-x-2"}>
-          <Button
-            disabled={startIndex === 1}
-            size="sm"
-            variant="outline"
-            onClick={goToPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button
-            disabled={endIndex === urls.length}
-            size="sm"
-            variant="outline"
-            onClick={goToNextPage}
-          >
-            Next
-          </Button>
-        </div>
+        {urls?.length > (isMobile ? 4 : 8) && (
+          <div className={"space-x-2"}>
+            <Button
+              disabled={startIndex === 1}
+              size="sm"
+              variant="outline"
+              onClick={goToPreviousPage}
+            >
+              Previous
+            </Button>
+            <Button
+              disabled={endIndex === urls.length}
+              size="sm"
+              variant="outline"
+              onClick={goToNextPage}
+            >
+              Next
+            </Button>
+          </div>
+        )}
       </div>
-      <DeleteAlert
+      <DeleteUrl
         deleteUrl={deleteUrl}
         id={selectedItemId || ""}
         isOpen={isDeleteOpen}

@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { UrlsProps } from "@/app/(authorized)/home/page"
-import { useIsMobile } from "@/lib/utils"
+import { useIsMobile } from "@/lib/hooks"
 import { useUser } from "./providers/user-provider"
 
 const urlFormSchema = z.object({

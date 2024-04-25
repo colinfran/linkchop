@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react"
+import React, { Dispatch, SetStateAction, useState } from "react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,8 +9,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import { Icons } from "@/assets/icons"
 
-type DeleteAlertProps = {
+type DeleteUrlProps = {
   setIsOpen: (isOpen: boolean) => void
   isOpen: boolean
   id: string
@@ -18,13 +19,14 @@ type DeleteAlertProps = {
   setSelectedItemId: Dispatch<SetStateAction<string>>
 }
 
-const DeleteAlert: React.FC<DeleteAlertProps> = ({
+const DeleteUrl: React.FC<DeleteUrlProps> = ({
   setIsOpen,
   isOpen,
   id,
   deleteUrl,
   setSelectedItemId,
 }) => {
+  const [loading, setloading] = useState(false)
   return (
     <AlertDialog open={isOpen}>
       <AlertDialogContent>
@@ -32,19 +34,21 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
             This action cannot be undone. This will permanently delete this url from our servers.
-            Click Continue to continue with deletion.
+            Click Delete to continue with deletion.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setIsOpen(!isOpen)}>Cancel</AlertDialogCancel>
           <AlertDialogAction
             onClick={async () => {
+              setloading(true)
               await deleteUrl(id)
+              setloading(false)
               setIsOpen(!isOpen)
               setSelectedItemId("")
             }}
           >
-            Continue
+            {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -52,4 +56,4 @@ const DeleteAlert: React.FC<DeleteAlertProps> = ({
   )
 }
 
-export default DeleteAlert
+export default DeleteUrl
