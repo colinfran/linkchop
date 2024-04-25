@@ -71,4 +71,4 @@ export const signupTemplate = `
     </center>
   </body>
 </html>
-`;
+`

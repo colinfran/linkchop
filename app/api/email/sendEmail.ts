@@ -31,10 +31,10 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 // Define the function to send emails
 const sendEmail = async (data: Props): Promise<boolean> => {
   if (!data.email) return false
-  
+
   // Initialize email HTML content and values object
   let emailHtml = ""
-  let values = {
+  const values = {
     from: "LinkChop <no-reply@linkchop.com>",
     to: data.email,
     subject: data.subject || "",

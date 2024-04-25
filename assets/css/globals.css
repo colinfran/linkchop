@@ -74,6 +74,8 @@
 html{
 	/* height: 100%; */
 	/* overflow-y: hidden; */
+	--scroll-behavior: smooth!important;
+	scroll-behavior: smooth!important;
 }
 
 body {

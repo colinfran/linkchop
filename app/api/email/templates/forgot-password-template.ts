@@ -73,4 +73,4 @@ export const forgotPasswordTemplate = `
     </center>
   </body>
 </html>
-`;
+`
