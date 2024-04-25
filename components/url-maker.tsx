@@ -135,7 +135,7 @@ const UrlMaker: React.FC = () => {
                 </div>
               ) : (
                 <>
-                  <div>{`https://linkchop.com/${shortUrl}`}</div>
+                  <div>{`linkchop.com/${shortUrl}`}</div>
                 </>
               )}
             </div>

@@ -156,9 +156,7 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
                   </div>
                 ) : (
                   <>
-                    <div
-                      className={shortUrl ? "" : "invisible"}
-                    >{`https://linkchop.com/${shortUrl}`}</div>
+                    <div className={shortUrl ? "" : "invisible"}>{`linkchop.com/${shortUrl}`}</div>
                     <div className={!shortUrl ? "invisible block" : "hidden"}>|</div>
                   </>
                 )}

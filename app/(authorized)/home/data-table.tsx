@@ -109,7 +109,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                         </div>
                       </TableCell>
                       <TableCell className="h-24">
-                        <div className="flex">{`https://linkchop.com/${url.id}`}</div>
+                        <div className="flex">{`linkchop.com/${url.id}`}</div>
                       </TableCell>
                       <TableCell className="h-24">
                         <div className="flex">{url.visit_count}</div>
@@ -181,7 +181,7 @@ export const DataTable: React.FC<DataTableProps> = ({
                     <div className="flex  size-full flex-row justify-between p-6 text-black dark:text-white">
                       <div>
                         <div>{url.original_url}</div>
-                        <div>{`https://linkchop.com/${url.id}`}</div>
+                        <div>{`linkchop.com/${url.id}`}</div>
                         <div>{`Created: ${format(new Date(url.created_at), "Pp")}`}</div>
                         <div>{`Visits: ${url.visit_count}`}</div>
                       </div>
