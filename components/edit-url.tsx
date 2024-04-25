@@ -101,7 +101,7 @@ const EditUrl: React.FC<EditUrlProps> = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setIsOpen(!isOpen)}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onClick} disabled={!isValidUrl(updatedUrl)}>
+          <AlertDialogAction disabled={!isValidUrl(updatedUrl)} onClick={onClick}>
             {loading ? <Icons.spinner className="mr-2 size-4 animate-spin" /> : "Save"}
           </AlertDialogAction>
         </AlertDialogFooter>
