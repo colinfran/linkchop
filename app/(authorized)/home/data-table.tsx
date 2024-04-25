@@ -71,7 +71,7 @@ export const DataTable: React.FC<DataTableProps> = ({
   return (
     <div className="">
       <div
-        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "max-h-[815px]" : "max-h-[580px]"}`}
+        className={`rounded-md border md:min-h-[815px] ${!isMobile && urls.length !== 0 ? "h-[815px]" : "min-h-[580px]"}`}
       >
         <Table className="hidden md:table">
           <TableHeader>
