@@ -221,7 +221,9 @@ export const DataTable: React.FC<DataTableProps> = ({
                   </div>
                 ))
               ) : (
-                <div>No Results</div>
+                <div className="border-b p-6 transition-colors hover:bg-muted/50">
+                  <div className="flex items-center justify-center">No results.</div>
+                </div>
               )}
             </>
           )}
