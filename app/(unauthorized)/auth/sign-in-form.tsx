@@ -164,22 +164,6 @@ const SignInForm: React.FC = () => {
                 </p>
               </div>
             </div>
-            <div className="mb-4">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <span className="w-full border-t" />
-                </div>
-                <div className="relative mt-5 flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">Or login with</span>
-                </div>
-              </div>
-              <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
-                <Icons.google className="mr-2 size-4" /> Google
-              </Button>
-              <Button className="mt-5 w-full" disabled={loading} type="button" variant="outline">
-                <Icons.apple className="mr-2 size-4" /> Apple
-              </Button>
-            </div>
             <div className="mt-10 text-center">
               <Link href="/auth/forgot-password">Forgot Password</Link>
             </div>

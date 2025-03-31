@@ -38,7 +38,7 @@ const UrlMaker: React.FC = () => {
     },
   })
 
-  const { watch, handleSubmit } = form
+  const { watch, handleSubmit, formState: { isValid } } = form
 
   const createUrl = async (): Promise<void> => {
     setLoading(true)
@@ -99,7 +99,7 @@ const UrlMaker: React.FC = () => {
                               type="text"
                               {...field}
                             />
-                            <Button className="ml-5 w-24" type="submit" onClick={createUrl}>
+                            <Button disabled={!isValid} className="ml-5 w-24" type="submit" onClick={createUrl}>
                               {loading ? (
                                 <Icons.spinner className="size-3 animate-spin" />
                               ) : (
