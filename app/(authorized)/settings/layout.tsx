@@ -14,6 +14,7 @@ const sidebarNavItems = [
   {
     title: "Subscription",
     href: "/settings/subscription",
+    disabled: true,
   },
   {
     title: "Display",

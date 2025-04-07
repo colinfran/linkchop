@@ -47,30 +47,30 @@ const UserNavigation: React.FC = () => {
             </DropdownMenuItem>
           </Link>
           <DropdownMenuSeparator />
-          {user?.is_premium_user ? (
+          {/* {user?.is_premium_user ? (
             <>
               <Link href="/analytics">
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer" >
                   <LineChart className="mr-2 size-4" />
                   <span className="w-full">Analytics</span>
                 </DropdownMenuItem>
               </Link>
             </>
-          ) : (
+          ) : ( */}
             <>
               <DropdownMenuItem className="cursor-pointer" disabled>
                 <LineChart className="mr-2 size-4" />
                 <span className="w-full">Analytics</span>
                 <Badge>Premium</Badge>
               </DropdownMenuItem>
-              <Link href="/subscribe">
-                <DropdownMenuItem className="cursor-pointer">
+              {/* <Link href="/subscribe"> */}
+                <DropdownMenuItem className="cursor-pointer" disabled>
                   <Unlock className="mr-2 size-4" />
                   <span className="w-full">Unlock Premium</span>
                 </DropdownMenuItem>
-              </Link>
+              {/* </Link> */}
             </>
-          )}
+          {/* )} */}
           <DropdownMenuSeparator />
           <Link href="/settings/profile">
             <DropdownMenuItem className="cursor-pointer">

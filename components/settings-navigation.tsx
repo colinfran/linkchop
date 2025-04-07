@@ -9,6 +9,7 @@ interface SettingsNavigationProps extends React.HTMLAttributes<HTMLElement> {
   items: {
     href: string
     title: string
+    disabled?: boolean
   }[]
 }
 
@@ -26,8 +27,21 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
       )}
       {...props}
     >
-      {items.map((item) => (
-        <Link className="mb-5 md:mb-0" href={item.href} key={item.href}>
+      {items.map((item) => {
+        if (item.disabled) {
+          return (
+            <Button
+              className="w-full justify-start"
+              variant="link"
+              disabled
+              key={item.href}
+            >
+              {item.title}
+            </Button>
+          )
+        }
+        return (
+          <Link className="mb-5 md:mb-0" href={item.href} key={item.href}>
           <Button
             className="w-full justify-start"
             variant={item.href === pathname ? "secondary" : "link"}
@@ -35,7 +49,8 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
             {item.title}
           </Button>
         </Link>
-      ))}
+        )
+      })}
     </nav>
   )
 }
