@@ -30,25 +30,20 @@ export const SettingsNavigation: React.FC<SettingsNavigationProps> = ({
       {items.map((item) => {
         if (item.disabled) {
           return (
-            <Button
-              className="w-full justify-start"
-              variant="link"
-              disabled
-              key={item.href}
-            >
+            <Button className="w-full justify-start" key={item.href} variant="link" disabled>
               {item.title}
             </Button>
           )
         }
         return (
           <Link className="mb-5 md:mb-0" href={item.href} key={item.href}>
-          <Button
-            className="w-full justify-start"
-            variant={item.href === pathname ? "secondary" : "link"}
-          >
-            {item.title}
-          </Button>
-        </Link>
+            <Button
+              className="w-full justify-start"
+              variant={item.href === pathname ? "secondary" : "link"}
+            >
+              {item.title}
+            </Button>
+          </Link>
         )
       })}
     </nav>
