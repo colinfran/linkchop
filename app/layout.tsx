@@ -48,7 +48,9 @@ const RootLayout: React.FC<Props> = ({ children, session }: Props) => {
         >
           <SessionProvider session={session}>
             <UserProvider>
-              <main>{children}</main>
+              <main className="min-h-[calc(100vh_-_121px)] md:min-h-[calc(100vh_-_121px)]">
+                {children}
+              </main>
               <Toaster />
             </UserProvider>
           </SessionProvider>

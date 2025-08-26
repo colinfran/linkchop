@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Icons } from "@/assets/icons"
 import { CopyToClipboard } from "react-copy-to-clipboard"
 import { useIsMobile } from "@/lib/hooks"
+import { useUser } from "@/components/providers/user-provider"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {
@@ -29,6 +30,8 @@ const UrlMaker: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [showingCopiedText, setShowingCopiedText] = useState(false)
   const isMobile = useIsMobile()
+
+  const { data } = useUser()
 
   const form = useForm<urlFormValues>({
     resolver: zodResolver(urlFormSchema),
@@ -73,6 +76,8 @@ const UrlMaker: React.FC = () => {
     setShowingCopiedText(false)
   }
 
+
+
   return (
     <section className="size-full py-12 md:py-24 lg:py-32 xl:py-48">
       <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
@@ -85,50 +90,52 @@ const UrlMaker: React.FC = () => {
             campaigns, and more.
           </p>
         </div>
-        <div className="mx-auto w-full space-y-2 md:w-[600px]">
-          <Form {...form}>
-            <form className="space-y-8" onSubmit={handleSubmit(createUrl)}>
-              <div>
+        {!data?.user && ( 
+          <div className="mx-auto w-full space-y-2 md:w-[600px]">
+            <Form {...form}>
+              <form className="space-y-8" onSubmit={handleSubmit(createUrl)}>
                 <div>
-                  <FormField
-                    control={form.control}
-                    name="url"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormControl>
-                          <div className="flex">
-                            <Input
-                              className={isMobile ? "text-base" : ""}
-                              placeholder="https://google.com/test/asdf/wer/asdf/asdf"
-                              type="text"
-                              {...field}
-                            />
-                            <Button
-                              className="ml-5 w-24"
-                              disabled={!isValid}
-                              type="submit"
-                              onClick={createUrl}
-                            >
-                              {loading ? (
-                                <Icons.spinner className="size-3 animate-spin" />
-                              ) : (
-                                "Create"
-                              )}
-                            </Button>
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                  <div>
+                    <FormField
+                      control={form.control}
+                      name="url"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex">
+                              <Input
+                                className={isMobile ? "text-base" : ""}
+                                placeholder="https://google.com/test/asdf/wer/asdf/asdf"
+                                type="text"
+                                {...field}
+                              />
+                              <Button
+                                className="ml-5 w-24"
+                                disabled={!isValid}
+                                type="submit"
+                                onClick={createUrl}
+                              >
+                                {loading ? (
+                                  <Icons.spinner className="size-3 animate-spin" />
+                                ) : (
+                                  "Create"
+                                )}
+                              </Button>
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                 </div>
-              </div>
-            </form>
-          </Form>
-          <p className="text-xs text-gray-500 dark:text-gray-400">
-            Sign up to keep track of your generated URLs.
-          </p>
-        </div>
+              </form>
+            </Form>
+            <p className="text-xs text-gray-500 dark:text-gray-400">
+              Sign up to keep track of your generated URLs.
+            </p>
+          </div>
+        )}
       </div>
       <div className={`relative ${shortUrl ? "visible" : "invisible"}`}>
         <div className="mt-10 flex flex-col items-center justify-center pb-4">
