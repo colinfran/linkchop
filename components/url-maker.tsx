@@ -88,7 +88,7 @@ const UrlMaker: React.FC = () => {
             campaigns, and more.
           </p>
         </div>
-        {!data?.user && (
+        {data?.user && (
           <div className="mx-auto w-full space-y-2 md:w-[600px]">
             <Form {...form}>
               <form className="space-y-8" onSubmit={handleSubmit(createUrl)}>
