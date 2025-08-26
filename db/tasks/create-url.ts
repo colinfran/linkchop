@@ -3,6 +3,7 @@ import ShortUniqueId from "short-unique-id"
 import { db } from "../init"
 import { urls } from "../tables"
 import { CreateUrlsQueryType } from "../types"
+import { sendDiscordNotification } from "@/lib/utils"
 
 /**
  * Creates a shortened URL in the database.
@@ -26,5 +27,6 @@ export const createUrl = async (
     result = await db.select().from(urls).where(eq(urls.id, id))
   }
   const values = { id, original_url: originalUrl, user_id: userId }
+  await sendDiscordNotification(values.original_url)
   return await db.insert(urls).values(values)
 }
