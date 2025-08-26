@@ -30,7 +30,6 @@ const UrlMaker: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [showingCopiedText, setShowingCopiedText] = useState(false)
   const isMobile = useIsMobile()
-
   const { data } = useUser()
 
   const form = useForm<urlFormValues>({
