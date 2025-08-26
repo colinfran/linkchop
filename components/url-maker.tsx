@@ -76,8 +76,6 @@ const UrlMaker: React.FC = () => {
     setShowingCopiedText(false)
   }
 
-
-
   return (
     <section className="size-full py-12 md:py-24 lg:py-32 xl:py-48">
       <div className="container flex flex-col items-center justify-center space-y-4 px-4 text-center md:px-6">
@@ -90,7 +88,7 @@ const UrlMaker: React.FC = () => {
             campaigns, and more.
           </p>
         </div>
-        {!data?.user && ( 
+        {!data?.user && (
           <div className="mx-auto w-full space-y-2 md:w-[600px]">
             <Form {...form}>
               <form className="space-y-8" onSubmit={handleSubmit(createUrl)}>
