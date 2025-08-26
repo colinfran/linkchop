@@ -7,7 +7,7 @@ export const sendDiscordNotification = async (newUrl: string): Promise<void> => 
   }
 
   const payload = {
-    content: `🔗 New URL added: ${newUrl}`,
+    content: `🔗 New URL added: <${newUrl}>`,
   }
 
   try {
