@@ -15,6 +15,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "./ui/alert-dialog"
+import { toast } from "./ui/use-toast"
 
 type EditUrlProps = {
   original_url: string
@@ -71,12 +72,18 @@ const EditUrl: React.FC<EditUrlProps> = ({
           obj.id === id ? Object.assign({}, obj, { ...obj, original_url: updatedUrl }) : obj,
         )
         setUrls(newData)
+        setIsOpen(false)
       }
     } catch (error) {
       console.error(error)
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: `${error}`,
+      })
+    } finally {
+      setloading(false)
     }
-    setloading(false)
-    setIsOpen(false)
   }
 
   return (

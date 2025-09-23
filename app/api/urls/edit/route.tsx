@@ -1,4 +1,6 @@
 import { editUrl } from "@/db/tasks"
+import { isSpamUrl } from "@/lib/utils/isSpamUrl"
+import { NextResponse } from "next/server"
 /**
  * Handles POST requests to the '/api/urls/edit' endpoint.
  * Edits the original URL of a shortened URL in the database based on the provided URL ID.
@@ -10,18 +12,21 @@ export async function POST(request: Request): Promise<Response> {
   // Extract the URL ID and the new URL from the request body.
   const res = await request.json()
   const { id, newUrl } = res
+  if (await isSpamUrl(newUrl)) {
+    return NextResponse.json({ success: false, error: 'Using this for spam is not allowed. Your IP has been recorded.' }, { status: 500 })
+  }
   try {
     // Edit the original URL of the shortened URL in the database.
     const didEdit = await editUrl(id, newUrl)
     // Return a success response if the URL is edited successfully.
     if (didEdit) {
-      return Response.json({ success: true })
+      return NextResponse.json({ success: true })
     } else {
-      return Response.json({ success: false, error: "Server Error" })
+      return NextResponse.json({ success: false, error: "Server Error" })
     }
   } catch (error) {
     // Handle errors that occur during URL editing and return a server error response.
     console.error("Error editing URL:", error)
-    return Response.json({ success: false, error: "Server Error" })
+    return NextResponse.json({ success: false, error: 'Server Error' }, { status: 500 })
   }
 }

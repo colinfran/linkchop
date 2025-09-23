@@ -13,6 +13,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard"
 import { UrlsProps } from "@/app/(authorized)/home/page"
 import { useIsMobile } from "@/lib/hooks"
 import { useUser } from "./providers/user-provider"
+import { toast } from "./ui/use-toast"
 
 const urlFormSchema = z.object({
   url: z.string().url().min(3, {
@@ -79,6 +80,11 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
         setUrls(arr)
       } catch (error) {
         console.error(error)
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: `${error}`,
+        })
       }
       setLoading(false)
     }
