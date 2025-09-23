@@ -18,7 +18,10 @@ export async function POST(request: Request): Promise<Response> {
 
   // check if url is not a prohibited url
   if (await isSpamUrl(originalUrl)) {
-    return NextResponse.json({ error: 'Using this for spam is not allowed. Your IP has been recorded.' }, { status: 500 })
+    return NextResponse.json(
+      { error: "Using this for spam is not allowed. Your IP has been recorded." },
+      { status: 500 },
+    )
   }
 
   // Generate a unique URL ID using ShortUniqueId library.
@@ -33,6 +36,6 @@ export async function POST(request: Request): Promise<Response> {
   } catch (error) {
     // Handle errors that occur during URL creation and return a server error response.
     console.error("Error creating URL:", error)
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
   }
 }

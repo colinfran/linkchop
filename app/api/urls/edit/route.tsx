@@ -13,7 +13,10 @@ export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
   const { id, newUrl } = res
   if (await isSpamUrl(newUrl)) {
-    return NextResponse.json({ success: false, error: 'Using this for spam is not allowed. Your IP has been recorded.' }, { status: 500 })
+    return NextResponse.json(
+      { success: false, error: "Using this for spam is not allowed. Your IP has been recorded." },
+      { status: 500 },
+    )
   }
   try {
     // Edit the original URL of the shortened URL in the database.
@@ -27,6 +30,6 @@ export async function POST(request: Request): Promise<Response> {
   } catch (error) {
     // Handle errors that occur during URL editing and return a server error response.
     console.error("Error editing URL:", error)
-    return NextResponse.json({ success: false, error: 'Server Error' }, { status: 500 })
+    return NextResponse.json({ success: false, error: "Server Error" }, { status: 500 })
   }
 }
