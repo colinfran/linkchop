@@ -1,6 +1,6 @@
 // lib/getFile.ts
-import fs from "fs/promises";
-import path from "path";
+import fs from "fs/promises"
+import path from "path"
 
 /**
  * Reads and parses a local JSON file from the project root.
@@ -8,7 +8,7 @@ import path from "path";
  * @returns Parsed JSON object
  */
 export async function getFile<T = unknown>(filename: string): Promise<T> {
-  const filePath = path.join(process.cwd(), filename);
-  const fileData = await fs.readFile(filePath, "utf-8");
-  return JSON.parse(fileData) as T;
+  const filePath = path.join(process.cwd(), filename)
+  const fileData = await fs.readFile(filePath, "utf-8")
+  return JSON.parse(fileData) as T
 }

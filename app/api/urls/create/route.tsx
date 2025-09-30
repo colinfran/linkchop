@@ -1,11 +1,9 @@
 import { createUrl } from "@/db/tasks"
-import { getFile } from "@/lib/utils/getFile"
 import { isSpamUrl } from "@/lib/utils/isSpamUrl"
 import { NextResponse } from "next/server"
 import ShortUniqueId from "short-unique-id"
-import spam from "./spam.json";
+import spam from "./spam.json"
 import { parse } from "tldts"
-
 
 /**
  * Handles POST requests to the '/api/urls/create' endpoint.
@@ -29,8 +27,8 @@ export async function POST(request: Request): Promise<Response> {
   }
 
   const url = new URL(originalUrl)
-  const { domain } = parse(url.hostname);
-  const exists = spam.spam.some((item) => item.includes(domain!));
+  const { domain } = parse(url.hostname)
+  const exists = spam.spam.some((item) => item.includes(domain!))
 
   if (exists) {
     return NextResponse.json(
