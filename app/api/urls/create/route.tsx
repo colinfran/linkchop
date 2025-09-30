@@ -1,7 +1,11 @@
 import { createUrl } from "@/db/tasks"
+import { getFile } from "@/lib/utils/getFile"
 import { isSpamUrl } from "@/lib/utils/isSpamUrl"
 import { NextResponse } from "next/server"
 import ShortUniqueId from "short-unique-id"
+import spam from "./spam.json";
+import { parse } from "tldts"
+
 
 /**
  * Handles POST requests to the '/api/urls/create' endpoint.
@@ -16,8 +20,19 @@ export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
   const { originalUrl, userId = null } = res
 
-  // check if url is not a prohibited url
+  // check if url is google spam spam
   if (await isSpamUrl(originalUrl)) {
+    return NextResponse.json(
+      { error: "Using this for spam is not allowed. Your IP has been recorded." },
+      { status: 500 },
+    )
+  }
+
+  const url = new URL(originalUrl)
+  const { domain } = parse(url.hostname);
+  const exists = spam.spam.some((item) => item.includes(domain!));
+
+  if (exists) {
     return NextResponse.json(
       { error: "Using this for spam is not allowed. Your IP has been recorded." },
       { status: 500 },
