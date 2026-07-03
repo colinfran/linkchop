@@ -33,7 +33,7 @@ type UrlMakeAuthProp = {
 }
 
 const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthProp) => {
-  const { data } = useUser()
+  const { data, user } = useUser()
   const isMobile = useIsMobile()
   const [shortUrl, setShortUrl] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -52,6 +52,16 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
 
   const generateUrl = (): void => {
     const createUrl = async (): Promise<void> => {
+      if (user?.is_banned) {
+        toast({
+          variant: "destructive",
+          title: "Account restricted",
+          description:
+            "Your account has been restricted for violating our Terms of Service. You cannot create new links.",
+        })
+        return
+      }
+
       setLoading(true)
       try {
         const response = await fetch("/api/urls/create", {
@@ -128,7 +138,8 @@ const UrlMakeAuth: React.FC<UrlMakeAuthProp> = ({ setUrls, urls }: UrlMakeAuthPr
                                 disabled={
                                   formData.url === "" ||
                                   formState.errors.url?.message === "Invalid url" ||
-                                  loading
+                                  loading ||
+                                  Boolean(user?.is_banned)
                                 }
                                 type="submit"
                                 onClick={generateUrl}

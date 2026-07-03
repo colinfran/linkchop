@@ -22,6 +22,7 @@ const Page: React.FC = () => {
   const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>([])
 
   const { data, status, user } = useUser()
+  const isUserLoaded = status !== "loading" && (status !== "authenticated" || Boolean(user))
   const isBanned = Boolean(user?.is_banned)
 
   useEffect(() => {
@@ -106,7 +107,11 @@ const Page: React.FC = () => {
     <>
       <div className="size-full space-y-6 py-6 md:min-h-[calc(100vh-72px+1.5rem)] xl:space-y-16">
         <div className="container space-y-2 p-5 sm:p-12 md:p-12">
-          {isBanned ? (
+          {!isUserLoaded ? (
+            <div className="mx-auto mt-24 w-full max-w-3xl text-center text-sm text-muted-foreground">
+              Loading your account...
+            </div>
+          ) : isBanned ? (
             <div className="mx-auto mt-24 flex w-full max-w-3xl flex-col items-center justify-center space-y-4 rounded-lg border border-red-500/40 bg-red-500/5 p-8 text-center">
               <h1 className="scroll-m-20 text-2xl font-extrabold tracking-tight md:text-4xl">
                 Account Restricted

@@ -1,4 +1,5 @@
 import { createUrl, getUserById } from "@/db/tasks"
+import { auth } from "@/app/api/auth/auth"
 import { isSpamUrl } from "@/lib/utils/isSpamUrl"
 import { NextResponse } from "next/server"
 import ShortUniqueId from "short-unique-id"
@@ -16,7 +17,14 @@ import { parse } from "tldts"
 export async function POST(request: Request): Promise<Response> {
   // Extract original URL and optional user ID from the request body.
   const res = await request.json()
-  const { originalUrl, userId = null } = res
+  const { originalUrl, userId: requestedUserId = null } = res
+  let userId = requestedUserId
+
+  // If logged in, always trust the authenticated session user id (not request body).
+  const session = await auth()
+  if (session?.user?.data?.id) {
+    userId = session.user.data.id
+  }
 
   if (userId) {
     const user = await getUserById(userId)
