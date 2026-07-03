@@ -19,39 +19,46 @@ const Page: React.FC = async () => {
                     Introduction
                   </h3>
                   <p>
-                    Welcome to LinkChop! These terms and conditions outline the rules and
-                    regulations for the use of LinkChop&apos;s Website, located at linkchop.com.
+                    {`Welcome to LinkChop. These Terms of Service ("Terms") govern your access to and
+                    use of our website and services, including link shortening, redirecting, and
+                    analytics features.`}
                   </p>
                   <p>
-                    By accessing this website we assume you accept these terms and conditions. Do
-                    not continue to use LinkChop if you do not agree to take all of the terms and
-                    conditions stated on this page.
+                    By creating an account, accessing, or using LinkChop, you agree to these Terms.
+                    If you do not agree, do not use the service.
                   </p>
                   <p>
-                    The following terminology applies to these Terms and Conditions, Privacy
-                    Statement and Disclaimer Notice and all Agreements: &quot;Client&quot;,
-                    &quot;You&quot; and &quot;Your&quot; refers to you, the person log on this
-                    website and compliant to the Company&apos;s terms and conditions. &quot;The
-                    Company&quot;, &quot;Ourselves&quot;, &quot;We&quot;, &quot;Our&quot; and
-                    &quot;Us&quot;, refers to our Company. &quot;Party&quot;, &quot;Parties&quot;,
-                    or &quot;Us&quot;, refers to both the Client and ourselves. All terms refer to
-                    the offer, acceptance and consideration of payment necessary to undertake the
-                    process of our assistance to the Client in the most appropriate manner for the
-                    express purpose of meeting the Client&apos;s needs in respect of provision of
-                    the Company&apos;s stated services, in accordance with and subject to,
-                    prevailing law of Netherlands. Any use of the above terminology or other words
-                    in the singular, plural, capitalization and/or he/she or they, are taken as
-                    interchangeable and therefore as referring to same.
+                    You are responsible for your account and all activity conducted through it,
+                    including all links you create, share, or manage.
                   </p>
                 </div>
                 <div className="pt-10">
                   <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
-                    User Responsibilities
+                    Acceptable Use
                   </h3>
                   <p>
-                    Users are responsible for the content of the URLs they shorten using LinkChop.
-                    Users may not use LinkChop to link to illegal or inappropriate content. LinkChop
-                    reserves the right to remove any links that violate these terms.
+                    You may not use LinkChop for illegal, harmful, abusive, or deceptive activity.
+                    This includes, but is not limited to, using LinkChop to distribute, promote, or
+                    facilitate:
+                  </p>
+                  <ul>
+                    <li>Pornographic or sexually explicit content.</li>
+                    <li>Gambling, betting, or wagering services where prohibited by law.</li>
+                    <li>Fraud, scams, phishing, impersonation, or other deceptive conduct.</li>
+                    <li>Malware, spyware, ransomware, viruses, or any malicious code.</li>
+                    <li>Harassment, threats, hate speech, exploitation, or violent content.</li>
+                    <li>
+                      Sale or promotion of illegal goods, controlled substances, or other unlawful
+                      services.
+                    </li>
+                    <li>
+                      Any activity that violates applicable law, infringes rights, or creates a
+                      safety risk to others.
+                    </li>
+                  </ul>
+                  <p>
+                    We may monitor, remove, disable, or block links and accounts at our sole
+                    discretion for violations of these Terms, with or without prior notice.
                   </p>
                 </div>
                 <div className="pt-10">
@@ -78,9 +85,10 @@ const Page: React.FC = async () => {
                     Payment and Subscription
                   </h3>
                   <p>
-                    LinkChop offers a free plan with basic features and a paid plan with additional
-                    features such as custom short URLs and detailed analytics. The paid plan is
-                    available on a monthly or annual subscription basis.
+                    LinkChop offers free and paid plans. Paid plans may include additional features
+                    such as custom short URLs and advanced analytics. Subscription fees, billing
+                    cycles, and renewal terms are presented at checkout and may change in the
+                    future.
                   </p>
                 </div>
                 <div className="pt-10">
@@ -88,8 +96,17 @@ const Page: React.FC = async () => {
                     Termination
                   </h3>
                   <p>
-                    LinkChop reserves the right to terminate the account of any user who violates
-                    these terms and conditions.
+                    We may suspend or terminate access to LinkChop at any time if you violate these
+                    Terms or if your use creates legal, security, or operational risk.
+                  </p>
+                </div>
+                <div className="pt-10">
+                  <h3 className="scroll-m-20 pb-4 text-2xl font-semibold tracking-tight">
+                    Governing Law
+                  </h3>
+                  <p>
+                    These Terms are governed by applicable laws of the United States and applicable
+                    state law, without regard to conflict of law principles.
                   </p>
                 </div>
                 <div className="pt-10">
@@ -97,12 +114,11 @@ const Page: React.FC = async () => {
                     Disclaimer
                   </h3>
                   <p>
-                    In no event shall LinkChop, nor any of its officers, directors and employees, be
-                    held liable for anything arising out of or in any way connected with your use of
-                    this website, whether such liability is under contract. LinkChop, including its
-                    officers, directors and employees shall not be held liable for any indirect,
-                    consequential or special liability arising out of or in any way related to your
-                    use of this website.
+                    {`LinkChop is provided on an "as is" and "as available" basis. To the maximum
+                    extent permitted by law, we disclaim all warranties, express or implied,
+                    including warranties of merchantability, fitness for a particular purpose, and
+                    non-infringement. We are not liable for indirect, incidental, consequential,
+                    special, exemplary, or punitive damages arising from your use of the service.`}
                   </p>
                 </div>
               </div>

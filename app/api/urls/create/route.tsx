@@ -1,4 +1,4 @@
-import { createUrl } from "@/db/tasks"
+import { createUrl, getUserById } from "@/db/tasks"
 import { isSpamUrl } from "@/lib/utils/isSpamUrl"
 import { NextResponse } from "next/server"
 import ShortUniqueId from "short-unique-id"
@@ -17,6 +17,19 @@ export async function POST(request: Request): Promise<Response> {
   // Extract original URL and optional user ID from the request body.
   const res = await request.json()
   const { originalUrl, userId = null } = res
+
+  if (userId) {
+    const user = await getUserById(userId)
+    if (user?.[0]?.is_banned) {
+      return NextResponse.json(
+        {
+          error:
+            "Your account has been restricted for violating our Terms of Service. You cannot create new links.",
+        },
+        { status: 403 },
+      )
+    }
+  }
 
   // check if url is google spam spam
   if (await isSpamUrl(originalUrl)) {

@@ -9,6 +9,7 @@ declare module "next-auth" {
       data: {
         id: string
         email: string
+        is_banned: boolean
       }
     }
   }

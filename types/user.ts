@@ -5,6 +5,7 @@ type UserData = {
   password?: string
   created_at: string
   updated_at: string
+  is_banned: boolean
   is_premium_user: boolean
 }
 

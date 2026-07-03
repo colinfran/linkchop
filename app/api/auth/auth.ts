@@ -46,6 +46,7 @@ export const {
           data: {
             id: user?.id,
             email: user?.email,
+            is_banned: Boolean(user?.is_banned),
           },
           exp: token.exp,
           iat: token.iat,

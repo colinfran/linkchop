@@ -25,6 +25,18 @@ export const authConfig = {
     authorized({ auth, request }) {
       const isLoggedIn = !!auth?.user
       const { nextUrl } = request
+      const isBanned = Boolean(auth?.user?.data?.is_banned)
+
+      const isPrivateRoute =
+        nextUrl.pathname === "/home" ||
+        nextUrl.pathname.startsWith("/settings") ||
+        nextUrl.pathname.startsWith("/subscribe")
+
+      // banned users can only access /home to see the account restriction notice
+      if (isLoggedIn && isBanned && isPrivateRoute && nextUrl.pathname !== "/home") {
+        return Response.redirect(new URL("/home", nextUrl))
+      }
+
       // prevent user from going to root route or auth route if logged in
       if (isLoggedIn && (nextUrl.pathname === "/" || nextUrl.pathname === "/auth")) {
         return Response.redirect(new URL("/home", nextUrl))

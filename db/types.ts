@@ -3,6 +3,7 @@ type UserType = {
   name: string | null
   email: string | null
   password: string | null
+  is_banned: boolean | null
   is_premium_user: boolean | null
   created_at: string | null
   updated_at: string | null
@@ -13,6 +14,7 @@ type UpdateUserType = {
   name: string | null
   email: string | null
   password: string | null
+  is_banned: boolean | null
   is_premium_user: boolean | null
   created_at: string | null
   updated_at: string | null

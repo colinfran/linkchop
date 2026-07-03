@@ -6,6 +6,7 @@ export const users = pgTable("users", {
   name: varchar("name"),
   email: varchar("email"),
   password: varchar("password"),
+  is_banned: boolean("is_banned"),
   created_at: date("created_at"),
   updated_at: date("updated_at"),
 })
