@@ -22,7 +22,7 @@ const Page: React.FC = () => {
   const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>([])
 
   const { data, status, user } = useUser()
-  const isUserLoaded = status !== "loading" && (status !== "authenticated" || Boolean(user))
+  const isUserLoaded = status === "authenticated" && Boolean(user)
   const isBanned = Boolean(user?.is_banned)
 
   useEffect(() => {
