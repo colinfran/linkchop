@@ -17,6 +17,7 @@ export const createUrl = async (
   idVal: string,
   originalUrl: string,
   userId: string | null,
+  userEmail: string | null,
 ): Promise<CreateUrlsQueryType[]> => {
   let id = idVal
   // Check to see if idVal exists; if it does, generate a new ID until a unique one is found.
@@ -27,6 +28,6 @@ export const createUrl = async (
     result = await db.select().from(urls).where(eq(urls.id, id))
   }
   const values = { id, original_url: originalUrl, user_id: userId }
-  await sendDiscordNotification(values.original_url)
+  await sendDiscordNotification(values.original_url, userEmail || "anonymous")
   return await db.insert(urls).values(values)
 }

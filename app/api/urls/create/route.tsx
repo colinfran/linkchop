@@ -19,6 +19,7 @@ export async function POST(request: Request): Promise<Response> {
   const res = await request.json()
   const { originalUrl, userId: requestedUserId = null } = res
   let userId = requestedUserId
+  let userEmail: string | null = null
 
   // If logged in, always trust the authenticated session user id (not request body).
   const session = await auth()
@@ -28,6 +29,7 @@ export async function POST(request: Request): Promise<Response> {
 
   if (userId) {
     const user = await getUserById(userId)
+    userEmail = user?.[0]?.email || null
     if (user?.[0]?.is_banned) {
       return NextResponse.json(
         {
@@ -64,7 +66,7 @@ export async function POST(request: Request): Promise<Response> {
 
   try {
     // Create a new shortened URL in the database.
-    await createUrl(id, originalUrl, userId)
+    await createUrl(id, originalUrl, userId, userEmail)
     // Return a response object containing the generated URL ID.
     return NextResponse.json({ urlId: id })
   } catch (error) {

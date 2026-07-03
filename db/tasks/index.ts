@@ -1,4 +1,5 @@
 import { addVisit } from "./add-visit"
+import { banUserByEmail } from "./ban-user-by-email"
 import { createPasswordResetToken } from "./create-password-reset-token"
 import { createUrl } from "./create-url"
 import { createUser } from "./create-user"
@@ -16,6 +17,7 @@ import { getSubscriptionInfo } from "./get-subscription-info"
 
 export {
   addVisit,
+  banUserByEmail,
   createPasswordResetToken,
   createUrl,
   createUser,
