@@ -47,7 +47,7 @@ const verifyDiscordRequest = (
   timestamp: string,
   publicKey: string,
 ): boolean => {
-  const message = Buffer.from(timestamp + body)
+  const message = new Uint8Array(Buffer.from(timestamp + body))
   const sig = hexToUint8Array(signature)
   const key = hexToUint8Array(publicKey)
   return nacl.sign.detached.verify(message, sig, key)
