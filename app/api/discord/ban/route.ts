@@ -107,7 +107,8 @@ export async function POST(request: Request): Promise<Response> {
     return textResponse("Unsupported interaction type.")
   }
 
-  if (interaction.data?.name !== "ban") {
+  const commandName = interaction.data?.name || ""
+  if (commandName !== "banuser" && commandName !== "ban") {
     return textResponse("Unsupported command.")
   }
 
@@ -117,7 +118,7 @@ export async function POST(request: Request): Promise<Response> {
 
   const email = getOption(interaction, "email")
   if (!email) {
-    return textResponse("Please provide an email. Example: /ban email:user@example.com")
+    return textResponse("Please provide an email. Example: /banuser email:user@example.com")
   }
 
   const banResult = await banUserByEmail(email)
