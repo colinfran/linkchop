@@ -1,4 +1,5 @@
-import NextAuth, { DefaultSession } from "next-auth"
+import "next-auth"
+import "next-auth/adapters"
 
 declare module "next-auth" {
   /**
@@ -12,5 +13,17 @@ declare module "next-auth" {
         is_banned: boolean
       }
     }
+  }
+
+  interface User {
+    id?: string
+    email?: string | null
+    is_banned?: boolean | null
+  }
+}
+
+declare module "next-auth/adapters" {
+  interface AdapterUser {
+    is_banned?: boolean | null
   }
 }
