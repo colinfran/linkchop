@@ -21,8 +21,8 @@ const Page: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>("")
   const [filteredUrls, setFilteredUrls] = useState<UrlsProps[]>([])
 
-  const { data, status } = useUser()
-  const isBanned = Boolean(data?.user?.data?.is_banned)
+  const { data, status, user } = useUser()
+  const isBanned = Boolean(user?.is_banned)
 
   useEffect(() => {
     if (status === "authenticated") {
