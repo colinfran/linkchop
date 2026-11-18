@@ -7,6 +7,8 @@ import { Session } from "next-auth/types"
 import { VercelAnalytics } from "@/components/providers/analytics-provider"
 import { UserProvider } from "@/components/providers/user-provider"
 import { Toaster } from "@/components/ui/toaster"
+import { BotIdClient } from "botid/client"
+import { botIdProtectedRoutes } from "@/lib/utils/botIdProtectedRoutes"
 
 const title = "LinkChop - URL Shortener"
 const description =
@@ -39,6 +41,9 @@ type Props = {
 const RootLayout: React.FC<Props> = ({ children, session }: Props) => {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <BotIdClient protect={botIdProtectedRoutes} />
+      </head>
       <body className={`${GeistSans.variable}`}>
         <ThemeProvider
           attribute="class"

@@ -81,7 +81,6 @@ const PasswordResetForm: React.FC = () => {
   const searchParams = useSearchParams()
 
   const id = searchParams.get("id")
-  const email = searchParams.get("email")
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -128,11 +127,11 @@ const PasswordResetForm: React.FC = () => {
   const onSubmit = async (): Promise<void> => {
     try {
       const values = {
-        email: email,
+        id,
         newPassword: formData.newPassword,
       }
       setLoading(true)
-      const response = await fetch("/api/user/update", {
+      const response = await fetch("/api/auth/password-reset", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

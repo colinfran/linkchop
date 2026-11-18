@@ -9,10 +9,20 @@ import { getUser } from "@/db/tasks"
 // Import Resend library
 import { Resend } from "resend"
 
+// Escape user-supplied values (e.g. the name entered at sign-up) so they can't inject HTML
+// such as phishing links into emails sent from no-reply@linkchop.com
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+
 // Define a function to replace placeholder keys with their corresponding values in the email template
 const replaceKeysWithValue = (string: string, object: { [x: string]: string }): string => {
   const pattern = new RegExp(Object.keys(object).join("|"), "g")
-  return string.replace(pattern, (match: string | number) => object[match])
+  return string.replace(pattern, (match: string) => escapeHtml(object[match]))
 }
 
 // Define type for the data object passed to the sendEmail function

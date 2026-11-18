@@ -1,3 +1,4 @@
+import { rejectBots } from "@/lib/utils/rejectBots"
 import { isIdExpired } from "@/db/tasks"
 
 /**
@@ -8,6 +9,9 @@ import { isIdExpired } from "@/db/tasks"
  */
 
 export async function POST(request: Request): Promise<Response> {
+  const botResponse = await rejectBots()
+  if (botResponse) return botResponse
+
   // Extract user registration data from the request body.
   const res = await request.json()
   const { id } = res

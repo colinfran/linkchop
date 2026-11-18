@@ -1,3 +1,4 @@
+import { rejectBots } from "@/lib/utils/rejectBots"
 import { createUrl, getUserById } from "@/db/tasks"
 import { auth } from "@/app/api/auth/auth"
 import { isSpamUrl } from "@/lib/utils/isSpamUrl"
@@ -15,17 +16,18 @@ import { parse } from "tldts"
  */
 
 export async function POST(request: Request): Promise<Response> {
+  const botResponse = await rejectBots()
+  if (botResponse) return botResponse
+
   // Extract original URL and optional user ID from the request body.
   const res = await request.json()
-  const { originalUrl, userId: requestedUserId = null } = res
-  let userId = requestedUserId
+  const { originalUrl } = res
   let userEmail: string | null = null
 
-  // If logged in, always trust the authenticated session user id (not request body).
+  // The owner is always the session user. A user id in the request body is ignored,
+  // otherwise anyone could create links in someone else's account.
   const session = await auth()
-  if (session?.user?.data?.id) {
-    userId = session.user.data.id
-  }
+  const userId: string | null = session?.user?.data?.id || null
 
   if (userId) {
     const user = await getUserById(userId)

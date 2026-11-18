@@ -35,27 +35,9 @@ const Page: React.FC = () => {
   }, [user])
 
   useEffect(() => {
-    const sendEmail = async (): Promise<void> => {
-      try {
-        await fetch("/api/email", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: user?.name,
-            email: user?.email,
-            subject: "Thank you for purchasing the premium subscription!",
-            type: "subscribe",
-          }),
-        })
-      } catch (error) {
-        console.error(error)
-      }
-    }
+    // The confirmation email is sent by /api/checkout/get when the subscription is recorded.
     if (status === "complete") {
       update()
-      sendEmail()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])

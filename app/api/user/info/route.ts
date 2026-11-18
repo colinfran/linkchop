@@ -1,24 +1,21 @@
 import { getUserById } from "@/db/tasks"
+import { getSessionUserId, unauthorizedResponse } from "@/lib/utils/session"
 
 /**
- * Handles POST requests to the '/api/urls/get' endpoint.
- * Retrieves the list of shortened URLs associated with the provided user ID from the database.
- * @param {Request} request - The incoming request object containing the user ID.
- * @returns {Promise<Response>} - Returns a response object containing the list of shortened URLs or an error message.
+ * Handles POST requests to the '/api/user/info' endpoint.
+ * Returns the signed-in user's data, without the password hash.
+ * @returns {Promise<Response>} - Returns a one-element array with the user, or an error.
  */
 
-export async function POST(request: Request): Promise<Response> {
-  // Extract the user ID from the request body.
-  const res = await request.json()
-  const { id } = res
+export async function POST(): Promise<Response> {
+  const userId = await getSessionUserId()
+  if (!userId) return unauthorizedResponse()
   try {
-    // Retrieve the list of shortened URLs associated with the user ID from the database.
-    const user = await getUserById(id)
-    // Return a response object containing the list of shortened URLs.
-    return Response.json(user)
+    const users = await getUserById(userId)
+    const safeUsers = users.map((user) => ({ ...user, password: undefined }))
+    return Response.json(safeUsers)
   } catch (error) {
-    // Handle errors that occur during URL retrieval and return a server error response.
-    console.error("Error getting URL:", error)
+    console.error("Error getting user:", error)
     return Response.json({ status: 500, error: "Server Error" })
   }
 }

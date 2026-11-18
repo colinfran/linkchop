@@ -11,6 +11,7 @@ import { getUrl } from "./get-url"
 import { getUser } from "./get-user"
 import { getUserById } from "./get-user-by-id"
 import { isIdExpired } from "./is-id-expired"
+import { resetPassword } from "./reset-password"
 import { setSubscriber } from "./set-subscriber"
 import { updateUser } from "./update-user"
 import { getSubscriptionInfo } from "./get-subscription-info"
@@ -29,6 +30,7 @@ export {
   getUser,
   getUserById,
   isIdExpired,
+  resetPassword,
   setSubscriber,
   updateUser,
   getSubscriptionInfo,

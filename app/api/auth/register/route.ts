@@ -1,3 +1,4 @@
+import { rejectBots } from "@/lib/utils/rejectBots"
 import { createUser, getUser } from "@/db/tasks"
 import sendEmail from "../../email/sendEmail"
 
@@ -10,6 +11,9 @@ import sendEmail from "../../email/sendEmail"
  */
 
 export async function POST(request: Request): Promise<Response> {
+  const botResponse = await rejectBots()
+  if (botResponse) return botResponse
+
   // Extract user registration data from the request body.
   const res = await request.json()
   const { email, name, password } = res

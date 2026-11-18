@@ -1,18 +1,22 @@
-import { eq } from "drizzle-orm"
+import { and, eq } from "drizzle-orm"
 import { db } from "../init"
 import { urls, visits } from "../tables"
 
 /**
- * Deletes a URL from the database.
- * It also deletes any click visit data associated with that url
- * @param {string} id - The ID of the URL to be deleted.
- * @returns {Promise<boolean>} A promise that resolves a boolean if the URL deleted.
+ * Deletes a shortened URL and its visits, if it belongs to the given user.
+ * @param {string} id - The ID of the URL to delete.
+ * @param {string} userId - The signed-in user's id. Must come from the session.
+ * @returns {Promise<boolean>} A promise that resolves to true if the URL was deleted, false if it
+ * doesn't exist, isn't owned by the user, or the deletion failed.
  */
 
-export const deleteUrl = async (id: string): Promise<boolean> => {
+export const deleteUrl = async (id: string, userId: string): Promise<boolean> => {
   try {
+    const isOwner = and(eq(urls.id, id), eq(urls.user_id, userId))
+    const owned = await db.select({ id: urls.id }).from(urls).where(isOwner)
+    if (owned.length === 0) return false
     await db.delete(visits).where(eq(visits.url_id, id))
-    await db.delete(urls).where(eq(urls.id, id))
+    await db.delete(urls).where(isOwner)
     return true
   } catch (error) {
     console.error("Error deleting URL:", error)

@@ -1,24 +1,21 @@
 import { unsubscribeUser } from "@/db/tasks/unsubscribe-user"
+import { getSessionUserId, unauthorizedResponse } from "@/lib/utils/session"
 
 /**
- * Handles POST requests to the '/api/urls/get' endpoint.
- * Retrieves the list of shortened URLs associated with the provided user ID from the database.
- * @param {Request} request - The incoming request object containing the user ID.
- * @returns {Promise<Response>} - Returns a response object containing the list of shortened URLs or an error message.
+ * Handles POST requests to the '/api/subscription/cancel' endpoint.
+ * Cancels the signed-in user's subscription. The remaining days are calculated on the
+ * server; any value in the request body is ignored.
+ * @returns {Promise<Response>} - Returns a response object indicating whether a subscription was cancelled.
  */
 
-export async function POST(request: Request): Promise<Response> {
-  // Extract the user ID from the request body.
-  const res = await request.json()
-  const { id, remainingDays } = res
+export async function POST(): Promise<Response> {
+  const userId = await getSessionUserId()
+  if (!userId) return unauthorizedResponse()
   try {
-    // Retrieve the list of shortened URLs associated with the user ID from the database.
-    await unsubscribeUser(id, remainingDays)
-    // Return a response object containing the list of shortened URLs.
-    return Response.json({ success: true })
+    const success = await unsubscribeUser(userId)
+    return Response.json({ success })
   } catch (error) {
-    // Handle errors that occur during URL retrieval and return a server error response.
-    console.error("Error getting URL:", error)
-    return res.status(500).json({ error: "Server Error" })
+    console.error("Error cancelling subscription:", error)
+    return Response.json({ error: "Server Error" }, { status: 500 })
   }
 }

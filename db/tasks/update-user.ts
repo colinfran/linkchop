@@ -2,82 +2,64 @@ import { eq } from "drizzle-orm"
 import { compare, genSaltSync, hashSync } from "bcrypt-ts"
 import { db } from "../init"
 import { users } from "../tables"
-import { getUser } from "./get-user"
-
-/**
- * Updates user data in the database.
- * @param {object} data - The data to update.
- * @returns {Promise<Props>} A promise that resolves to an object indicating the success of the update operation.
- */
 
 type Props = { success: boolean; errorMessage?: string }
-interface UserProps {
-  id: string
-  name: string
-  email: string
-  password?: string
-  created_at?: string
-  updated_at?: string
-  is_premium_user?: boolean
+
+export type UserChanges = {
+  name?: string
   newEmail?: string
   newPassword?: string
   oldPassword?: string
 }
-export const updateUser = async (data: UserProps): Promise<Props> => {
-  let updatedData = { ...data }
-  delete updatedData.updated_at
+
+/**
+ * Updates the profile of a signed-in user. Only the name, email and password can change,
+ * and a new password requires the current one (checked against the stored hash).
+ * Password resets for signed-out users go through resetPassword instead.
+ * @param {string} id - The user's id. Must come from the session, never the request body.
+ * @param {UserChanges} changes - The requested changes.
+ * @returns {Promise<Props>} A promise that resolves to an object indicating the success of the update operation.
+ */
+export const updateUser = async (id: string, changes: UserChanges): Promise<Props> => {
   try {
-    if (updatedData.newEmail) {
-      delete updatedData.newEmail
-      const newEmail = data.newEmail || ""
-      const result = await db.select().from(users).where(eq(users.email, newEmail))
-      if (result.length !== 0) {
-        return {
-          success: false,
-          errorMessage: "Email address is currently being used by another account.",
-        }
-      } else {
-        updatedData.email = data.newEmail || ""
-      }
-    }
-    if (updatedData.newPassword) {
-      // authenticated user is updating password
-      if (updatedData.oldPassword) {
-        const pass = data.password || ""
-        const passwordsMatch = await compare(updatedData.oldPassword, pass)
-        if (!passwordsMatch) {
+    const [user] = await db.select().from(users).where(eq(users.id, id))
+    if (!user) return { success: false, errorMessage: "User not found." }
+
+    const updates: Partial<typeof users.$inferInsert> = {}
+
+    if (changes.name) updates.name = changes.name
+
+    if (changes.newEmail) {
+      const newEmail = changes.newEmail.toLowerCase()
+      if (newEmail !== user.email) {
+        const result = await db.select({ id: users.id }).from(users).where(eq(users.email, newEmail))
+        if (result.length !== 0) {
           return {
             success: false,
-            errorMessage: "Incorrect old password.",
+            errorMessage: "Email address is currently being used by another account.",
           }
         }
-        delete updatedData.oldPassword
-        delete updatedData.newPassword
-        const salt = genSaltSync(10)
-        const newPass = data.newPassword || ""
-        const hash = hashSync(newPass, salt)
-        updatedData.password = hash
-      }
-      // user forgot password
-      else {
-        const user = await getUser(data.email)
-        updatedData = { ...user[0] } as UserProps
-        data.created_at = updatedData.created_at
-        data.id = updatedData.id
-        delete updatedData.updated_at
-        delete updatedData.newPassword
-        const salt = genSaltSync(10)
-        const newPass = data.newPassword || ""
-        const hash = hashSync(newPass, salt)
-        updatedData.password = hash
+        updates.email = newEmail
       }
     }
-    updatedData.created_at = new Date(data.created_at || "").toISOString()
-    updatedData.updated_at = new Date().toISOString()
-    await db.update(users).set(updatedData).where(eq(users.id, data.id))
+
+    if (changes.newPassword) {
+      const passwordsMatch =
+        !!changes.oldPassword && (await compare(changes.oldPassword, user.password || ""))
+      if (!passwordsMatch) {
+        return {
+          success: false,
+          errorMessage: "Incorrect old password.",
+        }
+      }
+      updates.password = hashSync(changes.newPassword, genSaltSync(10))
+    }
+
+    updates.updated_at = new Date().toISOString()
+    await db.update(users).set(updates).where(eq(users.id, id))
     return { success: true }
   } catch (error) {
     console.error("Error", error)
-    return { success: false, errorMessage: `${error}` }
+    return { success: false, errorMessage: "Something went wrong. Please try again." }
   }
 }
